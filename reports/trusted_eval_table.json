@@ -1,0 +1,330 @@
+{
+  "summary": {
+    "total": 10,
+    "passed": 10,
+    "failed": 0,
+    "accuracy": 1.0,
+    "by_type": {
+      "table_lookup": {
+        "total": 10,
+        "passed": 10,
+        "failed": 0,
+        "accuracy": 1.0
+      }
+    },
+    "by_failure_reason": {},
+    "report_path": "reports\\trusted_eval_table.json"
+  },
+  "details": [
+    {
+      "id": "TRUST_TABLE_016",
+      "type": "table_lookup",
+      "question": "2025年商业银行主要监管指标情况表中，资本充足率是多少？",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "rag_open"
+      ],
+      "actual_route": "rag_open",
+      "confidence": "high",
+      "answer_text": "根据检索到的表格证据，资本充足率对应的数值为0.15282、0.15578、0.15359、0.1546；单位为单位:亿元、%；来源工作表为商业银行季度。",
+      "expected_doc_ids": [
+        "nfra_012"
+      ],
+      "evidence_doc_ids": [
+        "nfra_012",
+        "nfra_012",
+        "nfra_012"
+      ],
+      "expected_evidence_types": [
+        "table_row"
+      ],
+      "evidence_types": [
+        "table_row",
+        "table_row",
+        "table_row"
+      ],
+      "required_fields": [],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_TABLE_017",
+      "type": "table_lookup",
+      "question": "2025年商业银行主要监管指标情况表中，不良贷款率是多少？",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "rag_open"
+      ],
+      "actual_route": "rag_open",
+      "confidence": "high",
+      "answer_text": "根据检索到的表格证据，不良贷款率对应的数值为0.01513、0.01491、0.01516、0.01496；单位为单位:亿元、%；来源工作表为商业银行季度。",
+      "expected_doc_ids": [
+        "nfra_012"
+      ],
+      "evidence_doc_ids": [
+        "nfra_012",
+        "nfra_070",
+        "nfra_251"
+      ],
+      "expected_evidence_types": [
+        "table_row"
+      ],
+      "evidence_types": [
+        "table_row",
+        "table_row",
+        "table_row"
+      ],
+      "required_fields": [],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_TABLE_018",
+      "type": "table_lookup",
+      "question": "2025年商业银行主要监管指标情况表中，拨备覆盖率是多少？",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "rag_open"
+      ],
+      "actual_route": "rag_open",
+      "confidence": "high",
+      "answer_text": "根据检索到的表格证据，拨备覆盖率对应的数值为2.08128、2.11969、2.07151、2.05211；单位为单位:亿元、%；来源工作表为商业银行季度。",
+      "expected_doc_ids": [
+        "nfra_012"
+      ],
+      "evidence_doc_ids": [
+        "nfra_012",
+        "nfra_070",
+        "nfra_251"
+      ],
+      "expected_evidence_types": [
+        "table_row"
+      ],
+      "evidence_types": [
+        "table_row",
+        "table_row",
+        "table_row"
+      ],
+      "required_fields": [],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_TABLE_019",
+      "type": "table_lookup",
+      "question": "2024年商业银行主要监管指标情况表中，资本利润率是多少？",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "rag_open"
+      ],
+      "actual_route": "rag_open",
+      "confidence": "high",
+      "answer_text": "根据检索到的表格证据，资本利润率对应的数值为0.09565、0.08914、0.08774、0.08103；单位为单位:亿元、%；来源工作表为商业银行季度。",
+      "expected_doc_ids": [
+        "nfra_070"
+      ],
+      "evidence_doc_ids": [
+        "nfra_070",
+        "nfra_012",
+        "nfra_251"
+      ],
+      "expected_evidence_types": [
+        "table_row"
+      ],
+      "evidence_types": [
+        "table_row",
+        "table_row",
+        "table_row"
+      ],
+      "required_fields": [],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_TABLE_020",
+      "type": "table_lookup",
+      "question": "2024年商业银行主要监管指标情况表中，流动性比例是多少？",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "rag_open"
+      ],
+      "actual_route": "rag_open",
+      "confidence": "high",
+      "answer_text": "根据检索到的表格证据，流动性比例对应的数值为0.6866、0.72375、0.75091、0.76743；单位为单位:亿元、%；来源工作表为商业银行季度。",
+      "expected_doc_ids": [
+        "nfra_070"
+      ],
+      "evidence_doc_ids": [
+        "nfra_070",
+        "nfra_012",
+        "nfra_251"
+      ],
+      "expected_evidence_types": [
+        "table_row"
+      ],
+      "evidence_types": [
+        "table_row",
+        "table_row",
+        "table_row"
+      ],
+      "required_fields": [],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_TABLE_021",
+      "type": "table_lookup",
+      "question": "2026年2月人身险公司经营情况表中，原保险保费收入情况是什么？",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "rag_open"
+      ],
+      "actual_route": "rag_open",
+      "confidence": "high",
+      "answer_text": "根据检索到的表格证据，原保险保费收入对应的数值为13107.93；单位为单位:亿元；来源工作表为人身保险公司（月度）   (2)。",
+      "expected_doc_ids": [
+        "nfra_003"
+      ],
+      "evidence_doc_ids": [
+        "nfra_003",
+        "nfra_007",
+        "nfra_120"
+      ],
+      "expected_evidence_types": [
+        "table_row"
+      ],
+      "evidence_types": [
+        "table_row",
+        "table_row",
+        "table_row"
+      ],
+      "required_fields": [],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_TABLE_022",
+      "type": "table_lookup",
+      "question": "2026年2月财产险公司经营情况表中，原保险保费收入情况是什么？",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "rag_open"
+      ],
+      "actual_route": "rag_open",
+      "confidence": "high",
+      "answer_text": "根据检索到的表格证据，原保险保费收入对应的数值为3313.66；单位为单位:亿元；来源工作表为产险公司数据（月度）  。",
+      "expected_doc_ids": [
+        "nfra_004"
+      ],
+      "evidence_doc_ids": [
+        "nfra_004",
+        "nfra_008",
+        "nfra_373"
+      ],
+      "expected_evidence_types": [
+        "table_row"
+      ],
+      "evidence_types": [
+        "table_row",
+        "table_row",
+        "text_unit"
+      ],
+      "required_fields": [],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_TABLE_023",
+      "type": "table_lookup",
+      "question": "2026年1月人身险公司经营情况表中，原保险保费收入情况是什么？",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "rag_open"
+      ],
+      "actual_route": "rag_open",
+      "confidence": "high",
+      "answer_text": "根据检索到的表格证据，原保险保费收入对应的数值为9741.73；单位为单位:亿元；来源工作表为人身保险公司（月度）  。",
+      "expected_doc_ids": [
+        "nfra_007"
+      ],
+      "evidence_doc_ids": [
+        "nfra_007",
+        "nfra_003",
+        "nfra_300"
+      ],
+      "expected_evidence_types": [
+        "table_row"
+      ],
+      "evidence_types": [
+        "table_row",
+        "table_row",
+        "table_row"
+      ],
+      "required_fields": [],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_TABLE_024",
+      "type": "table_lookup",
+      "question": "2026年1月财产险公司经营情况表中，原保险保费收入情况是什么？",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "rag_open"
+      ],
+      "actual_route": "rag_open",
+      "confidence": "high",
+      "answer_text": "根据检索到的表格证据，原保险保费收入对应的数值为2108.17；单位为单位:亿元；来源工作表为财产险公司数据（月度）  。",
+      "expected_doc_ids": [
+        "nfra_008"
+      ],
+      "evidence_doc_ids": [
+        "nfra_008",
+        "nfra_004",
+        "nfra_373"
+      ],
+      "expected_evidence_types": [
+        "table_row"
+      ],
+      "evidence_types": [
+        "table_row",
+        "table_row",
+        "text_unit"
+      ],
+      "required_fields": [],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_TABLE_025",
+      "type": "table_lookup",
+      "question": "2026年银行业总资产和总负债月度表中，总资产情况是什么？",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "rag_open"
+      ],
+      "actual_route": "rag_open",
+      "confidence": "high",
+      "answer_text": "根据检索到的表格证据，总资产对应的数值为4806061.691218953、4820568.61325416；单位为单位:亿元、%；来源工作表为资产负债月度。",
+      "expected_doc_ids": [
+        "nfra_001"
+      ],
+      "evidence_doc_ids": [
+        "nfra_001",
+        "nfra_001",
+        "nfra_001"
+      ],
+      "expected_evidence_types": [
+        "table_row"
+      ],
+      "evidence_types": [
+        "table_row",
+        "table_row",
+        "table_row"
+      ],
+      "required_fields": [],
+      "missing_required_fields": []
+    }
+  ]
+}

@@ -1,0 +1,136 @@
+{
+  "source_catalog_path": "data\\intermediate\\source_catalog_template_v2.csv",
+  "manifest_path": "E:\\work\\code\\JINRONG\\data\\processed\\manifest.jsonl",
+  "documents": 500,
+  "catalog_rows": 500,
+  "matched_documents": 500,
+  "match_rate": 1.0,
+  "match_by": {
+    "doc_id": 500
+  },
+  "missing_identity_rows": 0,
+  "duplicate_keys": {
+    "sha256": [
+      {
+        "value": "14e8960adee75e548902d54cffa7e74993273169f2522fa9d6d662a4ad081e5e",
+        "first_row": 376,
+        "duplicate_row": 377
+      }
+    ],
+    "title": [
+      {
+        "value": "全国各地区原保险保费收入情况表",
+        "first_row": 310,
+        "duplicate_row": 314
+      },
+      {
+        "value": "人身险公司经营情况表",
+        "first_row": 311,
+        "duplicate_row": 315
+      },
+      {
+        "value": "财产保险公司经营情况表",
+        "first_row": 312,
+        "duplicate_row": 316
+      },
+      {
+        "value": "保险业经营情况表",
+        "first_row": 313,
+        "duplicate_row": 317
+      },
+      {
+        "value": "全国各地区原保险保费收入情况表",
+        "first_row": 310,
+        "duplicate_row": 318
+      },
+      {
+        "value": "人身险公司经营情况表",
+        "first_row": 311,
+        "duplicate_row": 319
+      },
+      {
+        "value": "财产保险公司经营情况表",
+        "first_row": 312,
+        "duplicate_row": 320
+      },
+      {
+        "value": "保险业经营情况表",
+        "first_row": 313,
+        "duplicate_row": 321
+      },
+      {
+        "value": "全国各地区原保险保费收入情况表",
+        "first_row": 310,
+        "duplicate_row": 322
+      },
+      {
+        "value": "人身险公司经营情况表",
+        "first_row": 311,
+        "duplicate_row": 323
+      },
+      {
+        "value": "财产保险公司经营情况表",
+        "first_row": 312,
+        "duplicate_row": 324
+      },
+      {
+        "value": "保险业经营情况表",
+        "first_row": 313,
+        "duplicate_row": 325
+      },
+      {
+        "value": "全国各地区原保险保费收入情况表",
+        "first_row": 310,
+        "duplicate_row": 326
+      },
+      {
+        "value": "人身险公司经营情况表",
+        "first_row": 311,
+        "duplicate_row": 327
+      },
+      {
+        "value": "财产保险公司经营情况表",
+        "first_row": 312,
+        "duplicate_row": 328
+      },
+      {
+        "value": "保险业经营情况表",
+        "first_row": 313,
+        "duplicate_row": 329
+      },
+      {
+        "value": "全国各地区原保险保费收入情况表",
+        "first_row": 310,
+        "duplicate_row": 330
+      },
+      {
+        "value": "人身险公司经营情况表",
+        "first_row": 311,
+        "duplicate_row": 331
+      },
+      {
+        "value": "财产保险公司经营情况表",
+        "first_row": 312,
+        "duplicate_row": 332
+      },
+      {
+        "value": "保险业经营情况表",
+        "first_row": 313,
+        "duplicate_row": 333
+      }
+    ]
+  },
+  "url_warning_count": 0,
+  "url_warning_sample": [],
+  "conflict_count": 0,
+  "conflict_sample": [],
+  "unmatched_catalog_rows": 0,
+  "unmatched_catalog_sample": [],
+  "source_url_candidates": 0,
+  "attachment_url_candidates": 0,
+  "column_candidates": 0,
+  "version_status_candidates": 0,
+  "effective_date_candidates": 0,
+  "version_relation_candidates": 0,
+  "known_manifest_doc_ids": 500
+}

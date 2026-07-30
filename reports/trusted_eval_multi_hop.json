@@ -1,0 +1,164 @@
+{
+  "summary": {
+    "total": 4,
+    "passed": 4,
+    "failed": 0,
+    "accuracy": 1.0,
+    "by_type": {
+      "multi_hop": {
+        "total": 4,
+        "passed": 4,
+        "failed": 0,
+        "accuracy": 1.0
+      }
+    },
+    "by_failure_reason": {},
+    "report_path": "reports\\trusted_eval_multi_hop.json"
+  },
+  "details": [
+    {
+      "id": "TRUST_MULTI_046",
+      "type": "multi_hop",
+      "question": "比较2024年和2025年商业银行主要监管指标情况表中的资本充足率，并说明回答应引用哪些表格证据。",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "multi_hop"
+      ],
+      "actual_route": "multi_hop",
+      "confidence": "medium",
+      "answer_text": "该问题需要比较多个对象；已分别检索 2 组证据，答案应以各组表格或文本证据为依据，不脱离来源进行推断。",
+      "expected_doc_ids": [
+        "nfra_012",
+        "nfra_070"
+      ],
+      "evidence_doc_ids": [
+        "nfra_070",
+        "nfra_070",
+        "nfra_012",
+        "nfra_012"
+      ],
+      "expected_evidence_types": [
+        "table_row"
+      ],
+      "evidence_types": [
+        "table_row",
+        "table_row",
+        "table_row",
+        "table_row"
+      ],
+      "required_fields": [
+        "reasoning_steps",
+        "comparison",
+        "table_evidence"
+      ],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_MULTI_047",
+      "type": "multi_hop",
+      "question": "比较2026年1月和2月人身险公司经营情况表中的原保险保费收入，并说明变化依据。",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "multi_hop"
+      ],
+      "actual_route": "multi_hop",
+      "confidence": "medium",
+      "answer_text": "该问题需要比较多个对象；已分别检索 2 组证据，答案应以各组表格或文本证据为依据，不脱离来源进行推断。",
+      "expected_doc_ids": [
+        "nfra_003",
+        "nfra_007"
+      ],
+      "evidence_doc_ids": [
+        "nfra_007",
+        "nfra_003"
+      ],
+      "expected_evidence_types": [
+        "table_row"
+      ],
+      "evidence_types": [
+        "table_row",
+        "table_row"
+      ],
+      "required_fields": [
+        "reasoning_steps",
+        "comparison",
+        "table_evidence"
+      ],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_MULTI_048",
+      "type": "multi_hop",
+      "question": "比较2026年1月和2月财产险公司经营情况表中的原保险保费收入，并给出可追溯证据。",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "multi_hop"
+      ],
+      "actual_route": "multi_hop",
+      "confidence": "medium",
+      "answer_text": "该问题需要比较多个对象；已分别检索 2 组证据，答案应以各组表格或文本证据为依据，不脱离来源进行推断。",
+      "expected_doc_ids": [
+        "nfra_004",
+        "nfra_008"
+      ],
+      "evidence_doc_ids": [
+        "nfra_008",
+        "nfra_004"
+      ],
+      "expected_evidence_types": [
+        "table_row"
+      ],
+      "evidence_types": [
+        "table_row",
+        "table_row"
+      ],
+      "required_fields": [
+        "reasoning_steps",
+        "comparison",
+        "table_evidence"
+      ],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_MULTI_050",
+      "type": "multi_hop",
+      "question": "从银行函证制度要求出发，说明问答系统回答函证问题时应如何同时给出结论、依据和来源位置。",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "multi_hop"
+      ],
+      "actual_route": "multi_hop",
+      "confidence": "medium",
+      "answer_text": "该问题需要跨证据链回答；已分别检索 2 组依据，并保留来源位置用于追溯。",
+      "expected_doc_ids": [
+        "nfra_397",
+        "nfra_398"
+      ],
+      "evidence_doc_ids": [
+        "nfra_398",
+        "nfra_361",
+        "nfra_397",
+        "nfra_397"
+      ],
+      "expected_evidence_types": [
+        "text_unit"
+      ],
+      "evidence_types": [
+        "text_unit",
+        "text_unit",
+        "text_unit",
+        "text_unit"
+      ],
+      "required_fields": [
+        "reasoning_steps",
+        "basis",
+        "source_trace"
+      ],
+      "missing_required_fields": []
+    }
+  ]
+}

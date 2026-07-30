@@ -1,0 +1,17 @@
+[project]
+name = "jinrong-trusted-rag"
+version = "0.1.0"
+description = "Trusted RAG MVP for banking regulatory documents and statistical tables."
+requires-python = ">=3.10"
+dependencies = [
+  "openpyxl",
+  "pandas",
+  "python-docx",
+  "pdfplumber",
+  "xlrd",
+  "fastapi",
+  "uvicorn",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]

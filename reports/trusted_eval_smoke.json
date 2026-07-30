@@ -1,0 +1,116 @@
+{
+  "summary": {
+    "total": 3,
+    "passed": 3,
+    "failed": 0,
+    "accuracy": 1.0,
+    "by_type": {
+      "open_fact": {
+        "total": 3,
+        "passed": 3,
+        "failed": 0,
+        "accuracy": 1.0
+      }
+    },
+    "by_failure_reason": {},
+    "report_path": "reports\\trusted_eval_smoke.json"
+  },
+  "details": [
+    {
+      "id": "TRUST_TEXT_001",
+      "type": "open_fact",
+      "question": "银行函证工作为什么需要提高质量和效率？",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "rag_open"
+      ],
+      "actual_route": "rag_open",
+      "confidence": "high",
+      "answer_text": "根据《银行函证工作操作指引》中的证据，银行函证工作操作指引\n根据《关于加快推进银行函证规范化、集约化、数字化建设的通知》（财会〔2022〕39号）等文件要求，中国注册会计师协会和中国银行业协会制定了《银行函证工作操作指引》，对银行函证工作中的具体事项予以进一步明确和细化，以推进会计师事务所和银行业金融机构提高银行函证工作质量和效率。",
+      "expected_doc_ids": [
+        "nfra_397",
+        "nfra_398"
+      ],
+      "evidence_doc_ids": [
+        "nfra_397",
+        "nfra_398",
+        "nfra_397"
+      ],
+      "expected_evidence_types": [
+        "text_unit"
+      ],
+      "evidence_types": [
+        "text_unit",
+        "text_unit",
+        "text_unit"
+      ],
+      "required_fields": [],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_TEXT_002",
+      "type": "open_fact",
+      "question": "银行函证回函工作通常涉及哪些办理要求？",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "rag_open"
+      ],
+      "actual_route": "rag_open",
+      "confidence": "high",
+      "answer_text": "根据《银行函证工作操作指引》中的证据，（八）银行业金融机构回函工作说明。",
+      "expected_doc_ids": [
+        "nfra_397",
+        "nfra_398"
+      ],
+      "evidence_doc_ids": [
+        "nfra_398",
+        "nfra_397",
+        "nfra_398"
+      ],
+      "expected_evidence_types": [
+        "text_unit"
+      ],
+      "evidence_types": [
+        "text_unit",
+        "text_unit",
+        "text_unit"
+      ],
+      "required_fields": [],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_TEXT_003",
+      "type": "open_fact",
+      "question": "银行函证办理说明主要服务于哪些参与主体？",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "rag_open"
+      ],
+      "actual_route": "rag_open",
+      "confidence": "high",
+      "answer_text": "根据《银行函证工作操作指引》中的证据，一、银行函证工作办理说明",
+      "expected_doc_ids": [
+        "nfra_397",
+        "nfra_398"
+      ],
+      "evidence_doc_ids": [
+        "nfra_397",
+        "nfra_398",
+        "nfra_397"
+      ],
+      "expected_evidence_types": [
+        "text_unit"
+      ],
+      "evidence_types": [
+        "text_unit",
+        "text_unit",
+        "text_unit"
+      ],
+      "required_fields": [],
+      "missing_required_fields": []
+    }
+  ]
+}

@@ -1,0 +1,136 @@
+{
+  "summary": {
+    "total": 3,
+    "passed": 3,
+    "failed": 0,
+    "accuracy": 1.0,
+    "by_type": {
+      "text_then_table": {
+        "total": 3,
+        "passed": 3,
+        "failed": 0,
+        "accuracy": 1.0
+      }
+    },
+    "by_failure_reason": {},
+    "report_path": "reports\\trusted_eval_text_then_table.json"
+  },
+  "details": [
+    {
+      "id": "TRUST_MULTI_044",
+      "type": "text_then_table",
+      "question": "先说明绿色信贷统计制度的统计用途，再定位绿色信贷统计数据汇总表中的相关统计依据。",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "text_then_table"
+      ],
+      "actual_route": "text_then_table",
+      "confidence": "medium",
+      "answer_text": "该问题需要先确认制度或统计口径，再引用表格或指标证据。文本依据来自《绿色信贷统计信息披露说明-中文》。表格证据定位到《附件7：保险集团偿付能力风险管理能力评估表》中的分值合计。回答应围绕绿色信贷统计用途和统计依据展开。",
+      "expected_doc_ids": [
+        "nfra_361",
+        "nfra_362",
+        "nfra_363"
+      ],
+      "evidence_doc_ids": [
+        "nfra_361",
+        "nfra_361",
+        "nfra_466",
+        "nfra_464"
+      ],
+      "expected_evidence_types": [
+        "text_unit",
+        "table_row"
+      ],
+      "evidence_types": [
+        "text_unit",
+        "text_unit",
+        "table_row",
+        "table_row"
+      ],
+      "required_fields": [
+        "reasoning_steps",
+        "text_evidence",
+        "table_evidence"
+      ],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_MULTI_045",
+      "type": "text_then_table",
+      "question": "结合商业银行主要监管指标情况表，说明资本充足率这一指标为什么需要同时给出期间和单位。",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "text_then_table"
+      ],
+      "actual_route": "text_then_table",
+      "confidence": "medium",
+      "answer_text": "该问题需要先确认制度或统计口径，再引用表格或指标证据。文本依据来自《21家国内主要银行绿色信贷统计数据汇总表（201306）CN.p》。表格证据定位到《2025年商业银行主要监管指标情况表》中的资本充足率。回答资本充足率时应同时保留期间、单位和来源表格位置。",
+      "expected_doc_ids": [
+        "nfra_012",
+        "nfra_070"
+      ],
+      "evidence_doc_ids": [
+        "nfra_362",
+        "nfra_363",
+        "nfra_012",
+        "nfra_012"
+      ],
+      "expected_evidence_types": [
+        "table_row"
+      ],
+      "evidence_types": [
+        "text_unit",
+        "text_unit",
+        "table_row",
+        "table_row"
+      ],
+      "required_fields": [
+        "reasoning_steps",
+        "table_evidence"
+      ],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_MULTI_049",
+      "type": "text_then_table",
+      "question": "先解释为什么监管统计需要明确口径，再用商业银行主要监管指标情况表举一个指标证据。",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "text_then_table"
+      ],
+      "actual_route": "text_then_table",
+      "confidence": "medium",
+      "answer_text": "该问题需要先确认制度或统计口径，再引用表格或指标证据。文本依据来自《21家国内主要银行绿色信贷统计数据汇总表（201306）CN.p》。表格证据定位到《2025年商业银行主要监管指标情况表》中的资本充足率。",
+      "expected_doc_ids": [
+        "nfra_012",
+        "nfra_361"
+      ],
+      "evidence_doc_ids": [
+        "nfra_362",
+        "nfra_363",
+        "nfra_012",
+        "nfra_012"
+      ],
+      "expected_evidence_types": [
+        "text_unit",
+        "table_row"
+      ],
+      "evidence_types": [
+        "text_unit",
+        "text_unit",
+        "table_row",
+        "table_row"
+      ],
+      "required_fields": [
+        "reasoning_steps",
+        "text_evidence",
+        "table_evidence"
+      ],
+      "missing_required_fields": []
+    }
+  ]
+}

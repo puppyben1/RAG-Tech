@@ -1,0 +1,495 @@
+{
+  "summary": {
+    "total": 15,
+    "passed": 15,
+    "failed": 0,
+    "accuracy": 1.0,
+    "by_type": {
+      "open_fact": {
+        "total": 15,
+        "passed": 15,
+        "failed": 0,
+        "accuracy": 1.0
+      }
+    },
+    "by_failure_reason": {},
+    "report_path": "reports\\trusted_eval_open_fact.json"
+  },
+  "details": [
+    {
+      "id": "TRUST_TEXT_001",
+      "type": "open_fact",
+      "question": "银行函证工作为什么需要提高质量和效率？",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "rag_open"
+      ],
+      "actual_route": "rag_open",
+      "confidence": "high",
+      "answer_text": "根据《银行函证工作操作指引》中的证据，银行函证工作操作指引\n根据《关于加快推进银行函证规范化、集约化、数字化建设的通知》（财会〔2022〕39号）等文件要求，中国注册会计师协会和中国银行业协会制定了《银行函证工作操作指引》，对银行函证工作中的具体事项予以进一步明确和细化，以推进会计师事务所和银行业金融机构提高银行函证工作质量和效率。",
+      "expected_doc_ids": [
+        "nfra_397",
+        "nfra_398"
+      ],
+      "evidence_doc_ids": [
+        "nfra_397",
+        "nfra_398",
+        "nfra_397"
+      ],
+      "expected_evidence_types": [
+        "text_unit"
+      ],
+      "evidence_types": [
+        "text_unit",
+        "text_unit",
+        "text_unit"
+      ],
+      "required_fields": [],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_TEXT_002",
+      "type": "open_fact",
+      "question": "银行函证回函工作通常涉及哪些办理要求？",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "rag_open"
+      ],
+      "actual_route": "rag_open",
+      "confidence": "high",
+      "answer_text": "根据《银行函证工作操作指引》中的证据，（八）银行业金融机构回函工作说明。",
+      "expected_doc_ids": [
+        "nfra_397",
+        "nfra_398"
+      ],
+      "evidence_doc_ids": [
+        "nfra_398",
+        "nfra_397",
+        "nfra_398"
+      ],
+      "expected_evidence_types": [
+        "text_unit"
+      ],
+      "evidence_types": [
+        "text_unit",
+        "text_unit",
+        "text_unit"
+      ],
+      "required_fields": [],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_TEXT_003",
+      "type": "open_fact",
+      "question": "银行函证办理说明主要服务于哪些参与主体？",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "rag_open"
+      ],
+      "actual_route": "rag_open",
+      "confidence": "high",
+      "answer_text": "根据《银行函证工作操作指引》中的证据，一、银行函证工作办理说明",
+      "expected_doc_ids": [
+        "nfra_397",
+        "nfra_398"
+      ],
+      "evidence_doc_ids": [
+        "nfra_397",
+        "nfra_398",
+        "nfra_397"
+      ],
+      "expected_evidence_types": [
+        "text_unit"
+      ],
+      "evidence_types": [
+        "text_unit",
+        "text_unit",
+        "text_unit"
+      ],
+      "required_fields": [],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_TEXT_004",
+      "type": "open_fact",
+      "question": "大面积投诉为什么可能构成需要关注的数据安全事件？",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "rag_open"
+      ],
+      "actual_route": "rag_open",
+      "confidence": "high",
+      "answer_text": "根据《附件：数据安全事件分级》中的证据，（2）对公众利益造成严重危害，产生大范围社会负面影响，可能导致或者直接造成大面积投诉、社会群体性事件；",
+      "expected_doc_ids": [
+        "nfra_390"
+      ],
+      "evidence_doc_ids": [
+        "nfra_390",
+        "nfra_390",
+        "nfra_390"
+      ],
+      "expected_evidence_types": [
+        "text_unit"
+      ],
+      "evidence_types": [
+        "text_unit",
+        "text_unit",
+        "text_unit"
+      ],
+      "required_fields": [],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_TEXT_005",
+      "type": "open_fact",
+      "question": "绿色信贷统计制度说明中，绿色信贷统计制度的作用是什么？",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "rag_open"
+      ],
+      "actual_route": "rag_open",
+      "confidence": "high",
+      "answer_text": "根据《绿色信贷统计信息披露说明-中文》中的证据，三、环境效益测算说明\n绿色信贷统计制度要求银行业金融机构按照审慎性原则，对\n绿色信贷逐笔进行环境效益测算。",
+      "expected_doc_ids": [
+        "nfra_361"
+      ],
+      "evidence_doc_ids": [
+        "nfra_361",
+        "nfra_361",
+        "nfra_361"
+      ],
+      "expected_evidence_types": [
+        "text_unit"
+      ],
+      "evidence_types": [
+        "text_unit",
+        "text_unit",
+        "text_unit"
+      ],
+      "required_fields": [],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_TEXT_006",
+      "type": "open_fact",
+      "question": "绿色信贷统计报表通常用于汇总哪些银行信贷情况？",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "rag_open"
+      ],
+      "actual_route": "rag_open",
+      "confidence": "high",
+      "answer_text": "根据《绿色信贷统计信息披露说明-中文》中的证据，其中，各政策性银行、国有商业\n银行、股份制商业银行、邮政储蓄银行等 21 家主要银行将绿色\n信贷统计报表报送给银监会。",
+      "expected_doc_ids": [
+        "nfra_362",
+        "nfra_363"
+      ],
+      "evidence_doc_ids": [
+        "nfra_361",
+        "nfra_362",
+        "nfra_363"
+      ],
+      "expected_evidence_types": [
+        "text_unit"
+      ],
+      "evidence_types": [
+        "text_unit",
+        "text_unit",
+        "text_unit"
+      ],
+      "required_fields": [],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_TEXT_007",
+      "type": "open_fact",
+      "question": "消费者权益保护相关文件中，投诉处理为什么是监管关注点？",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "rag_open"
+      ],
+      "actual_route": "rag_open",
+      "confidence": "high",
+      "answer_text": "根据《附件：数据安全事件分级》中的证据，（2）对公众利益造成严重危害，产生大范围社会负面影响，可能导致或者直接造成大面积投诉、社会群体性事件；",
+      "expected_doc_ids": [
+        "nfra_390"
+      ],
+      "evidence_doc_ids": [
+        "nfra_390",
+        "nfra_390",
+        "nfra_390"
+      ],
+      "expected_evidence_types": [
+        "text_unit"
+      ],
+      "evidence_types": [
+        "text_unit",
+        "text_unit",
+        "text_unit"
+      ],
+      "required_fields": [],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_TEXT_008",
+      "type": "open_fact",
+      "question": "银行业金融机构数据安全管理为什么需要关注社会群体性事件？",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "rag_open"
+      ],
+      "actual_route": "rag_open",
+      "confidence": "high",
+      "answer_text": "根据《附件：数据安全事件分级》中的证据，（1）对公共利益造成特别严重危害，造成特别重大经济损失，或者产生特别重大社会群体性事件；",
+      "expected_doc_ids": [
+        "nfra_390"
+      ],
+      "evidence_doc_ids": [
+        "nfra_390",
+        "nfra_390",
+        "nfra_072"
+      ],
+      "expected_evidence_types": [
+        "text_unit"
+      ],
+      "evidence_types": [
+        "text_unit",
+        "text_unit",
+        "table_row"
+      ],
+      "required_fields": [],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_TEXT_009",
+      "type": "open_fact",
+      "question": "银行函证电子化办理的核心目的是什么？",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "rag_open"
+      ],
+      "actual_route": "rag_open",
+      "confidence": "high",
+      "answer_text": "根据《银行函证工作操作指引》中的证据，银行函证工作操作指引\n根据《关于加快推进银行函证规范化、集约化、数字化\n建设的通知》（财会〔2022〕39 号）等文件要求，中国注册\n会计师协会和中国银行业协会制定了《银行函证工作操作指\n引》，对银行函证工作中的具体事项予以进一步明确和细化，\n以推进会计师事务所和银行业金融机构提高银行函证工作\n质量和效率。",
+      "expected_doc_ids": [
+        "nfra_397",
+        "nfra_398"
+      ],
+      "evidence_doc_ids": [
+        "nfra_398",
+        "nfra_398",
+        "nfra_398"
+      ],
+      "expected_evidence_types": [
+        "text_unit"
+      ],
+      "evidence_types": [
+        "text_unit",
+        "text_unit",
+        "text_unit"
+      ],
+      "required_fields": [],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_TEXT_010",
+      "type": "open_fact",
+      "question": "银行函证业务中，回函信息为什么需要保证真实准确？",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "rag_open"
+      ],
+      "actual_route": "rag_open",
+      "confidence": "high",
+      "answer_text": "根据《银行函证工作操作指引》中的证据，银行业金融机构应当加强回函的复核控制，以提供真实准确的回函信息。",
+      "expected_doc_ids": [
+        "nfra_397",
+        "nfra_398"
+      ],
+      "evidence_doc_ids": [
+        "nfra_397",
+        "nfra_486",
+        "nfra_398"
+      ],
+      "expected_evidence_types": [
+        "text_unit"
+      ],
+      "evidence_types": [
+        "text_unit",
+        "text_unit",
+        "text_unit"
+      ],
+      "required_fields": [],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_TEXT_011",
+      "type": "open_fact",
+      "question": "绿色信贷统计数据汇总表反映的是什么类型的统计信息？",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "rag_open"
+      ],
+      "actual_route": "rag_open",
+      "confidence": "high",
+      "answer_text": "根据《绿色信贷统计信息披露说明-中文》中的证据，绿色信贷统计信息披露说明",
+      "expected_doc_ids": [
+        "nfra_362",
+        "nfra_363"
+      ],
+      "evidence_doc_ids": [
+        "nfra_361",
+        "nfra_362",
+        "nfra_363"
+      ],
+      "expected_evidence_types": [
+        "text_unit"
+      ],
+      "evidence_types": [
+        "text_unit",
+        "text_unit",
+        "text_unit"
+      ],
+      "required_fields": [],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_TEXT_012",
+      "type": "open_fact",
+      "question": "银行监管制度问答中，为什么需要保留来源文件标题和证据位置？",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "rag_open"
+      ],
+      "actual_route": "rag_open",
+      "confidence": "medium",
+      "answer_text": "根据《银行函证工作操作指引》中的证据，（十）沟通及跟进工作说明。",
+      "expected_doc_ids": [
+        "nfra_397",
+        "nfra_398",
+        "nfra_390"
+      ],
+      "evidence_doc_ids": [
+        "nfra_397",
+        "nfra_397",
+        "nfra_397"
+      ],
+      "expected_evidence_types": [
+        "text_unit"
+      ],
+      "evidence_types": [
+        "text_unit",
+        "text_unit",
+        "text_unit"
+      ],
+      "required_fields": [],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_TEXT_013",
+      "type": "open_fact",
+      "question": "数据安全事件处置文件中，投诉和舆情类信息为什么需要被识别？",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "rag_open"
+      ],
+      "actual_route": "rag_open",
+      "confidence": "high",
+      "answer_text": "根据《附件：数据安全事件分级》中的证据，（2）对公众利益造成严重危害，产生大范围社会负面影响，可能导致或者直接造成大面积投诉、社会群体性事件；",
+      "expected_doc_ids": [
+        "nfra_390"
+      ],
+      "evidence_doc_ids": [
+        "nfra_390",
+        "nfra_390",
+        "nfra_390"
+      ],
+      "expected_evidence_types": [
+        "text_unit"
+      ],
+      "evidence_types": [
+        "text_unit",
+        "text_unit",
+        "text_unit"
+      ],
+      "required_fields": [],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_TEXT_014",
+      "type": "open_fact",
+      "question": "绿色信贷统计说明为什么需要明确统计口径？",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "rag_open"
+      ],
+      "actual_route": "rag_open",
+      "confidence": "high",
+      "answer_text": "根据《绿色信贷统计信息披露说明-中文》中的证据，绿色信贷统计信息披露说明",
+      "expected_doc_ids": [
+        "nfra_361"
+      ],
+      "evidence_doc_ids": [
+        "nfra_361",
+        "nfra_361",
+        "nfra_361"
+      ],
+      "expected_evidence_types": [
+        "text_unit"
+      ],
+      "evidence_types": [
+        "text_unit",
+        "text_unit",
+        "text_unit"
+      ],
+      "required_fields": [],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_TEXT_015",
+      "type": "open_fact",
+      "question": "银行函证资料中，银行业金融机构和会计师事务所之间是什么关系？",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "rag_open"
+      ],
+      "actual_route": "rag_open",
+      "confidence": "high",
+      "answer_text": "根据《银行函证工作操作指引》中的证据，以现场办理后直接交付给会计师事务所跟函人员，或在办理\n后直接邮寄至银行询证函中指定的会计师事务所收件人。",
+      "expected_doc_ids": [
+        "nfra_397",
+        "nfra_398"
+      ],
+      "evidence_doc_ids": [
+        "nfra_398",
+        "nfra_398",
+        "nfra_397"
+      ],
+      "expected_evidence_types": [
+        "text_unit"
+      ],
+      "evidence_types": [
+        "text_unit",
+        "text_unit",
+        "text_unit"
+      ],
+      "required_fields": [],
+      "missing_required_fields": []
+    }
+  ]
+}

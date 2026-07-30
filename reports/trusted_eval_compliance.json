@@ -1,0 +1,309 @@
+{
+  "summary": {
+    "total": 8,
+    "passed": 8,
+    "failed": 0,
+    "accuracy": 1.0,
+    "by_type": {
+      "compliance_judgement": {
+        "total": 8,
+        "passed": 8,
+        "failed": 0,
+        "accuracy": 1.0
+      }
+    },
+    "by_failure_reason": {},
+    "report_path": "reports\\trusted_eval_compliance.json"
+  },
+  "details": [
+    {
+      "id": "TRUST_COMP_036",
+      "type": "compliance_judgement",
+      "question": "如果银行函证回函信息与实际业务记录不一致，是否合规？请给出判断、依据条款和风险点。",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "compliance_judgement"
+      ],
+      "actual_route": "compliance_judgement",
+      "confidence": "high",
+      "answer_text": "初步判断为存在风险。依据来自《银行函证工作操作指引》等检索证据；主要风险点是：函证办理或回函信息不准确，可能影响审计证据可靠性和业务可追溯性。；缺少来源和证据位置会削弱答案可核验性，不满足可追溯要求。 仍需补充确认：需补充具体业务发生时间、主体和操作过程。",
+      "expected_doc_ids": [
+        "nfra_397",
+        "nfra_398"
+      ],
+      "evidence_doc_ids": [
+        "nfra_397",
+        "nfra_397",
+        "nfra_398"
+      ],
+      "expected_evidence_types": [
+        "text_unit"
+      ],
+      "evidence_types": [
+        "text_unit",
+        "text_unit",
+        "text_unit"
+      ],
+      "required_fields": [
+        "judgement",
+        "basis",
+        "risk_points"
+      ],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_COMP_037",
+      "type": "compliance_judgement",
+      "question": "银行业金融机构发生大面积投诉并可能形成社会群体性事件时，是否应作为数据安全风险处置？请给出判断和依据。",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "compliance_judgement"
+      ],
+      "actual_route": "compliance_judgement",
+      "confidence": "high",
+      "answer_text": "初步判断为存在风险。依据来自《附件：数据安全事件分级》等检索证据；主要风险点是：投诉、舆情或群体性事件可能放大数据安全和消费者权益保护风险。；缺少来源和证据位置会削弱答案可核验性，不满足可追溯要求。 仍需补充确认：需补充具体业务发生时间、主体和操作过程。；需进一步核对是否存在更直接适用的专项制度条款。",
+      "expected_doc_ids": [
+        "nfra_390"
+      ],
+      "evidence_doc_ids": [
+        "nfra_390",
+        "nfra_390",
+        "nfra_390"
+      ],
+      "expected_evidence_types": [
+        "text_unit"
+      ],
+      "evidence_types": [
+        "text_unit",
+        "text_unit",
+        "text_unit"
+      ],
+      "required_fields": [
+        "judgement",
+        "basis",
+        "risk_points"
+      ],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_COMP_038",
+      "type": "compliance_judgement",
+      "question": "业务人员在引用绿色信贷统计数据时，不说明统计口径是否合规？请给出判断、依据和改进建议。",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "compliance_judgement"
+      ],
+      "actual_route": "compliance_judgement",
+      "confidence": "low",
+      "answer_text": "无法根据当前资料形成合规判断；需要补充明确制度依据、最小充分证据或具体业务事实。",
+      "expected_doc_ids": [
+        "nfra_361",
+        "nfra_362",
+        "nfra_363"
+      ],
+      "evidence_doc_ids": [
+        "nfra_361",
+        "nfra_361",
+        "nfra_361"
+      ],
+      "expected_evidence_types": [
+        "text_unit"
+      ],
+      "evidence_types": [
+        "text_unit",
+        "text_unit",
+        "text_unit"
+      ],
+      "required_fields": [
+        "judgement",
+        "basis",
+        "remediation"
+      ],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_COMP_039",
+      "type": "compliance_judgement",
+      "question": "如果问答系统只返回结论但没有来源 URL、文件标题和证据位置，是否满足赛题要求？请给出判断。",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "compliance_judgement"
+      ],
+      "actual_route": "compliance_judgement",
+      "confidence": "low",
+      "answer_text": "无法根据当前资料形成合规判断；需要补充明确制度依据、最小充分证据或具体业务事实。",
+      "expected_doc_ids": [
+        "nfra_397",
+        "nfra_398",
+        "nfra_390"
+      ],
+      "evidence_doc_ids": [
+        "nfra_390",
+        "nfra_390",
+        "nfra_390"
+      ],
+      "expected_evidence_types": [
+        "text_unit"
+      ],
+      "evidence_types": [
+        "text_unit",
+        "text_unit",
+        "text_unit"
+      ],
+      "required_fields": [
+        "judgement",
+        "basis",
+        "missing_evidence"
+      ],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_COMP_040",
+      "type": "compliance_judgement",
+      "question": "银行在监管报送中混用旧版和新版统计口径，是否存在合规风险？请给出判断和依据。",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "compliance_judgement"
+      ],
+      "actual_route": "compliance_judgement",
+      "confidence": "low",
+      "answer_text": "无法根据当前资料形成合规判断；需要补充明确制度依据、最小充分证据或具体业务事实。",
+      "expected_doc_ids": [
+        "nfra_361",
+        "nfra_362",
+        "nfra_363"
+      ],
+      "evidence_doc_ids": [
+        "nfra_361",
+        "nfra_361",
+        "nfra_361"
+      ],
+      "expected_evidence_types": [
+        "text_unit"
+      ],
+      "evidence_types": [
+        "text_unit",
+        "text_unit",
+        "text_unit"
+      ],
+      "required_fields": [
+        "judgement",
+        "basis",
+        "risk_points"
+      ],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_COMP_041",
+      "type": "compliance_judgement",
+      "question": "对于消费者投诉引发的数据安全事件，业务部门是否可以仅凭经验处理而不追溯制度依据？",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "compliance_judgement"
+      ],
+      "actual_route": "compliance_judgement",
+      "confidence": "high",
+      "answer_text": "初步判断为存在风险。依据来自《附件：数据安全事件分级》等检索证据；主要风险点是：投诉、舆情或群体性事件可能放大数据安全和消费者权益保护风险。；缺少来源和证据位置会削弱答案可核验性，不满足可追溯要求。 仍需补充确认：需补充具体业务发生时间、主体和操作过程。；需进一步核对是否存在更直接适用的专项制度条款。",
+      "expected_doc_ids": [
+        "nfra_390"
+      ],
+      "evidence_doc_ids": [
+        "nfra_390",
+        "nfra_390",
+        "nfra_390"
+      ],
+      "expected_evidence_types": [
+        "text_unit"
+      ],
+      "evidence_types": [
+        "text_unit",
+        "text_unit",
+        "text_unit"
+      ],
+      "required_fields": [
+        "judgement",
+        "basis",
+        "risk_points"
+      ],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_COMP_042",
+      "type": "compliance_judgement",
+      "question": "会计师事务所发起银行函证时，银行能否忽略函证业务的办理要求？请给出合规判断。",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "compliance_judgement"
+      ],
+      "actual_route": "compliance_judgement",
+      "confidence": "high",
+      "answer_text": "初步判断为存在风险。依据来自《银行函证工作操作指引》等检索证据；主要风险点是：函证办理或回函信息不准确，可能影响审计证据可靠性和业务可追溯性。 仍需补充确认：需补充具体业务发生时间、主体和操作过程。；需进一步核对是否存在更直接适用的专项制度条款。",
+      "expected_doc_ids": [
+        "nfra_397",
+        "nfra_398"
+      ],
+      "evidence_doc_ids": [
+        "nfra_398",
+        "nfra_397",
+        "nfra_397"
+      ],
+      "expected_evidence_types": [
+        "text_unit"
+      ],
+      "evidence_types": [
+        "text_unit",
+        "text_unit",
+        "text_unit"
+      ],
+      "required_fields": [
+        "judgement",
+        "basis",
+        "risk_points"
+      ],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_COMP_043",
+      "type": "compliance_judgement",
+      "question": "监管统计问答中，如果表格数值没有单位和期间维度，能否直接用于业务判断？请给出判断。",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "compliance_judgement"
+      ],
+      "actual_route": "compliance_judgement",
+      "confidence": "low",
+      "answer_text": "无法根据当前资料形成合规判断；需要补充明确制度依据、最小充分证据或具体业务事实。",
+      "expected_doc_ids": [
+        "nfra_001",
+        "nfra_012"
+      ],
+      "evidence_doc_ids": [
+        "nfra_012",
+        "nfra_070",
+        "nfra_190"
+      ],
+      "expected_evidence_types": [
+        "table_row"
+      ],
+      "evidence_types": [
+        "table_row",
+        "table_row",
+        "table_row"
+      ],
+      "required_fields": [
+        "judgement",
+        "basis",
+        "risk_points"
+      ],
+      "missing_required_fields": []
+    }
+  ]
+}

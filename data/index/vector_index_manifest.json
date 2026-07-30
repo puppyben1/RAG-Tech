@@ -1,0 +1,10 @@
+{
+  "embedding_type": "local_hashing_v1",
+  "dimensions": 4096,
+  "text_source": "E:\\work\\code\\JINRONG\\data\\processed\\text_units.jsonl",
+  "table_source": "E:\\work\\code\\JINRONG\\data\\processed\\table_rows.jsonl",
+  "text_vectors": 7132,
+  "table_row_vectors": 15775,
+  "text_index_path": "E:\\work\\code\\JINRONG\\data\\index\\text_vectors.jsonl",
+  "table_index_path": "E:\\work\\code\\JINRONG\\data\\index\\table_row_vectors.jsonl"
+}

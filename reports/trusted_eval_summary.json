@@ -1,0 +1,51 @@
+{
+  "total": 50,
+  "passed": 50,
+  "failed": 0,
+  "accuracy": 1.0,
+  "by_type": {
+    "open_fact": {
+      "total": 15,
+      "passed": 15,
+      "failed": 0,
+      "accuracy": 1.0,
+      "report_path": "reports\\trusted_eval_open_fact.json"
+    },
+    "table_lookup": {
+      "total": 10,
+      "passed": 10,
+      "failed": 0,
+      "accuracy": 1.0,
+      "report_path": "reports\\trusted_eval_table.json"
+    },
+    "refusal": {
+      "total": 10,
+      "passed": 10,
+      "failed": 0,
+      "accuracy": 1.0,
+      "report_path": "reports\\trusted_eval_refusal.json"
+    },
+    "compliance_judgement": {
+      "total": 8,
+      "passed": 8,
+      "failed": 0,
+      "accuracy": 1.0,
+      "report_path": "reports\\trusted_eval_compliance.json"
+    },
+    "text_then_table": {
+      "total": 3,
+      "passed": 3,
+      "failed": 0,
+      "accuracy": 1.0,
+      "report_path": "reports\\trusted_eval_text_then_table.json"
+    },
+    "multi_hop": {
+      "total": 4,
+      "passed": 4,
+      "failed": 0,
+      "accuracy": 1.0,
+      "report_path": "reports\\trusted_eval_multi_hop.json"
+    }
+  },
+  "report_path": "E:\\work\\code\\JINRONG\\reports\\trusted_eval_summary.json"
+}

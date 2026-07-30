@@ -1,0 +1,18 @@
+{
+  "documents": 500,
+  "processed_documents": 500,
+  "skipped_documents": 0,
+  "text_chunks": 1094,
+  "table_cells": 83555,
+  "table_rows": 15775,
+  "errors": [],
+  "error_count": 0,
+  "chunks_path": "E:\\work\\code\\JINRONG\\data\\processed\\text_chunks.jsonl",
+  "cells_path": "E:\\work\\code\\JINRONG\\data\\processed\\table_cells.jsonl",
+  "table_rows_path": "E:\\work\\code\\JINRONG\\data\\processed\\table_rows.jsonl",
+  "state_path": "E:\\work\\code\\JINRONG\\data\\processed\\kb_build_state.jsonl",
+  "errors_path": "E:\\work\\code\\JINRONG\\reports\\kb_build_errors.json",
+  "qa_only": false,
+  "resume": false,
+  "retry_failed": false
+}

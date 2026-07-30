@@ -1,0 +1,1360 @@
+{
+  "report_path": "E:\\work\\code\\JINRONG\\reports\\metadata_quality_report.json",
+  "created_at": "2026-07-30T07:09:17.841759+00:00",
+  "documents": 500,
+  "field_coverage": {
+    "publisher": {
+      "filled": 466,
+      "missing": 34,
+      "coverage": 0.932
+    },
+    "publish_date": {
+      "filled": 5,
+      "missing": 495,
+      "coverage": 0.01
+    },
+    "doc_no": {
+      "filled": 11,
+      "missing": 489,
+      "coverage": 0.022
+    },
+    "source_url": {
+      "filled": 0,
+      "missing": 500,
+      "coverage": 0.0
+    },
+    "attachment_url": {
+      "filled": 0,
+      "missing": 500,
+      "coverage": 0.0
+    },
+    "column": {
+      "filled": 383,
+      "missing": 117,
+      "coverage": 0.766
+    }
+  },
+  "by_source_type": {
+    "excel": {
+      "documents": 389,
+      "fields": {
+        "publisher": {
+          "filled": 379,
+          "missing": 10,
+          "coverage": 0.974293059125964
+        },
+        "publish_date": {
+          "filled": 0,
+          "missing": 389,
+          "coverage": 0.0
+        },
+        "doc_no": {
+          "filled": 0,
+          "missing": 389,
+          "coverage": 0.0
+        },
+        "source_url": {
+          "filled": 0,
+          "missing": 389,
+          "coverage": 0.0
+        },
+        "attachment_url": {
+          "filled": 0,
+          "missing": 389,
+          "coverage": 0.0
+        },
+        "column": {
+          "filled": 383,
+          "missing": 6,
+          "coverage": 0.9845758354755784
+        }
+      }
+    },
+    "pdf": {
+      "documents": 45,
+      "fields": {
+        "publisher": {
+          "filled": 35,
+          "missing": 10,
+          "coverage": 0.7777777777777778
+        },
+        "publish_date": {
+          "filled": 4,
+          "missing": 41,
+          "coverage": 0.08888888888888889
+        },
+        "doc_no": {
+          "filled": 5,
+          "missing": 40,
+          "coverage": 0.1111111111111111
+        },
+        "source_url": {
+          "filled": 0,
+          "missing": 45,
+          "coverage": 0.0
+        },
+        "attachment_url": {
+          "filled": 0,
+          "missing": 45,
+          "coverage": 0.0
+        },
+        "column": {
+          "filled": 0,
+          "missing": 45,
+          "coverage": 0.0
+        }
+      }
+    },
+    "word": {
+      "documents": 66,
+      "fields": {
+        "publisher": {
+          "filled": 52,
+          "missing": 14,
+          "coverage": 0.7878787878787878
+        },
+        "publish_date": {
+          "filled": 1,
+          "missing": 65,
+          "coverage": 0.015151515151515152
+        },
+        "doc_no": {
+          "filled": 6,
+          "missing": 60,
+          "coverage": 0.09090909090909091
+        },
+        "source_url": {
+          "filled": 0,
+          "missing": 66,
+          "coverage": 0.0
+        },
+        "attachment_url": {
+          "filled": 0,
+          "missing": 66,
+          "coverage": 0.0
+        },
+        "column": {
+          "filled": 0,
+          "missing": 66,
+          "coverage": 0.0
+        }
+      }
+    }
+  },
+  "by_business_domain": {
+    "保险经营统计": {
+      "documents": 221,
+      "fields": {
+        "publisher": {
+          "filled": 219,
+          "missing": 2,
+          "coverage": 0.9909502262443439
+        },
+        "publish_date": {
+          "filled": 0,
+          "missing": 221,
+          "coverage": 0.0
+        },
+        "doc_no": {
+          "filled": 0,
+          "missing": 221,
+          "coverage": 0.0
+        },
+        "source_url": {
+          "filled": 0,
+          "missing": 221,
+          "coverage": 0.0
+        },
+        "attachment_url": {
+          "filled": 0,
+          "missing": 221,
+          "coverage": 0.0
+        },
+        "column": {
+          "filled": 221,
+          "missing": 0,
+          "coverage": 1.0
+        }
+      }
+    },
+    "保险资金运用": {
+      "documents": 15,
+      "fields": {
+        "publisher": {
+          "filled": 15,
+          "missing": 0,
+          "coverage": 1.0
+        },
+        "publish_date": {
+          "filled": 0,
+          "missing": 15,
+          "coverage": 0.0
+        },
+        "doc_no": {
+          "filled": 0,
+          "missing": 15,
+          "coverage": 0.0
+        },
+        "source_url": {
+          "filled": 0,
+          "missing": 15,
+          "coverage": 0.0
+        },
+        "attachment_url": {
+          "filled": 0,
+          "missing": 15,
+          "coverage": 0.0
+        },
+        "column": {
+          "filled": 15,
+          "missing": 0,
+          "coverage": 1.0
+        }
+      }
+    },
+    "其他": {
+      "documents": 18,
+      "fields": {
+        "publisher": {
+          "filled": 13,
+          "missing": 5,
+          "coverage": 0.7222222222222222
+        },
+        "publish_date": {
+          "filled": 1,
+          "missing": 17,
+          "coverage": 0.05555555555555555
+        },
+        "doc_no": {
+          "filled": 2,
+          "missing": 16,
+          "coverage": 0.1111111111111111
+        },
+        "source_url": {
+          "filled": 0,
+          "missing": 18,
+          "coverage": 0.0
+        },
+        "attachment_url": {
+          "filled": 0,
+          "missing": 18,
+          "coverage": 0.0
+        },
+        "column": {
+          "filled": 0,
+          "missing": 18,
+          "coverage": 0.0
+        }
+      }
+    },
+    "反洗钱": {
+      "documents": 1,
+      "fields": {
+        "publisher": {
+          "filled": 1,
+          "missing": 0,
+          "coverage": 1.0
+        },
+        "publish_date": {
+          "filled": 0,
+          "missing": 1,
+          "coverage": 0.0
+        },
+        "doc_no": {
+          "filled": 1,
+          "missing": 0,
+          "coverage": 1.0
+        },
+        "source_url": {
+          "filled": 0,
+          "missing": 1,
+          "coverage": 0.0
+        },
+        "attachment_url": {
+          "filled": 0,
+          "missing": 1,
+          "coverage": 0.0
+        },
+        "column": {
+          "filled": 0,
+          "missing": 1,
+          "coverage": 0.0
+        }
+      }
+    },
+    "支付结算": {
+      "documents": 3,
+      "fields": {
+        "publisher": {
+          "filled": 3,
+          "missing": 0,
+          "coverage": 1.0
+        },
+        "publish_date": {
+          "filled": 0,
+          "missing": 3,
+          "coverage": 0.0
+        },
+        "doc_no": {
+          "filled": 0,
+          "missing": 3,
+          "coverage": 0.0
+        },
+        "source_url": {
+          "filled": 0,
+          "missing": 3,
+          "coverage": 0.0
+        },
+        "attachment_url": {
+          "filled": 0,
+          "missing": 3,
+          "coverage": 0.0
+        },
+        "column": {
+          "filled": 0,
+          "missing": 3,
+          "coverage": 0.0
+        }
+      }
+    },
+    "普惠金融": {
+      "documents": 1,
+      "fields": {
+        "publisher": {
+          "filled": 1,
+          "missing": 0,
+          "coverage": 1.0
+        },
+        "publish_date": {
+          "filled": 0,
+          "missing": 1,
+          "coverage": 0.0
+        },
+        "doc_no": {
+          "filled": 0,
+          "missing": 1,
+          "coverage": 0.0
+        },
+        "source_url": {
+          "filled": 0,
+          "missing": 1,
+          "coverage": 0.0
+        },
+        "attachment_url": {
+          "filled": 0,
+          "missing": 1,
+          "coverage": 0.0
+        },
+        "column": {
+          "filled": 1,
+          "missing": 0,
+          "coverage": 1.0
+        }
+      }
+    },
+    "消费者权益保护": {
+      "documents": 1,
+      "fields": {
+        "publisher": {
+          "filled": 1,
+          "missing": 0,
+          "coverage": 1.0
+        },
+        "publish_date": {
+          "filled": 0,
+          "missing": 1,
+          "coverage": 0.0
+        },
+        "doc_no": {
+          "filled": 0,
+          "missing": 1,
+          "coverage": 0.0
+        },
+        "source_url": {
+          "filled": 0,
+          "missing": 1,
+          "coverage": 0.0
+        },
+        "attachment_url": {
+          "filled": 0,
+          "missing": 1,
+          "coverage": 0.0
+        },
+        "column": {
+          "filled": 0,
+          "missing": 1,
+          "coverage": 0.0
+        }
+      }
+    },
+    "监管统计": {
+      "documents": 170,
+      "fields": {
+        "publisher": {
+          "filled": 156,
+          "missing": 14,
+          "coverage": 0.9176470588235294
+        },
+        "publish_date": {
+          "filled": 0,
+          "missing": 170,
+          "coverage": 0.0
+        },
+        "doc_no": {
+          "filled": 3,
+          "missing": 167,
+          "coverage": 0.01764705882352941
+        },
+        "source_url": {
+          "filled": 0,
+          "missing": 170,
+          "coverage": 0.0
+        },
+        "attachment_url": {
+          "filled": 0,
+          "missing": 170,
+          "coverage": 0.0
+        },
+        "column": {
+          "filled": 139,
+          "missing": 31,
+          "coverage": 0.8176470588235294
+        }
+      }
+    },
+    "绿色金融": {
+      "documents": 1,
+      "fields": {
+        "publisher": {
+          "filled": 1,
+          "missing": 0,
+          "coverage": 1.0
+        },
+        "publish_date": {
+          "filled": 0,
+          "missing": 1,
+          "coverage": 0.0
+        },
+        "doc_no": {
+          "filled": 0,
+          "missing": 1,
+          "coverage": 0.0
+        },
+        "source_url": {
+          "filled": 0,
+          "missing": 1,
+          "coverage": 0.0
+        },
+        "attachment_url": {
+          "filled": 0,
+          "missing": 1,
+          "coverage": 0.0
+        },
+        "column": {
+          "filled": 0,
+          "missing": 1,
+          "coverage": 0.0
+        }
+      }
+    },
+    "行政许可": {
+      "documents": 3,
+      "fields": {
+        "publisher": {
+          "filled": 3,
+          "missing": 0,
+          "coverage": 1.0
+        },
+        "publish_date": {
+          "filled": 0,
+          "missing": 3,
+          "coverage": 0.0
+        },
+        "doc_no": {
+          "filled": 0,
+          "missing": 3,
+          "coverage": 0.0
+        },
+        "source_url": {
+          "filled": 0,
+          "missing": 3,
+          "coverage": 0.0
+        },
+        "attachment_url": {
+          "filled": 0,
+          "missing": 3,
+          "coverage": 0.0
+        },
+        "column": {
+          "filled": 0,
+          "missing": 3,
+          "coverage": 0.0
+        }
+      }
+    },
+    "资本管理": {
+      "documents": 57,
+      "fields": {
+        "publisher": {
+          "filled": 47,
+          "missing": 10,
+          "coverage": 0.8245614035087719
+        },
+        "publish_date": {
+          "filled": 3,
+          "missing": 54,
+          "coverage": 0.05263157894736842
+        },
+        "doc_no": {
+          "filled": 1,
+          "missing": 56,
+          "coverage": 0.017543859649122806
+        },
+        "source_url": {
+          "filled": 0,
+          "missing": 57,
+          "coverage": 0.0
+        },
+        "attachment_url": {
+          "filled": 0,
+          "missing": 57,
+          "coverage": 0.0
+        },
+        "column": {
+          "filled": 7,
+          "missing": 50,
+          "coverage": 0.12280701754385964
+        }
+      }
+    },
+    "银行函证": {
+      "documents": 2,
+      "fields": {
+        "publisher": {
+          "filled": 2,
+          "missing": 0,
+          "coverage": 1.0
+        },
+        "publish_date": {
+          "filled": 0,
+          "missing": 2,
+          "coverage": 0.0
+        },
+        "doc_no": {
+          "filled": 2,
+          "missing": 0,
+          "coverage": 1.0
+        },
+        "source_url": {
+          "filled": 0,
+          "missing": 2,
+          "coverage": 0.0
+        },
+        "attachment_url": {
+          "filled": 0,
+          "missing": 2,
+          "coverage": 0.0
+        },
+        "column": {
+          "filled": 0,
+          "missing": 2,
+          "coverage": 0.0
+        }
+      }
+    },
+    "风险管理": {
+      "documents": 7,
+      "fields": {
+        "publisher": {
+          "filled": 4,
+          "missing": 3,
+          "coverage": 0.5714285714285714
+        },
+        "publish_date": {
+          "filled": 1,
+          "missing": 6,
+          "coverage": 0.14285714285714285
+        },
+        "doc_no": {
+          "filled": 2,
+          "missing": 5,
+          "coverage": 0.2857142857142857
+        },
+        "source_url": {
+          "filled": 0,
+          "missing": 7,
+          "coverage": 0.0
+        },
+        "attachment_url": {
+          "filled": 0,
+          "missing": 7,
+          "coverage": 0.0
+        },
+        "column": {
+          "filled": 0,
+          "missing": 7,
+          "coverage": 0.0
+        }
+      }
+    }
+  },
+  "missing_samples": {
+    "publisher": [
+      {
+        "doc_id": "nfra_093",
+        "title": "2024年8月全国地区原保险保费收入情况表",
+        "source_type": "excel",
+        "business_domain": "监管统计"
+      },
+      {
+        "doc_id": "nfra_094",
+        "title": "2024年8月人身险经营情况表",
+        "source_type": "excel",
+        "business_domain": "保险经营统计"
+      },
+      {
+        "doc_id": "nfra_095",
+        "title": "2024年8月财产险经营情况表",
+        "source_type": "excel",
+        "business_domain": "保险经营统计"
+      },
+      {
+        "doc_id": "nfra_097",
+        "title": "2024年7月全国各地区保费收入情况表",
+        "source_type": "excel",
+        "business_domain": "监管统计"
+      },
+      {
+        "doc_id": "nfra_128",
+        "title": "银行业金融机构资产负债情况表(季度)",
+        "source_type": "excel",
+        "business_domain": "监管统计"
+      },
+      {
+        "doc_id": "nfra_132",
+        "title": "银行业金融机构保障性安居工程贷款情况表(季度)",
+        "source_type": "excel",
+        "business_domain": "其他"
+      },
+      {
+        "doc_id": "nfra_189",
+        "title": "银行业金融机构资产负债情况表(法人)",
+        "source_type": "excel",
+        "business_domain": "监管统计"
+      },
+      {
+        "doc_id": "nfra_193",
+        "title": "银行业金融机构保障性安居工程贷款情况表",
+        "source_type": "excel",
+        "business_domain": "其他"
+      },
+      {
+        "doc_id": "nfra_248",
+        "title": "2021年银行业金融机构保障性安居工程贷款情况表(季度)",
+        "source_type": "excel",
+        "business_domain": "其他"
+      },
+      {
+        "doc_id": "nfra_304",
+        "title": "2020年银行业金融机构保障性安居工程贷款情况表（季度）",
+        "source_type": "excel",
+        "business_domain": "其他"
+      },
+      {
+        "doc_id": "nfra_362",
+        "title": "21家国内主要银行绿色信贷统计数据汇总表（201306）CN.p",
+        "source_type": "pdf",
+        "business_domain": "监管统计"
+      },
+      {
+        "doc_id": "nfra_363",
+        "title": "21家国内主要银行绿色信贷统计数据汇总表（201312）CN.p",
+        "source_type": "pdf",
+        "business_domain": "监管统计"
+      },
+      {
+        "doc_id": "nfra_364",
+        "title": "21家国内主要银行绿色信贷统计数据汇总表（201406）CN.p",
+        "source_type": "pdf",
+        "business_domain": "监管统计"
+      },
+      {
+        "doc_id": "nfra_365",
+        "title": "21家国内主要银行绿色信贷统计数据汇总表（201412）CN.p",
+        "source_type": "pdf",
+        "business_domain": "监管统计"
+      },
+      {
+        "doc_id": "nfra_366",
+        "title": "21家国内主要银行绿色信贷统计数据汇总表（201506）CN.p",
+        "source_type": "pdf",
+        "business_domain": "监管统计"
+      },
+      {
+        "doc_id": "nfra_367",
+        "title": "21家国内主要银行绿色信贷统计数据汇总表（201512）CN.p",
+        "source_type": "pdf",
+        "business_domain": "监管统计"
+      },
+      {
+        "doc_id": "nfra_368",
+        "title": "21家国内主要银行绿色信贷统计数据汇总表（201606）CN.p",
+        "source_type": "pdf",
+        "business_domain": "监管统计"
+      },
+      {
+        "doc_id": "nfra_369",
+        "title": "21家国内主要银行绿色信贷统计数据汇总表（201612）CN.p",
+        "source_type": "pdf",
+        "business_domain": "监管统计"
+      },
+      {
+        "doc_id": "nfra_370",
+        "title": "21家国内主要银行绿色信贷统计数据汇总表（201706）CN.p",
+        "source_type": "pdf",
+        "business_domain": "监管统计"
+      },
+      {
+        "doc_id": "nfra_374",
+        "title": "2015中国保险市场年报（英文）",
+        "source_type": "pdf",
+        "business_domain": "其他"
+      }
+    ],
+    "publish_date": [
+      {
+        "doc_id": "nfra_001",
+        "title": "2026年银行业总资产、总负债（月度）",
+        "source_type": "excel",
+        "business_domain": "监管统计"
+      },
+      {
+        "doc_id": "nfra_002",
+        "title": "2026年2月全国各地区原保险保费收入情况表",
+        "source_type": "excel",
+        "business_domain": "监管统计"
+      },
+      {
+        "doc_id": "nfra_003",
+        "title": "2026年2月人身险公司经营情况表",
+        "source_type": "excel",
+        "business_domain": "保险经营统计"
+      },
+      {
+        "doc_id": "nfra_004",
+        "title": "2026年2月财产险公司经营情况表",
+        "source_type": "excel",
+        "business_domain": "保险经营统计"
+      },
+      {
+        "doc_id": "nfra_005",
+        "title": "2026年2月保险业经营情况表",
+        "source_type": "excel",
+        "business_domain": "保险经营统计"
+      },
+      {
+        "doc_id": "nfra_006",
+        "title": "2026年1月全国各地区原保险保费收入情况表",
+        "source_type": "excel",
+        "business_domain": "监管统计"
+      },
+      {
+        "doc_id": "nfra_007",
+        "title": "2026年1月人身险公司经营情况表",
+        "source_type": "excel",
+        "business_domain": "保险经营统计"
+      },
+      {
+        "doc_id": "nfra_008",
+        "title": "2026年1月财产险公司经营情况表",
+        "source_type": "excel",
+        "business_domain": "保险经营统计"
+      },
+      {
+        "doc_id": "nfra_009",
+        "title": "2026年1月保险业经营情况表",
+        "source_type": "excel",
+        "business_domain": "保险经营统计"
+      },
+      {
+        "doc_id": "nfra_010",
+        "title": "2026年国家金融监督管理总局监管统计信息发布日程表",
+        "source_type": "excel",
+        "business_domain": "监管统计"
+      },
+      {
+        "doc_id": "nfra_011",
+        "title": "2025年银行业金融机构总资产、总负债(季度)",
+        "source_type": "excel",
+        "business_domain": "监管统计"
+      },
+      {
+        "doc_id": "nfra_012",
+        "title": "2025年商业银行主要监管指标情况表",
+        "source_type": "excel",
+        "business_domain": "监管统计"
+      },
+      {
+        "doc_id": "nfra_013",
+        "title": "2025年商业银行主要指标分机构类情况表",
+        "source_type": "excel",
+        "business_domain": "监管统计"
+      },
+      {
+        "doc_id": "nfra_014",
+        "title": "2025年银行业金融机构普惠型小微企业贷款情况表",
+        "source_type": "excel",
+        "business_domain": "监管统计"
+      },
+      {
+        "doc_id": "nfra_015",
+        "title": "2025年银行业金融机构普惠型涉农贷款情况表",
+        "source_type": "excel",
+        "business_domain": "监管统计"
+      },
+      {
+        "doc_id": "nfra_016",
+        "title": "2025年保险公司偿付能力状况表",
+        "source_type": "excel",
+        "business_domain": "监管统计"
+      },
+      {
+        "doc_id": "nfra_017",
+        "title": "2025年四季度保险公司资金运用情况表",
+        "source_type": "excel",
+        "business_domain": "保险资金运用"
+      },
+      {
+        "doc_id": "nfra_018",
+        "title": "2025年银行业总资产、总负债（月度）",
+        "source_type": "excel",
+        "business_domain": "监管统计"
+      },
+      {
+        "doc_id": "nfra_019",
+        "title": "2025年12月全国各地区原保险保费收入情况表",
+        "source_type": "excel",
+        "business_domain": "监管统计"
+      },
+      {
+        "doc_id": "nfra_020",
+        "title": "2025年12月人身险公司经营情况表",
+        "source_type": "excel",
+        "business_domain": "保险经营统计"
+      }
+    ],
+    "doc_no": [
+      {
+        "doc_id": "nfra_001",
+        "title": "2026年银行业总资产、总负债（月度）",
+        "source_type": "excel",
+        "business_domain": "监管统计"
+      },
+      {
+        "doc_id": "nfra_002",
+        "title": "2026年2月全国各地区原保险保费收入情况表",
+        "source_type": "excel",
+        "business_domain": "监管统计"
+      },
+      {
+        "doc_id": "nfra_003",
+        "title": "2026年2月人身险公司经营情况表",
+        "source_type": "excel",
+        "business_domain": "保险经营统计"
+      },
+      {
+        "doc_id": "nfra_004",
+        "title": "2026年2月财产险公司经营情况表",
+        "source_type": "excel",
+        "business_domain": "保险经营统计"
+      },
+      {
+        "doc_id": "nfra_005",
+        "title": "2026年2月保险业经营情况表",
+        "source_type": "excel",
+        "business_domain": "保险经营统计"
+      },
+      {
+        "doc_id": "nfra_006",
+        "title": "2026年1月全国各地区原保险保费收入情况表",
+        "source_type": "excel",
+        "business_domain": "监管统计"
+      },
+      {
+        "doc_id": "nfra_007",
+        "title": "2026年1月人身险公司经营情况表",
+        "source_type": "excel",
+        "business_domain": "保险经营统计"
+      },
+      {
+        "doc_id": "nfra_008",
+        "title": "2026年1月财产险公司经营情况表",
+        "source_type": "excel",
+        "business_domain": "保险经营统计"
+      },
+      {
+        "doc_id": "nfra_009",
+        "title": "2026年1月保险业经营情况表",
+        "source_type": "excel",
+        "business_domain": "保险经营统计"
+      },
+      {
+        "doc_id": "nfra_010",
+        "title": "2026年国家金融监督管理总局监管统计信息发布日程表",
+        "source_type": "excel",
+        "business_domain": "监管统计"
+      },
+      {
+        "doc_id": "nfra_011",
+        "title": "2025年银行业金融机构总资产、总负债(季度)",
+        "source_type": "excel",
+        "business_domain": "监管统计"
+      },
+      {
+        "doc_id": "nfra_012",
+        "title": "2025年商业银行主要监管指标情况表",
+        "source_type": "excel",
+        "business_domain": "监管统计"
+      },
+      {
+        "doc_id": "nfra_013",
+        "title": "2025年商业银行主要指标分机构类情况表",
+        "source_type": "excel",
+        "business_domain": "监管统计"
+      },
+      {
+        "doc_id": "nfra_014",
+        "title": "2025年银行业金融机构普惠型小微企业贷款情况表",
+        "source_type": "excel",
+        "business_domain": "监管统计"
+      },
+      {
+        "doc_id": "nfra_015",
+        "title": "2025年银行业金融机构普惠型涉农贷款情况表",
+        "source_type": "excel",
+        "business_domain": "监管统计"
+      },
+      {
+        "doc_id": "nfra_016",
+        "title": "2025年保险公司偿付能力状况表",
+        "source_type": "excel",
+        "business_domain": "监管统计"
+      },
+      {
+        "doc_id": "nfra_017",
+        "title": "2025年四季度保险公司资金运用情况表",
+        "source_type": "excel",
+        "business_domain": "保险资金运用"
+      },
+      {
+        "doc_id": "nfra_018",
+        "title": "2025年银行业总资产、总负债（月度）",
+        "source_type": "excel",
+        "business_domain": "监管统计"
+      },
+      {
+        "doc_id": "nfra_019",
+        "title": "2025年12月全国各地区原保险保费收入情况表",
+        "source_type": "excel",
+        "business_domain": "监管统计"
+      },
+      {
+        "doc_id": "nfra_020",
+        "title": "2025年12月人身险公司经营情况表",
+        "source_type": "excel",
+        "business_domain": "保险经营统计"
+      }
+    ],
+    "source_url": [
+      {
+        "doc_id": "nfra_001",
+        "title": "2026年银行业总资产、总负债（月度）",
+        "source_type": "excel",
+        "business_domain": "监管统计"
+      },
+      {
+        "doc_id": "nfra_002",
+        "title": "2026年2月全国各地区原保险保费收入情况表",
+        "source_type": "excel",
+        "business_domain": "监管统计"
+      },
+      {
+        "doc_id": "nfra_003",
+        "title": "2026年2月人身险公司经营情况表",
+        "source_type": "excel",
+        "business_domain": "保险经营统计"
+      },
+      {
+        "doc_id": "nfra_004",
+        "title": "2026年2月财产险公司经营情况表",
+        "source_type": "excel",
+        "business_domain": "保险经营统计"
+      },
+      {
+        "doc_id": "nfra_005",
+        "title": "2026年2月保险业经营情况表",
+        "source_type": "excel",
+        "business_domain": "保险经营统计"
+      },
+      {
+        "doc_id": "nfra_006",
+        "title": "2026年1月全国各地区原保险保费收入情况表",
+        "source_type": "excel",
+        "business_domain": "监管统计"
+      },
+      {
+        "doc_id": "nfra_007",
+        "title": "2026年1月人身险公司经营情况表",
+        "source_type": "excel",
+        "business_domain": "保险经营统计"
+      },
+      {
+        "doc_id": "nfra_008",
+        "title": "2026年1月财产险公司经营情况表",
+        "source_type": "excel",
+        "business_domain": "保险经营统计"
+      },
+      {
+        "doc_id": "nfra_009",
+        "title": "2026年1月保险业经营情况表",
+        "source_type": "excel",
+        "business_domain": "保险经营统计"
+      },
+      {
+        "doc_id": "nfra_010",
+        "title": "2026年国家金融监督管理总局监管统计信息发布日程表",
+        "source_type": "excel",
+        "business_domain": "监管统计"
+      },
+      {
+        "doc_id": "nfra_011",
+        "title": "2025年银行业金融机构总资产、总负债(季度)",
+        "source_type": "excel",
+        "business_domain": "监管统计"
+      },
+      {
+        "doc_id": "nfra_012",
+        "title": "2025年商业银行主要监管指标情况表",
+        "source_type": "excel",
+        "business_domain": "监管统计"
+      },
+      {
+        "doc_id": "nfra_013",
+        "title": "2025年商业银行主要指标分机构类情况表",
+        "source_type": "excel",
+        "business_domain": "监管统计"
+      },
+      {
+        "doc_id": "nfra_014",
+        "title": "2025年银行业金融机构普惠型小微企业贷款情况表",
+        "source_type": "excel",
+        "business_domain": "监管统计"
+      },
+      {
+        "doc_id": "nfra_015",
+        "title": "2025年银行业金融机构普惠型涉农贷款情况表",
+        "source_type": "excel",
+        "business_domain": "监管统计"
+      },
+      {
+        "doc_id": "nfra_016",
+        "title": "2025年保险公司偿付能力状况表",
+        "source_type": "excel",
+        "business_domain": "监管统计"
+      },
+      {
+        "doc_id": "nfra_017",
+        "title": "2025年四季度保险公司资金运用情况表",
+        "source_type": "excel",
+        "business_domain": "保险资金运用"
+      },
+      {
+        "doc_id": "nfra_018",
+        "title": "2025年银行业总资产、总负债（月度）",
+        "source_type": "excel",
+        "business_domain": "监管统计"
+      },
+      {
+        "doc_id": "nfra_019",
+        "title": "2025年12月全国各地区原保险保费收入情况表",
+        "source_type": "excel",
+        "business_domain": "监管统计"
+      },
+      {
+        "doc_id": "nfra_020",
+        "title": "2025年12月人身险公司经营情况表",
+        "source_type": "excel",
+        "business_domain": "保险经营统计"
+      }
+    ],
+    "attachment_url": [
+      {
+        "doc_id": "nfra_001",
+        "title": "2026年银行业总资产、总负债（月度）",
+        "source_type": "excel",
+        "business_domain": "监管统计"
+      },
+      {
+        "doc_id": "nfra_002",
+        "title": "2026年2月全国各地区原保险保费收入情况表",
+        "source_type": "excel",
+        "business_domain": "监管统计"
+      },
+      {
+        "doc_id": "nfra_003",
+        "title": "2026年2月人身险公司经营情况表",
+        "source_type": "excel",
+        "business_domain": "保险经营统计"
+      },
+      {
+        "doc_id": "nfra_004",
+        "title": "2026年2月财产险公司经营情况表",
+        "source_type": "excel",
+        "business_domain": "保险经营统计"
+      },
+      {
+        "doc_id": "nfra_005",
+        "title": "2026年2月保险业经营情况表",
+        "source_type": "excel",
+        "business_domain": "保险经营统计"
+      },
+      {
+        "doc_id": "nfra_006",
+        "title": "2026年1月全国各地区原保险保费收入情况表",
+        "source_type": "excel",
+        "business_domain": "监管统计"
+      },
+      {
+        "doc_id": "nfra_007",
+        "title": "2026年1月人身险公司经营情况表",
+        "source_type": "excel",
+        "business_domain": "保险经营统计"
+      },
+      {
+        "doc_id": "nfra_008",
+        "title": "2026年1月财产险公司经营情况表",
+        "source_type": "excel",
+        "business_domain": "保险经营统计"
+      },
+      {
+        "doc_id": "nfra_009",
+        "title": "2026年1月保险业经营情况表",
+        "source_type": "excel",
+        "business_domain": "保险经营统计"
+      },
+      {
+        "doc_id": "nfra_010",
+        "title": "2026年国家金融监督管理总局监管统计信息发布日程表",
+        "source_type": "excel",
+        "business_domain": "监管统计"
+      },
+      {
+        "doc_id": "nfra_011",
+        "title": "2025年银行业金融机构总资产、总负债(季度)",
+        "source_type": "excel",
+        "business_domain": "监管统计"
+      },
+      {
+        "doc_id": "nfra_012",
+        "title": "2025年商业银行主要监管指标情况表",
+        "source_type": "excel",
+        "business_domain": "监管统计"
+      },
+      {
+        "doc_id": "nfra_013",
+        "title": "2025年商业银行主要指标分机构类情况表",
+        "source_type": "excel",
+        "business_domain": "监管统计"
+      },
+      {
+        "doc_id": "nfra_014",
+        "title": "2025年银行业金融机构普惠型小微企业贷款情况表",
+        "source_type": "excel",
+        "business_domain": "监管统计"
+      },
+      {
+        "doc_id": "nfra_015",
+        "title": "2025年银行业金融机构普惠型涉农贷款情况表",
+        "source_type": "excel",
+        "business_domain": "监管统计"
+      },
+      {
+        "doc_id": "nfra_016",
+        "title": "2025年保险公司偿付能力状况表",
+        "source_type": "excel",
+        "business_domain": "监管统计"
+      },
+      {
+        "doc_id": "nfra_017",
+        "title": "2025年四季度保险公司资金运用情况表",
+        "source_type": "excel",
+        "business_domain": "保险资金运用"
+      },
+      {
+        "doc_id": "nfra_018",
+        "title": "2025年银行业总资产、总负债（月度）",
+        "source_type": "excel",
+        "business_domain": "监管统计"
+      },
+      {
+        "doc_id": "nfra_019",
+        "title": "2025年12月全国各地区原保险保费收入情况表",
+        "source_type": "excel",
+        "business_domain": "监管统计"
+      },
+      {
+        "doc_id": "nfra_020",
+        "title": "2025年12月人身险公司经营情况表",
+        "source_type": "excel",
+        "business_domain": "保险经营统计"
+      }
+    ],
+    "column": [
+      {
+        "doc_id": "nfra_132",
+        "title": "银行业金融机构保障性安居工程贷款情况表(季度)",
+        "source_type": "excel",
+        "business_domain": "其他"
+      },
+      {
+        "doc_id": "nfra_193",
+        "title": "银行业金融机构保障性安居工程贷款情况表",
+        "source_type": "excel",
+        "business_domain": "其他"
+      },
+      {
+        "doc_id": "nfra_248",
+        "title": "2021年银行业金融机构保障性安居工程贷款情况表(季度)",
+        "source_type": "excel",
+        "business_domain": "其他"
+      },
+      {
+        "doc_id": "nfra_304",
+        "title": "2020年银行业金融机构保障性安居工程贷款情况表（季度）",
+        "source_type": "excel",
+        "business_domain": "其他"
+      },
+      {
+        "doc_id": "nfra_361",
+        "title": "绿色信贷统计信息披露说明-中文",
+        "source_type": "pdf",
+        "business_domain": "监管统计"
+      },
+      {
+        "doc_id": "nfra_362",
+        "title": "21家国内主要银行绿色信贷统计数据汇总表（201306）CN.p",
+        "source_type": "pdf",
+        "business_domain": "监管统计"
+      },
+      {
+        "doc_id": "nfra_363",
+        "title": "21家国内主要银行绿色信贷统计数据汇总表（201312）CN.p",
+        "source_type": "pdf",
+        "business_domain": "监管统计"
+      },
+      {
+        "doc_id": "nfra_364",
+        "title": "21家国内主要银行绿色信贷统计数据汇总表（201406）CN.p",
+        "source_type": "pdf",
+        "business_domain": "监管统计"
+      },
+      {
+        "doc_id": "nfra_365",
+        "title": "21家国内主要银行绿色信贷统计数据汇总表（201412）CN.p",
+        "source_type": "pdf",
+        "business_domain": "监管统计"
+      },
+      {
+        "doc_id": "nfra_366",
+        "title": "21家国内主要银行绿色信贷统计数据汇总表（201506）CN.p",
+        "source_type": "pdf",
+        "business_domain": "监管统计"
+      },
+      {
+        "doc_id": "nfra_367",
+        "title": "21家国内主要银行绿色信贷统计数据汇总表（201512）CN.p",
+        "source_type": "pdf",
+        "business_domain": "监管统计"
+      },
+      {
+        "doc_id": "nfra_368",
+        "title": "21家国内主要银行绿色信贷统计数据汇总表（201606）CN.p",
+        "source_type": "pdf",
+        "business_domain": "监管统计"
+      },
+      {
+        "doc_id": "nfra_369",
+        "title": "21家国内主要银行绿色信贷统计数据汇总表（201612）CN.p",
+        "source_type": "pdf",
+        "business_domain": "监管统计"
+      },
+      {
+        "doc_id": "nfra_370",
+        "title": "21家国内主要银行绿色信贷统计数据汇总表（201706）CN.p",
+        "source_type": "pdf",
+        "business_domain": "监管统计"
+      },
+      {
+        "doc_id": "nfra_373",
+        "title": "2015中国保险市场年报（中文)",
+        "source_type": "pdf",
+        "business_domain": "风险管理"
+      },
+      {
+        "doc_id": "nfra_374",
+        "title": "2015中国保险市场年报（英文）",
+        "source_type": "pdf",
+        "business_domain": "其他"
+      },
+      {
+        "doc_id": "nfra_385",
+        "title": "附件：保险公司资本保证金处置情况报告表",
+        "source_type": "word",
+        "business_domain": "资本管理"
+      },
+      {
+        "doc_id": "nfra_386",
+        "title": "知识产权金融生态综合试点工作方案",
+        "source_type": "pdf",
+        "business_domain": "绿色金融"
+      },
+      {
+        "doc_id": "nfra_387",
+        "title": "附件1：集中度风险指标统计表",
+        "source_type": "word",
+        "business_domain": "监管统计"
+      },
+      {
+        "doc_id": "nfra_388",
+        "title": "附件2：集中度风险管理情况报告内容",
+        "source_type": "word",
+        "business_domain": "资本管理"
+      }
+    ]
+  },
+  "source_type_counts": {
+    "excel": 389,
+    "pdf": 45,
+    "word": 66
+  },
+  "business_domain_counts": {
+    "监管统计": 170,
+    "保险经营统计": 221,
+    "保险资金运用": 15,
+    "其他": 18,
+    "风险管理": 7,
+    "资本管理": 57,
+    "绿色金融": 1,
+    "消费者权益保护": 1,
+    "普惠金融": 1,
+    "银行函证": 2,
+    "行政许可": 3,
+    "反洗钱": 1,
+    "支付结算": 3
+  },
+  "recommendations": [
+    "优先补齐 source_url/attachment_url；当前来源追溯字段覆盖不足。",
+    "增强发布日期抽取，建议结合来源页面发布日期和正文日期规则。",
+    "增强文号抽取，覆盖 金规/银保监规/银监发/财会 等常见格式。"
+  ]
+}

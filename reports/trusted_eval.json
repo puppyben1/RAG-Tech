@@ -1,0 +1,1756 @@
+{
+  "summary": {
+    "total": 50,
+    "passed": 33,
+    "failed": 17,
+    "accuracy": 0.66,
+    "by_type": {
+      "compliance_judgement": {
+        "total": 8,
+        "passed": 8,
+        "failed": 0,
+        "accuracy": 1.0
+      },
+      "multi_hop": {
+        "total": 4,
+        "passed": 0,
+        "failed": 4,
+        "accuracy": 0.0
+      },
+      "open_fact": {
+        "total": 15,
+        "passed": 12,
+        "failed": 3,
+        "accuracy": 0.8
+      },
+      "refusal": {
+        "total": 10,
+        "passed": 5,
+        "failed": 5,
+        "accuracy": 0.5
+      },
+      "table_lookup": {
+        "total": 10,
+        "passed": 8,
+        "failed": 2,
+        "accuracy": 0.8
+      },
+      "text_then_table": {
+        "total": 3,
+        "passed": 0,
+        "failed": 3,
+        "accuracy": 0.0
+      }
+    },
+    "by_failure_reason": {
+      "evidence_doc_mismatch": 5,
+      "evidence_type_mismatch": 1,
+      "expected_refusal": 5,
+      "missing_required_fields": 7,
+      "must_contain_missing": 8,
+      "refusal_text_missing": 5,
+      "route_mismatch": 13,
+      "unexpected_refusal": 3,
+      "unsupported_task_type": 7
+    },
+    "report_path": "reports\\trusted_eval.json"
+  },
+  "details": [
+    {
+      "id": "TRUST_TEXT_001",
+      "type": "open_fact",
+      "question": "银行函证工作为什么需要提高质量和效率？",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "rag_open"
+      ],
+      "actual_route": "rag_open",
+      "confidence": "high",
+      "answer_text": "根据《银行函证工作操作指引》中的证据，银行函证工作操作指引\n根据《关于加快推进银行函证规范化、集约化、数字化建设的通知》（财会〔2022〕39号）等文件要求，中国注册会计师协会和中国银行业协会制定了《银行函证工作操作指引》，对银行函证工作中的具体事项予以进一步明确和细化，以推进会计师事务所和银行业金融机构提高银行函证工作质量和效率。",
+      "expected_doc_ids": [
+        "nfra_397",
+        "nfra_398"
+      ],
+      "evidence_doc_ids": [
+        "nfra_397",
+        "nfra_398",
+        "nfra_397"
+      ],
+      "expected_evidence_types": [
+        "text_unit"
+      ],
+      "evidence_types": [
+        "text_unit",
+        "text_unit",
+        "text_unit"
+      ],
+      "required_fields": [],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_TEXT_002",
+      "type": "open_fact",
+      "question": "银行函证回函工作通常涉及哪些办理要求？",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "rag_open"
+      ],
+      "actual_route": "rag_open",
+      "confidence": "high",
+      "answer_text": "根据《银行函证工作操作指引》中的证据，（八）银行业金融机构回函工作说明。",
+      "expected_doc_ids": [
+        "nfra_397",
+        "nfra_398"
+      ],
+      "evidence_doc_ids": [
+        "nfra_398",
+        "nfra_397",
+        "nfra_398"
+      ],
+      "expected_evidence_types": [
+        "text_unit"
+      ],
+      "evidence_types": [
+        "text_unit",
+        "text_unit",
+        "text_unit"
+      ],
+      "required_fields": [],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_TEXT_003",
+      "type": "open_fact",
+      "question": "银行函证办理说明主要服务于哪些参与主体？",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "rag_open"
+      ],
+      "actual_route": "rag_open",
+      "confidence": "high",
+      "answer_text": "根据《银行函证工作操作指引》中的证据，一、银行函证工作办理说明",
+      "expected_doc_ids": [
+        "nfra_397",
+        "nfra_398"
+      ],
+      "evidence_doc_ids": [
+        "nfra_397",
+        "nfra_398",
+        "nfra_397"
+      ],
+      "expected_evidence_types": [
+        "text_unit"
+      ],
+      "evidence_types": [
+        "text_unit",
+        "text_unit",
+        "text_unit"
+      ],
+      "required_fields": [],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_TEXT_004",
+      "type": "open_fact",
+      "question": "大面积投诉为什么可能构成需要关注的数据安全事件？",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "rag_open"
+      ],
+      "actual_route": "rag_open",
+      "confidence": "high",
+      "answer_text": "根据《附件：数据安全事件分级》中的证据，（2）对公众利益造成严重危害，产生大范围社会负面影响，可能导致或者直接造成大面积投诉、社会群体性事件；",
+      "expected_doc_ids": [
+        "nfra_390"
+      ],
+      "evidence_doc_ids": [
+        "nfra_390",
+        "nfra_390",
+        "nfra_390"
+      ],
+      "expected_evidence_types": [
+        "text_unit"
+      ],
+      "evidence_types": [
+        "text_unit",
+        "text_unit",
+        "text_unit"
+      ],
+      "required_fields": [],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_TEXT_005",
+      "type": "open_fact",
+      "question": "绿色信贷统计制度说明中，绿色信贷统计制度的作用是什么？",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "rag_open"
+      ],
+      "actual_route": "rag_open",
+      "confidence": "high",
+      "answer_text": "根据《绿色信贷统计信息披露说明-中文》中的证据，三、环境效益测算说明\n绿色信贷统计制度要求银行业金融机构按照审慎性原则，对\n绿色信贷逐笔进行环境效益测算。",
+      "expected_doc_ids": [
+        "nfra_361"
+      ],
+      "evidence_doc_ids": [
+        "nfra_361",
+        "nfra_361",
+        "nfra_361"
+      ],
+      "expected_evidence_types": [
+        "text_unit"
+      ],
+      "evidence_types": [
+        "text_unit",
+        "text_unit",
+        "text_unit"
+      ],
+      "required_fields": [],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_TEXT_006",
+      "type": "open_fact",
+      "question": "绿色信贷统计报表通常用于汇总哪些银行信贷情况？",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "rag_open"
+      ],
+      "actual_route": "rag_open",
+      "confidence": "high",
+      "answer_text": "根据《绿色信贷统计信息披露说明-中文》中的证据，其中，各政策性银行、国有商业\n银行、股份制商业银行、邮政储蓄银行等 21 家主要银行将绿色\n信贷统计报表报送给银监会。",
+      "expected_doc_ids": [
+        "nfra_362",
+        "nfra_363"
+      ],
+      "evidence_doc_ids": [
+        "nfra_361",
+        "nfra_362",
+        "nfra_363"
+      ],
+      "expected_evidence_types": [
+        "text_unit"
+      ],
+      "evidence_types": [
+        "text_unit",
+        "text_unit",
+        "text_unit"
+      ],
+      "required_fields": [],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_TEXT_007",
+      "type": "open_fact",
+      "question": "消费者权益保护相关文件中，投诉处理为什么是监管关注点？",
+      "passed": false,
+      "failure_reasons": [
+        "evidence_doc_mismatch"
+      ],
+      "expected_routes": [
+        "rag_open"
+      ],
+      "actual_route": "rag_open",
+      "confidence": "high",
+      "answer_text": "根据《2015中国保险市场年报（中文)》中的证据，07\n保险消费者权益保护与教育\n·加强保险消费者权益保护顶层制度建设\n·及时化解保险消费纠纷\n·切实解决保险消费者关心的突出问题\n·加强与保险消费者有关信息披露\n·扎实开展保险消费者教育工作",
+      "expected_doc_ids": [
+        "nfra_390"
+      ],
+      "evidence_doc_ids": [
+        "nfra_373",
+        "nfra_373",
+        "nfra_502"
+      ],
+      "expected_evidence_types": [
+        "text_unit"
+      ],
+      "evidence_types": [
+        "text_unit",
+        "text_unit",
+        "text_unit"
+      ],
+      "required_fields": [],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_TEXT_008",
+      "type": "open_fact",
+      "question": "银行业金融机构数据安全管理为什么需要关注社会群体性事件？",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "rag_open"
+      ],
+      "actual_route": "rag_open",
+      "confidence": "high",
+      "answer_text": "根据《附件：数据安全事件分级》中的证据，（1）对公共利益造成特别严重危害，造成特别重大经济损失，或者产生特别重大社会群体性事件；",
+      "expected_doc_ids": [
+        "nfra_390"
+      ],
+      "evidence_doc_ids": [
+        "nfra_390",
+        "nfra_390",
+        "nfra_072"
+      ],
+      "expected_evidence_types": [
+        "text_unit"
+      ],
+      "evidence_types": [
+        "text_unit",
+        "text_unit",
+        "table_row"
+      ],
+      "required_fields": [],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_TEXT_009",
+      "type": "open_fact",
+      "question": "银行函证电子化办理的核心目的是什么？",
+      "passed": false,
+      "failure_reasons": [
+        "route_mismatch",
+        "unexpected_refusal"
+      ],
+      "expected_routes": [
+        "rag_open"
+      ],
+      "actual_route": "rag_refusal",
+      "confidence": "low",
+      "answer_text": "无法根据当前资料确定。",
+      "expected_doc_ids": [
+        "nfra_397",
+        "nfra_398"
+      ],
+      "evidence_doc_ids": [
+        "nfra_417",
+        "nfra_397",
+        "nfra_398"
+      ],
+      "expected_evidence_types": [
+        "text_unit"
+      ],
+      "evidence_types": [
+        "text_unit",
+        "text_unit",
+        "text_unit"
+      ],
+      "required_fields": [],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_TEXT_010",
+      "type": "open_fact",
+      "question": "银行函证业务中，回函信息为什么需要保证真实准确？",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "rag_open"
+      ],
+      "actual_route": "rag_open",
+      "confidence": "high",
+      "answer_text": "根据《银行函证工作操作指引》中的证据，银行业金融机构应当加强回函的复核控制，以提供真实准确的回函信息。",
+      "expected_doc_ids": [
+        "nfra_397",
+        "nfra_398"
+      ],
+      "evidence_doc_ids": [
+        "nfra_397",
+        "nfra_486",
+        "nfra_398"
+      ],
+      "expected_evidence_types": [
+        "text_unit"
+      ],
+      "evidence_types": [
+        "text_unit",
+        "text_unit",
+        "text_unit"
+      ],
+      "required_fields": [],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_TEXT_011",
+      "type": "open_fact",
+      "question": "绿色信贷统计数据汇总表反映的是什么类型的统计信息？",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "rag_open"
+      ],
+      "actual_route": "rag_open",
+      "confidence": "high",
+      "answer_text": "根据《绿色信贷统计信息披露说明-中文》中的证据，绿色信贷统计信息披露说明",
+      "expected_doc_ids": [
+        "nfra_362",
+        "nfra_363"
+      ],
+      "evidence_doc_ids": [
+        "nfra_361",
+        "nfra_362",
+        "nfra_363"
+      ],
+      "expected_evidence_types": [
+        "text_unit"
+      ],
+      "evidence_types": [
+        "text_unit",
+        "text_unit",
+        "text_unit"
+      ],
+      "required_fields": [],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_TEXT_012",
+      "type": "open_fact",
+      "question": "银行监管制度问答中，为什么需要保留来源文件标题和证据位置？",
+      "passed": false,
+      "failure_reasons": [
+        "evidence_doc_mismatch"
+      ],
+      "expected_routes": [
+        "rag_open"
+      ],
+      "actual_route": "rag_open",
+      "confidence": "medium",
+      "answer_text": "根据《附件22：商业银行信息披露内容和要求》中的证据，目的：披露商业银行监管映射法下专业贷款的定量信息。",
+      "expected_doc_ids": [
+        "nfra_397",
+        "nfra_398",
+        "nfra_390"
+      ],
+      "evidence_doc_ids": [
+        "nfra_417",
+        "nfra_417",
+        "nfra_472"
+      ],
+      "expected_evidence_types": [
+        "text_unit"
+      ],
+      "evidence_types": [
+        "text_unit",
+        "text_unit",
+        "text_unit"
+      ],
+      "required_fields": [],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_TEXT_013",
+      "type": "open_fact",
+      "question": "数据安全事件处置文件中，投诉和舆情类信息为什么需要被识别？",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "rag_open"
+      ],
+      "actual_route": "rag_open",
+      "confidence": "high",
+      "answer_text": "根据《附件：数据安全事件分级》中的证据，三、较大数据安全事件\n对个人造成不可消除或者消除代价较大的负面影响，包括个人财产安全遭受损失或者可能产生重大损失，个人名誉尊严受到侵害，产生投诉、诉讼事件等。",
+      "expected_doc_ids": [
+        "nfra_390"
+      ],
+      "evidence_doc_ids": [
+        "nfra_390",
+        "nfra_390",
+        "nfra_390"
+      ],
+      "expected_evidence_types": [
+        "text_unit"
+      ],
+      "evidence_types": [
+        "text_unit",
+        "text_unit",
+        "text_unit"
+      ],
+      "required_fields": [],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_TEXT_014",
+      "type": "open_fact",
+      "question": "绿色信贷统计说明为什么需要明确统计口径？",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "rag_open"
+      ],
+      "actual_route": "rag_open",
+      "confidence": "high",
+      "answer_text": "根据《绿色信贷统计信息披露说明-中文》中的证据，绿色信贷统计信息披露说明",
+      "expected_doc_ids": [
+        "nfra_361"
+      ],
+      "evidence_doc_ids": [
+        "nfra_361",
+        "nfra_361",
+        "nfra_361"
+      ],
+      "expected_evidence_types": [
+        "text_unit"
+      ],
+      "evidence_types": [
+        "text_unit",
+        "text_unit",
+        "text_unit"
+      ],
+      "required_fields": [],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_TEXT_015",
+      "type": "open_fact",
+      "question": "银行函证资料中，银行业金融机构和会计师事务所之间是什么关系？",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "rag_open"
+      ],
+      "actual_route": "rag_open",
+      "confidence": "high",
+      "answer_text": "根据《银行函证工作操作指引》中的证据，以现场办理后直接交付给会计师事务所跟函人员，或在办理\n后直接邮寄至银行询证函中指定的会计师事务所收件人。",
+      "expected_doc_ids": [
+        "nfra_397",
+        "nfra_398"
+      ],
+      "evidence_doc_ids": [
+        "nfra_398",
+        "nfra_398",
+        "nfra_397"
+      ],
+      "expected_evidence_types": [
+        "text_unit"
+      ],
+      "evidence_types": [
+        "text_unit",
+        "text_unit",
+        "text_unit"
+      ],
+      "required_fields": [],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_TABLE_016",
+      "type": "table_lookup",
+      "question": "2025年商业银行主要监管指标情况表中，资本充足率是多少？",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "rag_open"
+      ],
+      "actual_route": "rag_open",
+      "confidence": "high",
+      "answer_text": "根据检索到的表格证据，资本充足率对应的数值为0.15282、0.15578、0.15359、0.1546；单位为单位:亿元、%；来源工作表为商业银行季度。",
+      "expected_doc_ids": [
+        "nfra_012"
+      ],
+      "evidence_doc_ids": [
+        "nfra_012",
+        "nfra_012",
+        "nfra_012"
+      ],
+      "expected_evidence_types": [
+        "table_row"
+      ],
+      "evidence_types": [
+        "table_row",
+        "table_row",
+        "table_row"
+      ],
+      "required_fields": [],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_TABLE_017",
+      "type": "table_lookup",
+      "question": "2025年商业银行主要监管指标情况表中，不良贷款率是多少？",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "rag_open"
+      ],
+      "actual_route": "rag_open",
+      "confidence": "high",
+      "answer_text": "根据检索到的表格证据，不良贷款率对应的数值为0.01513、0.01491、0.01516、0.01496；单位为单位:亿元、%；来源工作表为商业银行季度。",
+      "expected_doc_ids": [
+        "nfra_012"
+      ],
+      "evidence_doc_ids": [
+        "nfra_012",
+        "nfra_070",
+        "nfra_251"
+      ],
+      "expected_evidence_types": [
+        "table_row"
+      ],
+      "evidence_types": [
+        "table_row",
+        "table_row",
+        "table_row"
+      ],
+      "required_fields": [],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_TABLE_018",
+      "type": "table_lookup",
+      "question": "2025年商业银行主要监管指标情况表中，拨备覆盖率是多少？",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "rag_open"
+      ],
+      "actual_route": "rag_open",
+      "confidence": "high",
+      "answer_text": "根据检索到的表格证据，拨备覆盖率对应的数值为2.08128、2.11969、2.07151、2.05211；单位为单位:亿元、%；来源工作表为商业银行季度。",
+      "expected_doc_ids": [
+        "nfra_012"
+      ],
+      "evidence_doc_ids": [
+        "nfra_012",
+        "nfra_070",
+        "nfra_251"
+      ],
+      "expected_evidence_types": [
+        "table_row"
+      ],
+      "evidence_types": [
+        "table_row",
+        "table_row",
+        "table_row"
+      ],
+      "required_fields": [],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_TABLE_019",
+      "type": "table_lookup",
+      "question": "2024年商业银行主要监管指标情况表中，资本利润率是多少？",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "rag_open"
+      ],
+      "actual_route": "rag_open",
+      "confidence": "high",
+      "answer_text": "根据检索到的表格证据，资本利润率对应的数值为0.09565、0.08914、0.08774、0.08103；单位为单位:亿元、%；来源工作表为商业银行季度。",
+      "expected_doc_ids": [
+        "nfra_070"
+      ],
+      "evidence_doc_ids": [
+        "nfra_070",
+        "nfra_012",
+        "nfra_251"
+      ],
+      "expected_evidence_types": [
+        "table_row"
+      ],
+      "evidence_types": [
+        "table_row",
+        "table_row",
+        "table_row"
+      ],
+      "required_fields": [],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_TABLE_020",
+      "type": "table_lookup",
+      "question": "2024年商业银行主要监管指标情况表中，流动性比例是多少？",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "rag_open"
+      ],
+      "actual_route": "rag_open",
+      "confidence": "high",
+      "answer_text": "根据检索到的表格证据，流动性比例对应的数值为0.6866、0.72375、0.75091、0.76743；单位为单位:亿元、%；来源工作表为商业银行季度。",
+      "expected_doc_ids": [
+        "nfra_070"
+      ],
+      "evidence_doc_ids": [
+        "nfra_070",
+        "nfra_012",
+        "nfra_251"
+      ],
+      "expected_evidence_types": [
+        "table_row"
+      ],
+      "evidence_types": [
+        "table_row",
+        "table_row",
+        "table_row"
+      ],
+      "required_fields": [],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_TABLE_021",
+      "type": "table_lookup",
+      "question": "2026年2月人身险公司经营情况表中，原保险保费收入情况是什么？",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "rag_open"
+      ],
+      "actual_route": "rag_open",
+      "confidence": "high",
+      "answer_text": "根据检索到的表格证据，原保险保费收入对应的数值为13107.93；单位为单位:亿元；来源工作表为人身保险公司（月度）   (2)。",
+      "expected_doc_ids": [
+        "nfra_003"
+      ],
+      "evidence_doc_ids": [
+        "nfra_003",
+        "nfra_007",
+        "nfra_120"
+      ],
+      "expected_evidence_types": [
+        "table_row"
+      ],
+      "evidence_types": [
+        "table_row",
+        "table_row",
+        "table_row"
+      ],
+      "required_fields": [],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_TABLE_022",
+      "type": "table_lookup",
+      "question": "2026年2月财产险公司经营情况表中，原保险保费收入情况是什么？",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "rag_open"
+      ],
+      "actual_route": "rag_open",
+      "confidence": "high",
+      "answer_text": "根据检索到的表格证据，原保险保费收入对应的数值为3313.66；单位为单位:亿元；来源工作表为产险公司数据（月度）  。",
+      "expected_doc_ids": [
+        "nfra_004"
+      ],
+      "evidence_doc_ids": [
+        "nfra_004",
+        "nfra_008",
+        "nfra_373"
+      ],
+      "expected_evidence_types": [
+        "table_row"
+      ],
+      "evidence_types": [
+        "table_row",
+        "table_row",
+        "text_unit"
+      ],
+      "required_fields": [],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_TABLE_023",
+      "type": "table_lookup",
+      "question": "2026年1月人身险公司经营情况表中，原保险保费收入情况是什么？",
+      "passed": false,
+      "failure_reasons": [
+        "evidence_doc_mismatch"
+      ],
+      "expected_routes": [
+        "rag_open"
+      ],
+      "actual_route": "rag_open",
+      "confidence": "high",
+      "answer_text": "根据检索到的表格证据，原保险保费收入对应的数值为9741.73；单位为单位:亿元；来源工作表为人身保险公司（月度）  。",
+      "expected_doc_ids": [
+        "nfra_009"
+      ],
+      "evidence_doc_ids": [
+        "nfra_007",
+        "nfra_003",
+        "nfra_300"
+      ],
+      "expected_evidence_types": [
+        "table_row"
+      ],
+      "evidence_types": [
+        "table_row",
+        "table_row",
+        "table_row"
+      ],
+      "required_fields": [],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_TABLE_024",
+      "type": "table_lookup",
+      "question": "2026年1月财产险公司经营情况表中，原保险保费收入情况是什么？",
+      "passed": false,
+      "failure_reasons": [
+        "evidence_doc_mismatch"
+      ],
+      "expected_routes": [
+        "rag_open"
+      ],
+      "actual_route": "rag_open",
+      "confidence": "high",
+      "answer_text": "根据检索到的表格证据，原保险保费收入对应的数值为2108.17；单位为单位:亿元；来源工作表为财产险公司数据（月度）  。",
+      "expected_doc_ids": [
+        "nfra_010"
+      ],
+      "evidence_doc_ids": [
+        "nfra_008",
+        "nfra_004",
+        "nfra_373"
+      ],
+      "expected_evidence_types": [
+        "table_row"
+      ],
+      "evidence_types": [
+        "table_row",
+        "table_row",
+        "text_unit"
+      ],
+      "required_fields": [],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_TABLE_025",
+      "type": "table_lookup",
+      "question": "2026年银行业总资产和总负债月度表中，总资产情况是什么？",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "rag_open"
+      ],
+      "actual_route": "rag_open",
+      "confidence": "high",
+      "answer_text": "根据检索到的表格证据，总资产对应的数值为4806061.691218953、4820568.61325416；单位为单位:亿元、%；来源工作表为资产负债月度。",
+      "expected_doc_ids": [
+        "nfra_001"
+      ],
+      "evidence_doc_ids": [
+        "nfra_001",
+        "nfra_001",
+        "nfra_001"
+      ],
+      "expected_evidence_types": [
+        "table_row"
+      ],
+      "evidence_types": [
+        "table_row",
+        "table_row",
+        "table_row"
+      ],
+      "required_fields": [],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_REFUSE_026",
+      "type": "refusal",
+      "question": "月球银行资本充足率是多少？",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "rag_refusal"
+      ],
+      "actual_route": "rag_refusal",
+      "confidence": "low",
+      "answer_text": "无法根据当前资料确定。",
+      "expected_doc_ids": [],
+      "evidence_doc_ids": [
+        "nfra_424",
+        "nfra_379",
+        "nfra_012"
+      ],
+      "expected_evidence_types": [],
+      "evidence_types": [
+        "text_unit",
+        "table_row",
+        "table_row"
+      ],
+      "required_fields": [],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_REFUSE_027",
+      "type": "refusal",
+      "question": "火星保险公司2026年2月原保险保费收入是多少？",
+      "passed": false,
+      "failure_reasons": [
+        "expected_refusal",
+        "must_contain_missing",
+        "refusal_text_missing",
+        "route_mismatch"
+      ],
+      "expected_routes": [
+        "rag_refusal"
+      ],
+      "actual_route": "rag_open",
+      "confidence": "high",
+      "answer_text": "根据《中国银保监会办公厅关于印发意外伤害保险业务监管办法的通知》中的证据，第十条 对年度累计原保险保费收入连续三年超过 500\n万元的保险期限一年及以下的意外险产品，如过往三年再保\n后综合赔付率的平均值低于 50%，保险公司应及时将费率调\n整至合理水平，并按相关要求重新报送审批或备案。",
+      "expected_doc_ids": [],
+      "evidence_doc_ids": [
+        "nfra_495",
+        "nfra_373",
+        "nfra_373"
+      ],
+      "expected_evidence_types": [],
+      "evidence_types": [
+        "text_unit",
+        "text_unit",
+        "text_unit"
+      ],
+      "required_fields": [],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_REFUSE_028",
+      "type": "refusal",
+      "question": "唐代商业银行贷款五级分类制度的现行条款是什么？",
+      "passed": false,
+      "failure_reasons": [
+        "expected_refusal",
+        "must_contain_missing",
+        "refusal_text_missing",
+        "route_mismatch"
+      ],
+      "expected_routes": [
+        "rag_refusal"
+      ],
+      "actual_route": "rag_open",
+      "confidence": "high",
+      "answer_text": "根据《中国银保监会关于印发保险公司偿付能力_监管规则（Ⅱ）的通知_保险公司偿付能力监管规则第9号：信用风险最低资本_》中的证据，第三十七条 非基础资产穿透后，底层资产为贷款\n资产的，应当按照贷款资产风险分类等级确定风险因子，\nRF 赋值如下：\n0\n资产风险分类等级 基础因子\n正常类\n0.085\n关注类\n0.135\n次级类\n0.3\n可疑类\n0.5\n损失类\n1\n贷款资产的风险分类等级参照商业银行贷款五级分\n类标准确定。",
+      "expected_doc_ids": [],
+      "evidence_doc_ids": [
+        "nfra_480",
+        "nfra_502",
+        "nfra_458"
+      ],
+      "expected_evidence_types": [],
+      "evidence_types": [
+        "text_unit",
+        "text_unit",
+        "text_unit"
+      ],
+      "required_fields": [],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_REFUSE_029",
+      "type": "refusal",
+      "question": "银河系人民银行发布的反洗钱办法第十条是什么？",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "rag_refusal"
+      ],
+      "actual_route": "rag_refusal",
+      "confidence": "low",
+      "answer_text": "无法根据当前资料确定。",
+      "expected_doc_ids": [],
+      "evidence_doc_ids": [
+        "nfra_421",
+        "nfra_422",
+        "nfra_389"
+      ],
+      "expected_evidence_types": [],
+      "evidence_types": [
+        "text_unit",
+        "text_unit",
+        "text_unit"
+      ],
+      "required_fields": [],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_REFUSE_030",
+      "type": "refusal",
+      "question": "请给出资料中不存在的某家虚构银行内部员工绩效考核细则。",
+      "passed": false,
+      "failure_reasons": [
+        "expected_refusal",
+        "must_contain_missing",
+        "refusal_text_missing",
+        "route_mismatch"
+      ],
+      "expected_routes": [
+        "rag_refusal"
+      ],
+      "actual_route": "rag_open",
+      "confidence": "high",
+      "answer_text": "根据《附件：商业银行实施资本计量高级方法验收材料清单》中的证据，包括内部评级结果在授信审批、风险监控、限额设定、信贷政策、风险报告、经济资本和绩效考核、风险偏好、贷款定价、损失准备计提等领域的应用情况。",
+      "expected_doc_ids": [],
+      "evidence_doc_ids": [
+        "nfra_392",
+        "nfra_392",
+        "nfra_386"
+      ],
+      "expected_evidence_types": [],
+      "evidence_types": [
+        "text_unit",
+        "text_unit",
+        "text_unit"
+      ],
+      "required_fields": [],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_REFUSE_031",
+      "type": "refusal",
+      "question": "资料里有没有 2099 年银行业监管指标预测表？",
+      "passed": false,
+      "failure_reasons": [
+        "expected_refusal",
+        "must_contain_missing",
+        "refusal_text_missing",
+        "route_mismatch"
+      ],
+      "expected_routes": [
+        "rag_refusal"
+      ],
+      "actual_route": "rag_open",
+      "confidence": "medium",
+      "answer_text": "根据《附件：中资商业银行行政许可事项申请材料目录及格式要求（2023年》中的证据，内容包括但不限于：拟升格机构的\n服务区域现有银行机构的竞争状况、业务重点领域和经营策略、\n内部控制制度、风险管理情况、信息技术管理系统建设或应用情\n况、市场前景分析、未来 3 年发展规划并附主要经营指标预测表\n及其预测依据和说明等。",
+      "expected_doc_ids": [],
+      "evidence_doc_ids": [
+        "nfra_430",
+        "nfra_435",
+        "nfra_012"
+      ],
+      "expected_evidence_types": [],
+      "evidence_types": [
+        "text_unit",
+        "text_unit",
+        "table_row"
+      ],
+      "required_fields": [],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_REFUSE_032",
+      "type": "refusal",
+      "question": "请回答量子保险公司的偿付能力监管比例。",
+      "passed": false,
+      "failure_reasons": [
+        "expected_refusal",
+        "must_contain_missing",
+        "refusal_text_missing",
+        "route_mismatch"
+      ],
+      "expected_routes": [
+        "rag_refusal"
+      ],
+      "actual_route": "rag_open",
+      "confidence": "medium",
+      "answer_text": "根据《保险公司偿付能力监管规则第18号：偿付能力报告》中的证据，第六条 银保监会依法对保险公司的偿付能力报告\n编制和报送实施监督检查。",
+      "expected_doc_ids": [],
+      "evidence_doc_ids": [
+        "nfra_489",
+        "nfra_482",
+        "nfra_490"
+      ],
+      "expected_evidence_types": [],
+      "evidence_types": [
+        "text_unit",
+        "text_unit",
+        "text_unit"
+      ],
+      "required_fields": [],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_REFUSE_033",
+      "type": "refusal",
+      "question": "外星支付机构备付金集中存管比例是多少？",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "rag_refusal"
+      ],
+      "actual_route": "rag_refusal",
+      "confidence": "low",
+      "answer_text": "无法根据当前资料确定。",
+      "expected_doc_ids": [],
+      "evidence_doc_ids": [
+        "nfra_418",
+        "nfra_379",
+        "nfra_434"
+      ],
+      "expected_evidence_types": [],
+      "evidence_types": [
+        "text_unit",
+        "table_row",
+        "text_unit"
+      ],
+      "required_fields": [],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_REFUSE_034",
+      "type": "refusal",
+      "question": "这批资料中是否记录了某个人的私人银行账户密码？",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "rag_refusal"
+      ],
+      "actual_route": "rag_refusal",
+      "confidence": "low",
+      "answer_text": "无法根据当前资料确定。",
+      "expected_doc_ids": [],
+      "evidence_doc_ids": [
+        "nfra_468",
+        "nfra_468",
+        "nfra_468"
+      ],
+      "expected_evidence_types": [],
+      "evidence_types": [
+        "table_row",
+        "table_row",
+        "table_row"
+      ],
+      "required_fields": [],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_REFUSE_035",
+      "type": "refusal",
+      "question": "请根据当前资料确定不存在文件《未来银行监管条例》的发布日期。",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "rag_refusal"
+      ],
+      "actual_route": "rag_refusal",
+      "confidence": "low",
+      "answer_text": "无法根据当前资料确定。",
+      "expected_doc_ids": [],
+      "evidence_doc_ids": [
+        "nfra_417",
+        "nfra_482",
+        "nfra_375"
+      ],
+      "expected_evidence_types": [],
+      "evidence_types": [
+        "text_unit",
+        "text_unit",
+        "table_row"
+      ],
+      "required_fields": [],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_COMP_036",
+      "type": "compliance_judgement",
+      "question": "如果银行函证回函信息与实际业务记录不一致，是否合规？请给出判断、依据条款和风险点。",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "compliance_judgement"
+      ],
+      "actual_route": "compliance_judgement",
+      "confidence": "high",
+      "answer_text": "初步判断为存在风险。依据来自《银行函证工作操作指引》等检索证据；主要风险点是：函证办理或回函信息不准确，可能影响审计证据可靠性和业务可追溯性。；缺少来源和证据位置会削弱答案可核验性，不满足可追溯要求。 仍需补充确认：需补充具体业务发生时间、主体和操作过程。",
+      "expected_doc_ids": [
+        "nfra_397",
+        "nfra_398"
+      ],
+      "evidence_doc_ids": [
+        "nfra_397",
+        "nfra_397",
+        "nfra_398"
+      ],
+      "expected_evidence_types": [
+        "text_unit"
+      ],
+      "evidence_types": [
+        "text_unit",
+        "text_unit",
+        "text_unit"
+      ],
+      "required_fields": [
+        "judgement",
+        "basis",
+        "risk_points"
+      ],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_COMP_037",
+      "type": "compliance_judgement",
+      "question": "银行业金融机构发生大面积投诉并可能形成社会群体性事件时，是否应作为数据安全风险处置？请给出判断和依据。",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "compliance_judgement"
+      ],
+      "actual_route": "compliance_judgement",
+      "confidence": "high",
+      "answer_text": "初步判断为存在风险。依据来自《附件：数据安全事件分级》等检索证据；主要风险点是：投诉、舆情或群体性事件可能放大数据安全和消费者权益保护风险。；缺少来源和证据位置会削弱答案可核验性，不满足可追溯要求。 仍需补充确认：需补充具体业务发生时间、主体和操作过程。；需进一步核对是否存在更直接适用的专项制度条款。",
+      "expected_doc_ids": [
+        "nfra_390"
+      ],
+      "evidence_doc_ids": [
+        "nfra_390",
+        "nfra_390",
+        "nfra_390"
+      ],
+      "expected_evidence_types": [
+        "text_unit"
+      ],
+      "evidence_types": [
+        "text_unit",
+        "text_unit",
+        "text_unit"
+      ],
+      "required_fields": [
+        "judgement",
+        "basis",
+        "risk_points"
+      ],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_COMP_038",
+      "type": "compliance_judgement",
+      "question": "业务人员在引用绿色信贷统计数据时，不说明统计口径是否合规？请给出判断、依据和改进建议。",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "compliance_judgement"
+      ],
+      "actual_route": "compliance_judgement",
+      "confidence": "low",
+      "answer_text": "无法根据当前资料形成合规判断；需要补充明确制度依据、最小充分证据或具体业务事实。",
+      "expected_doc_ids": [
+        "nfra_361",
+        "nfra_362",
+        "nfra_363"
+      ],
+      "evidence_doc_ids": [
+        "nfra_361",
+        "nfra_361",
+        "nfra_361"
+      ],
+      "expected_evidence_types": [
+        "text_unit"
+      ],
+      "evidence_types": [
+        "text_unit",
+        "text_unit",
+        "text_unit"
+      ],
+      "required_fields": [
+        "judgement",
+        "basis",
+        "remediation"
+      ],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_COMP_039",
+      "type": "compliance_judgement",
+      "question": "如果问答系统只返回结论但没有来源 URL、文件标题和证据位置，是否满足赛题要求？请给出判断。",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "compliance_judgement"
+      ],
+      "actual_route": "compliance_judgement",
+      "confidence": "low",
+      "answer_text": "无法根据当前资料形成合规判断；需要补充明确制度依据、最小充分证据或具体业务事实。",
+      "expected_doc_ids": [
+        "nfra_397",
+        "nfra_398",
+        "nfra_390"
+      ],
+      "evidence_doc_ids": [
+        "nfra_390",
+        "nfra_390",
+        "nfra_390"
+      ],
+      "expected_evidence_types": [
+        "text_unit"
+      ],
+      "evidence_types": [
+        "text_unit",
+        "text_unit",
+        "text_unit"
+      ],
+      "required_fields": [
+        "judgement",
+        "basis",
+        "missing_evidence"
+      ],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_COMP_040",
+      "type": "compliance_judgement",
+      "question": "银行在监管报送中混用旧版和新版统计口径，是否存在合规风险？请给出判断和依据。",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "compliance_judgement"
+      ],
+      "actual_route": "compliance_judgement",
+      "confidence": "low",
+      "answer_text": "无法根据当前资料形成合规判断；需要补充明确制度依据、最小充分证据或具体业务事实。",
+      "expected_doc_ids": [
+        "nfra_361",
+        "nfra_362",
+        "nfra_363"
+      ],
+      "evidence_doc_ids": [
+        "nfra_361",
+        "nfra_361",
+        "nfra_361"
+      ],
+      "expected_evidence_types": [
+        "text_unit"
+      ],
+      "evidence_types": [
+        "text_unit",
+        "text_unit",
+        "text_unit"
+      ],
+      "required_fields": [
+        "judgement",
+        "basis",
+        "risk_points"
+      ],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_COMP_041",
+      "type": "compliance_judgement",
+      "question": "对于消费者投诉引发的数据安全事件，业务部门是否可以仅凭经验处理而不追溯制度依据？",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "compliance_judgement"
+      ],
+      "actual_route": "compliance_judgement",
+      "confidence": "high",
+      "answer_text": "初步判断为存在风险。依据来自《附件：数据安全事件分级》等检索证据；主要风险点是：投诉、舆情或群体性事件可能放大数据安全和消费者权益保护风险。；缺少来源和证据位置会削弱答案可核验性，不满足可追溯要求。 仍需补充确认：需补充具体业务发生时间、主体和操作过程。；需进一步核对是否存在更直接适用的专项制度条款。",
+      "expected_doc_ids": [
+        "nfra_390"
+      ],
+      "evidence_doc_ids": [
+        "nfra_390",
+        "nfra_390",
+        "nfra_390"
+      ],
+      "expected_evidence_types": [
+        "text_unit"
+      ],
+      "evidence_types": [
+        "text_unit",
+        "text_unit",
+        "text_unit"
+      ],
+      "required_fields": [
+        "judgement",
+        "basis",
+        "risk_points"
+      ],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_COMP_042",
+      "type": "compliance_judgement",
+      "question": "会计师事务所发起银行函证时，银行能否忽略函证业务的办理要求？请给出合规判断。",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "compliance_judgement"
+      ],
+      "actual_route": "compliance_judgement",
+      "confidence": "high",
+      "answer_text": "初步判断为存在风险。依据来自《银行函证工作操作指引》等检索证据；主要风险点是：函证办理或回函信息不准确，可能影响审计证据可靠性和业务可追溯性。 仍需补充确认：需补充具体业务发生时间、主体和操作过程。；需进一步核对是否存在更直接适用的专项制度条款。",
+      "expected_doc_ids": [
+        "nfra_397",
+        "nfra_398"
+      ],
+      "evidence_doc_ids": [
+        "nfra_398",
+        "nfra_397",
+        "nfra_397"
+      ],
+      "expected_evidence_types": [
+        "text_unit"
+      ],
+      "evidence_types": [
+        "text_unit",
+        "text_unit",
+        "text_unit"
+      ],
+      "required_fields": [
+        "judgement",
+        "basis",
+        "risk_points"
+      ],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_COMP_043",
+      "type": "compliance_judgement",
+      "question": "监管统计问答中，如果表格数值没有单位和期间维度，能否直接用于业务判断？请给出判断。",
+      "passed": true,
+      "failure_reasons": [],
+      "expected_routes": [
+        "compliance_judgement"
+      ],
+      "actual_route": "compliance_judgement",
+      "confidence": "low",
+      "answer_text": "无法根据当前资料形成合规判断；需要补充明确制度依据、最小充分证据或具体业务事实。",
+      "expected_doc_ids": [
+        "nfra_001",
+        "nfra_012"
+      ],
+      "evidence_doc_ids": [
+        "nfra_012",
+        "nfra_070",
+        "nfra_190"
+      ],
+      "expected_evidence_types": [
+        "table_row"
+      ],
+      "evidence_types": [
+        "table_row",
+        "table_row",
+        "table_row"
+      ],
+      "required_fields": [
+        "judgement",
+        "basis",
+        "risk_points"
+      ],
+      "missing_required_fields": []
+    },
+    {
+      "id": "TRUST_MULTI_044",
+      "type": "text_then_table",
+      "question": "先说明绿色信贷统计制度的统计用途，再定位绿色信贷统计数据汇总表中的相关统计依据。",
+      "passed": false,
+      "failure_reasons": [
+        "missing_required_fields",
+        "route_mismatch",
+        "unsupported_task_type"
+      ],
+      "expected_routes": [
+        "text_then_table"
+      ],
+      "actual_route": "rag_open",
+      "confidence": "high",
+      "answer_text": "根据《绿色信贷统计信息披露说明-中文》中的证据，三、环境效益测算说明\n绿色信贷统计制度要求银行业金融机构按照审慎性原则，对\n绿色信贷逐笔进行环境效益测算。",
+      "expected_doc_ids": [
+        "nfra_361",
+        "nfra_362",
+        "nfra_363"
+      ],
+      "evidence_doc_ids": [
+        "nfra_361",
+        "nfra_362",
+        "nfra_363"
+      ],
+      "expected_evidence_types": [
+        "text_unit",
+        "table_row"
+      ],
+      "evidence_types": [
+        "text_unit",
+        "text_unit",
+        "text_unit"
+      ],
+      "required_fields": [
+        "reasoning_steps",
+        "text_evidence",
+        "table_evidence"
+      ],
+      "missing_required_fields": [
+        "reasoning_steps",
+        "text_evidence",
+        "table_evidence"
+      ]
+    },
+    {
+      "id": "TRUST_MULTI_045",
+      "type": "text_then_table",
+      "question": "结合商业银行主要监管指标情况表，说明资本充足率这一指标为什么需要同时给出期间和单位。",
+      "passed": false,
+      "failure_reasons": [
+        "missing_required_fields",
+        "route_mismatch",
+        "unsupported_task_type"
+      ],
+      "expected_routes": [
+        "text_then_table"
+      ],
+      "actual_route": "rag_open",
+      "confidence": "high",
+      "answer_text": "根据检索到的表格证据，资本充足率对应的数值为0.15282、0.15578、0.15359、0.1546；单位为单位:亿元、%；来源工作表为商业银行季度。",
+      "expected_doc_ids": [
+        "nfra_012",
+        "nfra_070"
+      ],
+      "evidence_doc_ids": [
+        "nfra_012",
+        "nfra_070",
+        "nfra_190"
+      ],
+      "expected_evidence_types": [
+        "table_row"
+      ],
+      "evidence_types": [
+        "table_row",
+        "table_row",
+        "table_row"
+      ],
+      "required_fields": [
+        "reasoning_steps",
+        "table_evidence"
+      ],
+      "missing_required_fields": [
+        "reasoning_steps",
+        "table_evidence"
+      ]
+    },
+    {
+      "id": "TRUST_MULTI_046",
+      "type": "multi_hop",
+      "question": "比较2024年和2025年商业银行主要监管指标情况表中的资本充足率，并说明回答应引用哪些表格证据。",
+      "passed": false,
+      "failure_reasons": [
+        "missing_required_fields",
+        "route_mismatch",
+        "unsupported_task_type"
+      ],
+      "expected_routes": [
+        "multi_hop"
+      ],
+      "actual_route": "rag_open",
+      "confidence": "high",
+      "answer_text": "根据检索到的表格证据，资本充足率对应的数值为0.15282、0.15578、0.15359、0.1546；单位为单位:亿元、%；来源工作表为商业银行季度。",
+      "expected_doc_ids": [
+        "nfra_012",
+        "nfra_070"
+      ],
+      "evidence_doc_ids": [
+        "nfra_012",
+        "nfra_070",
+        "nfra_012"
+      ],
+      "expected_evidence_types": [
+        "table_row"
+      ],
+      "evidence_types": [
+        "table_row",
+        "table_row",
+        "table_row"
+      ],
+      "required_fields": [
+        "reasoning_steps",
+        "comparison",
+        "table_evidence"
+      ],
+      "missing_required_fields": [
+        "reasoning_steps",
+        "comparison",
+        "table_evidence"
+      ]
+    },
+    {
+      "id": "TRUST_MULTI_047",
+      "type": "multi_hop",
+      "question": "比较2026年1月和2月人身险公司经营情况表中的原保险保费收入，并说明变化依据。",
+      "passed": false,
+      "failure_reasons": [
+        "missing_required_fields",
+        "route_mismatch",
+        "unsupported_task_type"
+      ],
+      "expected_routes": [
+        "multi_hop"
+      ],
+      "actual_route": "rag_open",
+      "confidence": "high",
+      "answer_text": "根据《2015中国保险市场年报（中文)》中的证据，Annual Report of the Chinese Insurance Market 2015\n图4 2014年人身保险公司业务构成\n2014年，人身保险公司健康险和意外险保费收入增长迅速，健康险保费收入1 415.8亿元，\n同比增长41.6%，意外险保费收入370.7亿元，同比增长19.4%。",
+      "expected_doc_ids": [
+        "nfra_003",
+        "nfra_009"
+      ],
+      "evidence_doc_ids": [
+        "nfra_373",
+        "nfra_007",
+        "nfra_003"
+      ],
+      "expected_evidence_types": [
+        "table_row"
+      ],
+      "evidence_types": [
+        "text_unit",
+        "table_row",
+        "table_row"
+      ],
+      "required_fields": [
+        "reasoning_steps",
+        "comparison",
+        "table_evidence"
+      ],
+      "missing_required_fields": [
+        "reasoning_steps",
+        "comparison",
+        "table_evidence"
+      ]
+    },
+    {
+      "id": "TRUST_MULTI_048",
+      "type": "multi_hop",
+      "question": "比较2026年1月和2月财产险公司经营情况表中的原保险保费收入，并给出可追溯证据。",
+      "passed": false,
+      "failure_reasons": [
+        "evidence_doc_mismatch",
+        "evidence_type_mismatch",
+        "missing_required_fields",
+        "must_contain_missing",
+        "route_mismatch",
+        "unexpected_refusal",
+        "unsupported_task_type"
+      ],
+      "expected_routes": [
+        "multi_hop"
+      ],
+      "actual_route": "rag_refusal",
+      "confidence": "low",
+      "answer_text": "无法根据当前资料确定。",
+      "expected_doc_ids": [
+        "nfra_004",
+        "nfra_010"
+      ],
+      "evidence_doc_ids": [
+        "nfra_373",
+        "nfra_373",
+        "nfra_373"
+      ],
+      "expected_evidence_types": [
+        "table_row"
+      ],
+      "evidence_types": [
+        "text_unit",
+        "text_unit",
+        "text_unit"
+      ],
+      "required_fields": [
+        "reasoning_steps",
+        "comparison",
+        "table_evidence"
+      ],
+      "missing_required_fields": [
+        "reasoning_steps",
+        "comparison",
+        "table_evidence"
+      ]
+    },
+    {
+      "id": "TRUST_MULTI_049",
+      "type": "text_then_table",
+      "question": "先解释为什么监管统计需要明确口径，再用商业银行主要监管指标情况表举一个指标证据。",
+      "passed": false,
+      "failure_reasons": [
+        "missing_required_fields",
+        "must_contain_missing",
+        "route_mismatch",
+        "unsupported_task_type"
+      ],
+      "expected_routes": [
+        "text_then_table"
+      ],
+      "actual_route": "rag_open",
+      "confidence": "high",
+      "answer_text": "根据检索到的表格证据，净息差对应的数值为0.01428、0.01415、0.01415、0.01415；单位为单位:亿元、%；来源工作表为商业银行季度。",
+      "expected_doc_ids": [
+        "nfra_012",
+        "nfra_361"
+      ],
+      "evidence_doc_ids": [
+        "nfra_012",
+        "nfra_012",
+        "nfra_070"
+      ],
+      "expected_evidence_types": [
+        "text_unit",
+        "table_row"
+      ],
+      "evidence_types": [
+        "table_row",
+        "table_row",
+        "table_row"
+      ],
+      "required_fields": [
+        "reasoning_steps",
+        "text_evidence",
+        "table_evidence"
+      ],
+      "missing_required_fields": [
+        "reasoning_steps",
+        "text_evidence",
+        "table_evidence"
+      ]
+    },
+    {
+      "id": "TRUST_MULTI_050",
+      "type": "multi_hop",
+      "question": "从银行函证制度要求出发，说明问答系统回答函证问题时应如何同时给出结论、依据和来源位置。",
+      "passed": false,
+      "failure_reasons": [
+        "missing_required_fields",
+        "must_contain_missing",
+        "route_mismatch",
+        "unexpected_refusal",
+        "unsupported_task_type"
+      ],
+      "expected_routes": [
+        "multi_hop"
+      ],
+      "actual_route": "rag_refusal",
+      "confidence": "low",
+      "answer_text": "无法根据当前资料确定。",
+      "expected_doc_ids": [
+        "nfra_397",
+        "nfra_398"
+      ],
+      "evidence_doc_ids": [
+        "nfra_418",
+        "nfra_397",
+        "nfra_398"
+      ],
+      "expected_evidence_types": [
+        "text_unit"
+      ],
+      "evidence_types": [
+        "text_unit",
+        "text_unit",
+        "text_unit"
+      ],
+      "required_fields": [
+        "reasoning_steps",
+        "basis",
+        "source_trace"
+      ],
+      "missing_required_fields": [
+        "reasoning_steps",
+        "basis",
+        "source_trace"
+      ]
+    }
+  ]
+}

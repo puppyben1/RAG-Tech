@@ -1,0 +1,11 @@
+{
+  "output_path": "E:\\work\\code\\JINRONG\\data\\processed\\text_units.jsonl",
+  "text_units": 7132,
+  "with_page_no": 3409,
+  "with_section_path": 7005,
+  "with_article_no": 1828,
+  "by_source_type": {
+    "pdf": 3445,
+    "word": 3687
+  }
+}

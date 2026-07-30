@@ -1,0 +1,13 @@
+{
+  "table_rows_path": "E:\\work\\code\\JINRONG\\data\\processed\\table_rows.jsonl",
+  "table_cells_path": "E:\\work\\code\\JINRONG\\data\\processed\\table_cells.jsonl",
+  "table_rows": 15775,
+  "rows_with_indicator": 15775,
+  "rows_with_headers": 15775,
+  "rows_with_periods": 15775,
+  "rows_with_cells": 15775,
+  "indicator_coverage": 1.0,
+  "headers_coverage": 1.0,
+  "periods_coverage": 1.0,
+  "cells_coverage": 1.0
+}

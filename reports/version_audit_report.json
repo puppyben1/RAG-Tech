@@ -1,0 +1,71 @@
+{
+  "report_path": "E:\\work\\code\\JINRONG\\reports\\version_audit_report.json",
+  "created_at": "2026-07-30T07:37:21.322196+00:00",
+  "documents": 500,
+  "status_counts": {
+    "unknown": 500
+  },
+  "current_count": 0,
+  "superseded_count": 0,
+  "unknown_count": 500,
+  "field_coverage": {
+    "source_url": {
+      "filled": 0,
+      "missing": 500,
+      "coverage": 0.0
+    },
+    "attachment_url": {
+      "filled": 0,
+      "missing": 500,
+      "coverage": 0.0
+    },
+    "version_status": {
+      "filled": 500,
+      "missing": 0,
+      "coverage": 1.0
+    },
+    "effective_date": {
+      "filled": 0,
+      "missing": 500,
+      "coverage": 0.0
+    },
+    "expiry_date": {
+      "filled": 0,
+      "missing": 500,
+      "coverage": 0.0
+    },
+    "version_group": {
+      "filled": 0,
+      "missing": 500,
+      "coverage": 0.0
+    },
+    "supersedes_doc_id": {
+      "filled": 0,
+      "missing": 500,
+      "coverage": 0.0
+    },
+    "superseded_by_doc_id": {
+      "filled": 0,
+      "missing": 500,
+      "coverage": 0.0
+    }
+  },
+  "dangling_relation_count": 0,
+  "dangling_relations": [],
+  "self_relation_count": 0,
+  "self_relations": [],
+  "group_issue_count": 0,
+  "group_issues": [],
+  "relation_pair_count": 0,
+  "relation_pairs": [],
+  "source_type_counts": {
+    "excel": 389,
+    "pdf": 45,
+    "word": 66
+  },
+  "recommendations": [
+    "优先补齐 version_status，至少区分 current、superseded、unknown，避免问答误用旧规。",
+    "优先补齐 source_url 和 attachment_url，保证答案证据能回到来源页面与附件。",
+    "为同一制度、同一统计报表序列补 version_group，支持新旧版本归并与 current 优先。"
+  ]
+}
