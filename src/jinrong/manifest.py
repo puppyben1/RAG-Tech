@@ -5,6 +5,7 @@ from dataclasses import asdict, dataclass
 from pathlib import Path
 
 from .config import MANIFEST_PATH, RAW_DATA_DIR, SUPPORTED_EXTENSIONS
+from .path_refs import to_project_ref
 from .utils import sha256_file, write_jsonl
 
 
@@ -61,7 +62,7 @@ def build_manifest(raw_data_dir: Path = RAW_DATA_DIR, output_path: Path = MANIFE
                 doc_id=f"nfra_{numeric_prefix}",
                 title=title,
                 file_name=path.name,
-                local_path=str(path.resolve()),
+                local_path=to_project_ref(path),
                 file_ext=ext,
                 file_size=path.stat().st_size,
                 sha256=sha256_file(path),

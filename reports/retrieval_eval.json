@@ -10,7 +10,7 @@
     "top1_accuracy": 1.0,
     "top3_accuracy": 1.0,
     "topk_accuracy": 1.0,
-    "report_path": "E:\\work\\code\\JINRONG\\reports\\retrieval_eval.json"
+    "report_path": "reports/retrieval_eval.json"
   },
   "details": [
     {

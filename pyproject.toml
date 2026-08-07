@@ -13,5 +13,15 @@ dependencies = [
   "uvicorn",
 ]
 
+[project.optional-dependencies]
+dev = [
+  "httpx",
+  "pytest",
+  "uv==0.8.13",
+]
+
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]

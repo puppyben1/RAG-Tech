@@ -1,0 +1,15 @@
+{
+  "schema_version": "1.0",
+  "status": "passed",
+  "roots": [
+    "data/eval/frozen",
+    "data/eval/review"
+  ],
+  "files_checked": 7,
+  "fields_checked": 0,
+  "unique_references_checked": 0,
+  "issue_count": 0,
+  "issues_by_code": {},
+  "issues": [],
+  "issue_samples_truncated": false
+}

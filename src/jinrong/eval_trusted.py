@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import time
 from collections import Counter, defaultdict
 from dataclasses import asdict
 from pathlib import Path
@@ -8,6 +9,8 @@ from typing import Any
 
 from .ask import ask
 from .config import REPORTS_DIR, TRUSTED_EVAL_PATH, TRUSTED_EVAL_REPORT, TRUSTED_EVAL_SUMMARY_REPORT
+from .eval_provenance import add_eval_provenance, assess_eval_freshness
+from .path_refs import to_project_ref
 from .utils import ensure_dir, norm_text, read_jsonl
 
 
@@ -36,7 +39,7 @@ def evaluate_trusted(
         cases = cases[:limit]
     details = [_evaluate_case(case) for case in cases]
     summary = _summarize(details, report_path)
-    payload = {"summary": summary, "details": details}
+    payload = add_eval_provenance({"summary": summary, "details": details}, eval_path)
     ensure_dir(report_path.parent)
     report_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
     return summary
@@ -58,8 +61,9 @@ def write_trusted_summary_report(
     report_path: Path = TRUSTED_EVAL_SUMMARY_REPORT,
     reports_dir: Path = REPORTS_DIR,
 ) -> dict[str, Any]:
+    stale_sources: list[str] = []
     if summaries is None:
-        summaries = _load_type_summaries(reports_dir)
+        summaries, stale_sources = _load_type_summaries(reports_dir)
     total = sum(int(summary.get("total", 0)) for summary in summaries.values())
     passed = sum(int(summary.get("passed", 0)) for summary in summaries.values())
     by_type = {
@@ -78,8 +82,12 @@ def write_trusted_summary_report(
         "failed": total - passed,
         "accuracy": passed / total if total else 0,
         "by_type": by_type,
-        "report_path": str(report_path),
+        "report_path": to_project_ref(report_path),
     }
+    payload = add_eval_provenance(payload, TRUSTED_EVAL_PATH)
+    if stale_sources:
+        payload["stale"] = True
+        payload["stale_reasons"] = [f"source_report_stale:{case_type}" for case_type in stale_sources]
     ensure_dir(report_path.parent)
     report_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
     return payload
@@ -91,20 +99,24 @@ def load_trusted_report(case_type: str = "summary", reports_dir: Path = REPORTS_
     else:
         path = _trusted_report_path(reports_dir, case_type)
     if not path.exists():
-        return {"available": False, "case_type": case_type, "report_path": str(path), "message": "trusted eval report not found"}
+        return {"available": False, "case_type": case_type, "report_path": to_project_ref(path), "message": "trusted eval report not found"}
     payload = json.loads(path.read_text(encoding="utf-8"))
-    return {"available": True, "case_type": case_type, **payload}
+    freshness = assess_eval_freshness(payload, TRUSTED_EVAL_PATH)
+    return {"available": True, "case_type": case_type, **payload, **freshness}
 
 
-def _load_type_summaries(reports_dir: Path) -> dict[str, dict[str, Any]]:
+def _load_type_summaries(reports_dir: Path) -> tuple[dict[str, dict[str, Any]], list[str]]:
     summaries: dict[str, dict[str, Any]] = {}
+    stale_sources: list[str] = []
     for case_type in TRUSTED_CASE_TYPES:
         path = _trusted_report_path(reports_dir, case_type)
         if not path.exists():
             continue
         payload = json.loads(path.read_text(encoding="utf-8"))
         summaries[case_type] = payload.get("summary", {})
-    return summaries
+        if assess_eval_freshness(payload, TRUSTED_EVAL_PATH)["stale"]:
+            stale_sources.append(case_type)
+    return summaries, stale_sources
 
 
 def _trusted_report_path(reports_dir: Path, case_type: str) -> Path:
@@ -112,6 +124,7 @@ def _trusted_report_path(reports_dir: Path, case_type: str) -> Path:
 
 
 def _evaluate_case(case: dict[str, Any]) -> dict[str, Any]:
+    started = time.perf_counter()
     response = ask(question=case["question"])
     response_dict = asdict(response)
     evidence = response.evidence or []
@@ -130,15 +143,29 @@ def _evaluate_case(case: dict[str, Any]) -> dict[str, Any]:
         failure_reasons.append("unexpected_refusal")
 
     expected_doc_ids = _expected_doc_ids(case)
-    if expected_doc_ids and not any(item.get("doc_id") in expected_doc_ids for item in evidence):
+    evidence_doc_ids = [str(item.get("doc_id")) for item in evidence if item.get("doc_id")]
+    citation_doc_hit = not expected_doc_ids or set(expected_doc_ids).issubset(evidence_doc_ids)
+    if not citation_doc_hit:
         failure_reasons.append("evidence_doc_mismatch")
 
     expected_evidence_types = _expected_evidence_types(case)
-    if expected_evidence_types and not any(item.get("evidence_type") in expected_evidence_types for item in evidence):
+    evidence_types = [str(item.get("evidence_type")) for item in evidence if item.get("evidence_type")]
+    citation_type_hit = not expected_evidence_types or set(expected_evidence_types).issubset(evidence_types)
+    if not citation_type_hit:
         failure_reasons.append("evidence_type_mismatch")
 
-    if not _contains_all(case.get("must_contain") or [], response_dict):
+    answer_blob = _answer_blob(response_dict)
+    must_contain_missing = _missing_terms(case.get("must_contain") or [], answer_blob)
+    if must_contain_missing:
         failure_reasons.append("must_contain_missing")
+
+    critical_entity_errors = _missing_terms(case.get("critical_entities") or [], answer_blob)
+    if critical_entity_errors:
+        failure_reasons.append("critical_entity_error")
+
+    locator_hit = _gold_evidence_hit(case.get("gold_evidence") or [], evidence)
+    if not locator_hit:
+        failure_reasons.append("evidence_locator_mismatch")
 
     missing_fields = _missing_required_fields(case, response_dict)
     if missing_fields:
@@ -148,22 +175,43 @@ def _evaluate_case(case: dict[str, Any]) -> dict[str, Any]:
     if case.get("type") in unsupported_types and response.route not in expected_routes:
         failure_reasons.append("unsupported_task_type")
 
+    answer_failure_reasons = {
+        "route_mismatch",
+        "unexpected_refusal",
+        "must_contain_missing",
+        "critical_entity_error",
+        "missing_required_fields",
+        "unsupported_task_type",
+    }
+    refusal_failure_reasons = {"route_mismatch", "expected_refusal", "refusal_text_missing"}
+
     return {
         "id": case.get("id"),
         "type": case.get("type"),
+        "category": case.get("category"),
+        "answerable": case.get("answerable") is not False,
         "question": case.get("question"),
         "passed": not failure_reasons,
+        "answer_correct": not bool(set(failure_reasons) & answer_failure_reasons),
+        "refusal_correct": case.get("answerable") is False
+        and not bool(set(failure_reasons) & refusal_failure_reasons),
         "failure_reasons": sorted(set(failure_reasons)),
         "expected_routes": expected_routes,
         "actual_route": response.route,
         "confidence": response.confidence,
         "answer_text": str(response.answer_text or "")[:500],
+        "must_contain_missing": must_contain_missing,
+        "critical_entities": list(case.get("critical_entities") or []),
+        "critical_entity_errors": critical_entity_errors,
         "expected_doc_ids": expected_doc_ids,
-        "evidence_doc_ids": [item.get("doc_id") for item in evidence],
+        "evidence_doc_ids": evidence_doc_ids,
         "expected_evidence_types": expected_evidence_types,
-        "evidence_types": [item.get("evidence_type") for item in evidence],
+        "evidence_types": evidence_types,
+        "citation_hit": citation_doc_hit and citation_type_hit and locator_hit,
+        "evidence_locator_hit": locator_hit,
         "required_fields": case.get("required_fields") or [],
         "missing_required_fields": missing_fields,
+        "latency_ms": round((time.perf_counter() - started) * 1000, 2),
     }
 
 
@@ -187,6 +235,7 @@ def _summarize(details: list[dict[str, Any]], report_path: Path) -> dict[str, An
     failure_counter: Counter[str] = Counter()
     for item in details:
         failure_counter.update(item["failure_reasons"])
+    latencies = sorted(float(item.get("latency_ms", 0)) for item in details)
 
     return {
         "total": total,
@@ -195,8 +244,20 @@ def _summarize(details: list[dict[str, Any]], report_path: Path) -> dict[str, An
         "accuracy": passed / total if total else 0,
         "by_type": by_type,
         "by_failure_reason": dict(sorted(failure_counter.items())),
-        "report_path": str(report_path),
+        "latency_ms": {
+            "p50": _percentile(latencies, 0.50),
+            "p95": _percentile(latencies, 0.95),
+            "max": max(latencies) if latencies else 0,
+        },
+        "report_path": to_project_ref(report_path),
     }
+
+
+def _percentile(values: list[float], quantile: float) -> float:
+    if not values:
+        return 0
+    index = min(len(values) - 1, max(0, int((len(values) - 1) * quantile)))
+    return round(values[index], 2)
 
 
 def _expected_routes(case: dict[str, Any]) -> list[str]:
@@ -223,16 +284,34 @@ def _expected_evidence_types(case: dict[str, Any]) -> list[str]:
     return []
 
 
-def _contains_all(terms: list[str], response: dict[str, Any]) -> bool:
-    blob = norm_text(
-        " ".join(
-            [
-                _answer_blob(response),
-                json.dumps(response.get("evidence") or [], ensure_ascii=False),
-            ]
-        )
-    )
-    return all(norm_text(term) in blob for term in terms)
+def _missing_terms(terms: list[str], text: str) -> list[str]:
+    blob = norm_text(text)
+    return [str(term) for term in terms if norm_text(term) not in blob]
+
+
+def _gold_evidence_hit(gold: list[dict[str, Any]], actual: list[dict[str, Any]]) -> bool:
+    if not gold:
+        return True
+    return all(any(_evidence_matches(expected, item) for item in actual) for expected in gold)
+
+
+def _evidence_matches(expected: dict[str, Any], actual: dict[str, Any]) -> bool:
+    if str(expected.get("doc_id") or "") != str(actual.get("doc_id") or ""):
+        return False
+    position = actual.get("position") if isinstance(actual.get("position"), dict) else {}
+    if expected.get("page_no") is not None:
+        return str(expected["page_no"]) == str(position.get("page_no") or actual.get("page_no") or "")
+    if expected.get("article_no"):
+        return norm_text(expected["article_no"]) == norm_text(position.get("article_no") or actual.get("article_no"))
+    if expected.get("sheet_name") and expected.get("cell_ref"):
+        actual_sheet = actual.get("sheet_name") or position.get("sheet_name")
+        actual_cells = actual.get("cell_refs") or position.get("cell_refs") or []
+        if actual.get("cell_ref"):
+            actual_cells = [actual.get("cell_ref"), *actual_cells]
+        return norm_text(expected["sheet_name"]) == norm_text(actual_sheet) and str(expected["cell_ref"]) in {
+            str(value) for value in actual_cells
+        }
+    return False
 
 
 def _answer_blob(response: dict[str, Any]) -> str:

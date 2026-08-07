@@ -3,9 +3,9 @@ from __future__ import annotations
 from datetime import datetime, timezone
 from functools import lru_cache
 import json
+import os
 from pathlib import Path
 import re
-import shutil
 import subprocess
 from typing import Any
 
@@ -21,6 +21,7 @@ from .config import (
 )
 from .excel_parser import parse_excel
 from .manifest import build_manifest
+from .path_refs import resolve_project_ref, to_project_ref
 from .qa_data import load_qa
 from .text_parser import extract_text, split_sentences
 from .utils import append_jsonl, ensure_dir, norm_text, read_jsonl
@@ -59,7 +60,7 @@ def build_knowledge_base(
         if state_key in completed:
             skipped += 1
             continue
-        path = Path(record["local_path"])
+        path = resolve_project_ref(record["local_path"])
         if not path.exists():
             error = _error_record(record, "load_file", FileNotFoundError("file not found"))
             run_errors.append(error)
@@ -102,11 +103,11 @@ def build_knowledge_base(
         "table_rows": _count_jsonl(table_rows_path),
         "errors": all_errors[:100],
         "error_count": len(all_errors),
-        "chunks_path": str(chunks_path),
-        "cells_path": str(cells_path),
-        "table_rows_path": str(table_rows_path),
-        "state_path": str(KB_BUILD_STATE_PATH),
-        "errors_path": str(KB_BUILD_ERRORS_PATH),
+        "chunks_path": to_project_ref(chunks_path),
+        "cells_path": to_project_ref(cells_path),
+        "table_rows_path": to_project_ref(table_rows_path),
+        "state_path": to_project_ref(KB_BUILD_STATE_PATH),
+        "errors_path": to_project_ref(KB_BUILD_ERRORS_PATH),
         "qa_only": qa_only,
         "resume": resume,
         "retry_failed": retry_failed,
@@ -242,14 +243,30 @@ def _resolve_excel_input(path: Path) -> Path:
 
 
 def _convert_with_libreoffice(path: Path, target_ext: str) -> Path | None:
-    soffice = shutil.which("soffice") or shutil.which("libreoffice")
-    if not soffice:
+    profile = os.getenv("JINRONG_PARSER_PROFILE", "portable").strip().lower()
+    if profile == "portable":
         return None
+    if profile != "libreoffice":
+        raise RuntimeError(f"unsupported parser profile: {profile}")
+    executable = os.getenv("JINRONG_LIBREOFFICE_EXECUTABLE", "").strip()
+    expected_version = os.getenv("JINRONG_LIBREOFFICE_VERSION", "").strip()
+    if not executable or not expected_version:
+        raise RuntimeError(
+            "libreoffice profile requires JINRONG_LIBREOFFICE_EXECUTABLE and JINRONG_LIBREOFFICE_VERSION"
+        )
+    soffice = Path(executable)
+    if not soffice.is_file():
+        raise RuntimeError(f"configured LibreOffice executable not found: {executable}")
+    version = subprocess.run(
+        [str(soffice), "--version"], check=True, capture_output=True, text=True
+    ).stdout.strip()
+    if expected_version not in version:
+        raise RuntimeError(f"LibreOffice version mismatch: expected {expected_version}, got {version}")
     output_dir = INTERMEDIATE_DIR / "converted" / target_ext
     ensure_dir(output_dir)
     subprocess.run(
         [
-            soffice,
+            str(soffice),
             "--headless",
             "--convert-to",
             target_ext,
@@ -298,8 +315,9 @@ def _chunk_record(record: dict[str, Any], path: Path, chunk_index: int, text: st
         "text": text[:2000],
         "norm_text": norm_text(text[:2000]),
     }
-    if str(path) != record["local_path"]:
-        row["parsed_path"] = str(path)
+    parsed_ref = to_project_ref(path)
+    if parsed_ref != record["local_path"]:
+        row["parsed_path"] = parsed_ref
     return row
 
 
@@ -316,7 +334,7 @@ def _build_table_cells(record: dict[str, Any], path: Path) -> list[dict[str, Any
                 "source_title": record["title"],
                 "file_name": record["file_name"],
                 "local_path": record["local_path"],
-                "parsed_path": str(path) if str(path) != record["local_path"] else None,
+                "parsed_path": to_project_ref(path) if to_project_ref(path) != record["local_path"] else None,
                 "sheet_name": fact.sheet_name,
                 "cell_ref": fact.cell_ref,
                 "row_index": fact.row_index,

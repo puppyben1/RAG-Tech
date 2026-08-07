@@ -6,6 +6,7 @@ from dataclasses import dataclass
 from typing import Any
 
 from .llm import generate_grounded_answer, load_llm_config
+from .governance import assess_evidence_authority
 from .services import search_evidence
 from .text_parser import split_sentences
 from .utils import norm_text
@@ -38,6 +39,16 @@ def answer_open_question(question: str, source_type: str | None = None, doc_id: 
 
     search = _search_open_question(question, source_type=source_type, doc_id=doc_id)
     evidence = search.get("results", [])
+    authority = assess_evidence_authority(evidence)
+    if evidence and not authority["authoritative"]:
+        return TrustedAnswer(
+            answer=None,
+            answer_text=REFUSAL_TEXT,
+            evidence=evidence[:3],
+            confidence="low",
+            route="rag_refusal",
+            debug=json.dumps({"reason": "non_authoritative_evidence", "authority": authority}, ensure_ascii=False),
+        )
     assessment = assess_evidence(question, evidence)
     if _query_rewrite_sufficient(search, evidence, assessment):
         assessment = {

@@ -303,6 +303,48 @@ textarea {
   margin: 0;
 }
 
+.source-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--accent-strong);
+  font-size: 13px;
+  margin: 0 0 8px;
+}
+
+.demo-layout {
+  display: grid;
+  grid-template-columns: minmax(240px, 340px) minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.demo-list {
+  display: grid;
+  gap: 6px;
+}
+
+.demo-row {
+  width: 100%;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: white;
+  color: var(--text);
+  padding: 8px 10px;
+  cursor: pointer;
+  text-align: left;
+}
+
+.demo-row.active {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent);
+}
+
 .json-view {
   background: #f8fafc;
   border: 1px solid var(--line);
@@ -479,7 +521,8 @@ th {
   }
 
   .content-grid,
-  .form-row {
+  .form-row,
+  .demo-layout {
     grid-template-columns: 1fr;
   }
 

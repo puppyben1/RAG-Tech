@@ -9,6 +9,8 @@ from typing import Any
 
 from .config import DOCUMENT_METADATA_PATH, SQLITE_DB_PATH, VERSION_AUDIT_REPORT
 from .db.schema import connect, init_db
+from .governance import audit_version_rows
+from .path_refs import to_project_ref
 from .utils import ensure_dir, read_jsonl
 
 
@@ -45,9 +47,10 @@ def _build_report(rows: list[dict[str, Any]], report_path: Path) -> dict[str, An
     self_relations = _self_relations(rows)
     group_issues = _version_group_issues(rows)
     relation_pairs = _relation_pairs(rows)
+    governance = audit_version_rows(rows)
 
     return {
-        "report_path": str(report_path),
+        "report_path": to_project_ref(report_path),
         "created_at": _now(),
         "documents": len(rows),
         "status_counts": dict(sorted(status_counts.items())),
@@ -63,6 +66,8 @@ def _build_report(rows: list[dict[str, Any]], report_path: Path) -> dict[str, An
         "group_issues": group_issues[:50],
         "relation_pair_count": len(relation_pairs),
         "relation_pairs": relation_pairs[:50],
+        "invalid_status_count": governance["invalid_status_count"],
+        "invalid_statuses": governance["invalid_statuses"][:50],
         "source_type_counts": dict(Counter(row.get("source_type") or "unknown" for row in rows)),
         "recommendations": _recommendations(status_counts, field_coverage, dangling_relations, group_issues),
     }

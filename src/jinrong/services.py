@@ -10,6 +10,7 @@ from .eval_text import evaluate_text
 from .excel_parser import parse_xlsx
 from .knowledge_base import kb_available, load_table_rows, load_text_chunks
 from .manifest import build_manifest
+from .path_refs import resolve_project_ref, to_project_ref
 from .reranker import rerank_evidence
 from .text_parser import extract_text, split_sentences
 from .text_qa import ngram_coverage
@@ -188,7 +189,7 @@ def search_evidence(
 
     results: list[dict[str, Any]] = []
     for record in records:
-        path = Path(record["local_path"])
+        path = resolve_project_ref(record["local_path"])
         if not path.exists():
             continue
         if record.get("source_type") == "excel" and path.suffix.lower() == ".xlsx":
@@ -783,7 +784,7 @@ def _search_text_record(query: str, record: dict[str, Any], path: Path) -> list[
     try:
         text = extract_text(str(path.resolve()))
     except Exception as exc:
-        return [{"doc_id": record["doc_id"], "source": str(path), "score": 0, "error": str(exc)}]
+        return [{"doc_id": record["doc_id"], "source": record["local_path"], "score": 0, "error": str(exc)}]
     q = norm_text(query)
     rows: list[dict[str, Any]] = []
     for idx, sent in enumerate(split_sentences(text)):
@@ -797,7 +798,7 @@ def _search_text_record(query: str, record: dict[str, Any], path: Path) -> list[
                     "doc_id": record["doc_id"],
                     "source_type": record["source_type"],
                     "source_title": record["title"],
-                    "source": str(path),
+                    "source": record["local_path"],
                     "position": {"sentence_index": idx},
                     "score": round(score, 4),
                     "text": sent[:1000],
@@ -812,7 +813,7 @@ def _search_excel_record(query: str, record: dict[str, Any], path: Path) -> list
     try:
         facts = parse_xlsx(str(path.resolve()))
     except Exception as exc:
-        return [{"doc_id": record["doc_id"], "source": str(path), "score": 0, "error": str(exc)}]
+        return [{"doc_id": record["doc_id"], "source": record["local_path"], "score": 0, "error": str(exc)}]
     for fact in facts:
         hay = norm_text(f"{record['title']}{fact.sheet_name}{fact.row_header}{fact.col_header}{fact.value_raw}")
         score = 0.0
@@ -825,7 +826,7 @@ def _search_excel_record(query: str, record: dict[str, Any], path: Path) -> list
                     "doc_id": record["doc_id"],
                     "source_type": "excel",
                     "source_title": record["title"],
-                    "source": str(path),
+                    "source": record["local_path"],
                     "position": {
                         "sheet_name": fact.sheet_name,
                         "cell_ref": fact.cell_ref,
@@ -867,18 +868,18 @@ def kb_status() -> dict[str, Any]:
         payload = {"available": True, **__import__("json").loads(KB_STATS_PATH.read_text(encoding="utf-8"))}
         if DOCUMENT_METADATA_PATH.exists():
             payload["document_metadata"] = _count_jsonl(DOCUMENT_METADATA_PATH)
-            payload["document_metadata_path"] = str(DOCUMENT_METADATA_PATH)
+            payload["document_metadata_path"] = to_project_ref(DOCUMENT_METADATA_PATH)
         if TEXT_UNITS_PATH.exists():
             payload["text_units"] = _count_jsonl(TEXT_UNITS_PATH)
-            payload["text_units_path"] = str(TEXT_UNITS_PATH)
+            payload["text_units_path"] = to_project_ref(TEXT_UNITS_PATH)
         if vector_index_available():
             payload["vector_index"] = True
             if TEXT_VECTOR_INDEX_PATH.exists():
                 payload["text_vectors"] = _count_jsonl(TEXT_VECTOR_INDEX_PATH)
-                payload["text_vector_index_path"] = str(TEXT_VECTOR_INDEX_PATH)
+                payload["text_vector_index_path"] = to_project_ref(TEXT_VECTOR_INDEX_PATH)
             if TABLE_VECTOR_INDEX_PATH.exists():
                 payload["table_row_vectors"] = _count_jsonl(TABLE_VECTOR_INDEX_PATH)
-                payload["table_vector_index_path"] = str(TABLE_VECTOR_INDEX_PATH)
+                payload["table_vector_index_path"] = to_project_ref(TABLE_VECTOR_INDEX_PATH)
         return payload
     return {"available": False, "message": "run `python -m jinrong.cli build-kb --qa-only` first"}
 
@@ -900,6 +901,7 @@ def openapi_spec() -> dict[str, Any]:
             "/documents/{doc_id}": {"get": {"summary": "Get one document metadata record"}},
             "/kb/status": {"get": {"summary": "Get processed RAG knowledge base status"}},
             "/eval": {"post": {"summary": "Run QA evaluation"}},
+            "/eval/acceptance": {"get": {"summary": "Get final holdout acceptance report"}},
             "/eval/trusted/summary": {"get": {"summary": "Get trusted QA evaluation summary report"}},
             "/eval/trusted/{case_type}": {"get": {"summary": "Get one trusted QA evaluation type report"}},
         },

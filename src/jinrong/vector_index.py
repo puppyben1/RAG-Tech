@@ -17,6 +17,7 @@ from .config import (
     VECTOR_INDEX_MANIFEST_PATH,
 )
 from .knowledge_base import load_table_rows, load_text_chunks
+from .path_refs import to_project_ref
 from .retrieval import tokenize
 from .utils import ensure_dir, read_jsonl, write_jsonl
 
@@ -41,12 +42,12 @@ def build_vector_index(
     payload = {
         "embedding_type": "local_hashing_v1",
         "dimensions": VECTOR_DIMENSIONS,
-        "text_source": str(TEXT_UNITS_PATH if TEXT_UNITS_PATH.exists() else TEXT_CHUNKS_PATH),
-        "table_source": str(TABLE_ROWS_PATH),
+        "text_source": to_project_ref(TEXT_UNITS_PATH if TEXT_UNITS_PATH.exists() else TEXT_CHUNKS_PATH),
+        "table_source": to_project_ref(TABLE_ROWS_PATH),
         "text_vectors": len(text_index),
         "table_row_vectors": len(table_index),
-        "text_index_path": str(text_output_path),
-        "table_index_path": str(table_output_path),
+        "text_index_path": to_project_ref(text_output_path),
+        "table_index_path": to_project_ref(table_output_path),
     }
     ensure_dir(manifest_path.parent)
     manifest_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")

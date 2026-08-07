@@ -7,6 +7,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from typing import Any
 
 from .ask import ask
+from .eval_acceptance import load_acceptance_report
 from .eval_trusted import load_trusted_report
 from .services import get_document, kb_status, list_documents, openapi_spec, run_eval, search_evidence
 
@@ -32,6 +33,9 @@ class AskHandler(BaseHTTPRequestHandler):
             return
         if parsed.path == "/eval/trusted/summary":
             self._send_json(load_trusted_report("summary"))
+            return
+        if parsed.path == "/eval/acceptance":
+            self._send_json(load_acceptance_report())
             return
         if parsed.path.startswith("/eval/trusted/"):
             case_type = parsed.path.rsplit("/", 1)[-1]

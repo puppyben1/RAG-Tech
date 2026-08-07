@@ -1,5 +1,5 @@
 import React from "react";
-import { AlertCircle, CheckCircle2, FileText } from "lucide-react";
+import { AlertCircle, CheckCircle2, FileText, ExternalLink } from "lucide-react";
 import { shortPath } from "./api.js";
 
 export function Badge({ children, tone = "neutral" }) {
@@ -22,6 +22,9 @@ export function EmptyState({ children = "暂无数据" }) {
 
 export function EvidenceCard({ item }) {
   const position = item.position || {};
+  const location = position.sheet_name && position.cell_ref
+    ? `${position.sheet_name}!${position.cell_ref}`
+    : [position.page_no && `page ${position.page_no}`, position.article_no && `article ${position.article_no}`, position.section_path].filter(Boolean).join(" / ");
   return (
     <article className="evidence-card">
       <div className="evidence-head">
@@ -34,11 +37,12 @@ export function EvidenceCard({ item }) {
         {item.score !== undefined && <Badge>score {item.score}</Badge>}
         {item.source_type && <Badge>{item.source_type}</Badge>}
         {item.source && <Badge>{shortPath(item.source)}</Badge>}
-        {position.sheet_name && <Badge>{position.sheet_name}</Badge>}
-        {position.cell_ref && <Badge>{position.cell_ref}</Badge>}
+        {item.version_status && <Badge tone={item.version_status === "current" ? "green" : item.version_status === "superseded" ? "red" : "neutral"}>version: {item.version_status}</Badge>}
+        {location && <Badge>{location}</Badge>}
         {position.row_index && <Badge>row {position.row_index}</Badge>}
         {item.unit && <Badge>{item.unit}</Badge>}
       </div>
+      {item.source_url && <a className="source-link" href={item.source_url} target="_blank" rel="noreferrer"><ExternalLink size={14} /> source link</a>}
       <pre className="evidence-text">{item.text || JSON.stringify(item, null, 2)}</pre>
     </article>
   );

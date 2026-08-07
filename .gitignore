@@ -1,6 +1,7 @@
 __pycache__/
 *.py[cod]
 *.egg-info/
+.venv/
 .pytest_cache/
 .ruff_cache/
 .mypy_cache/
@@ -10,6 +11,7 @@ frontend/dist/
 
 .env
 .env.*
+!.env.example
 
 *.log
 *.tmp
@@ -17,3 +19,6 @@ frontend/dist/
 
 data/db/*.sqlite3-wal
 data/db/*.sqlite3-shm
+
+reports/acceptance/
+reports/path_audit.json

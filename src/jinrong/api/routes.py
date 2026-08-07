@@ -5,6 +5,7 @@ import json
 from fastapi import APIRouter, HTTPException, Query
 
 from ..ask import ask
+from ..eval_acceptance import load_acceptance_report
 from ..eval_trusted import load_trusted_report
 from ..services import get_document, kb_status, list_documents, run_eval, search_evidence
 from .schemas import AskRequest, EvalRequest, JsonDict, SearchRequest
@@ -123,6 +124,11 @@ def eval_route(payload: EvalRequest) -> JsonDict:
 @router.get("/eval/trusted/summary")
 def trusted_eval_summary_route() -> JsonDict:
     return load_trusted_report("summary")
+
+
+@router.get("/eval/acceptance")
+def acceptance_report_route() -> JsonDict:
+    return load_acceptance_report()
 
 
 @router.get("/eval/trusted/{case_type}")

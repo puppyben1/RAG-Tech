@@ -1,0 +1,13 @@
+{
+  "schema_version": "sensitive_audit_v1",
+  "records_scanned": 90687,
+  "candidate_count": 0,
+  "confirmed_sensitive_count": 0,
+  "unresolved_count": 0,
+  "scan_fingerprint": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+  "raw_match_values_persisted": false,
+  "gate": "passed",
+  "gate_reasons": [],
+  "candidates": [],
+  "candidate_sample_truncated": false
+}

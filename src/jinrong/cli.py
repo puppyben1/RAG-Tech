@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 
 from .ask import ask
 from pathlib import Path
@@ -16,14 +17,24 @@ from .knowledge_base import build_knowledge_base
 from .manifest import build_manifest
 from .metadata_extractor import build_document_metadata
 from .metadata_quality import build_metadata_quality_report
+from .path_refs import to_project_ref
+from .path_audit import audit_project_paths
 from .retrieval_eval_builder import build_retrieval_eval_set
 from .services import kb_status, list_documents, run_eval, search_evidence
-from .source_catalog import enrich_manifest_from_source_catalog, export_source_catalog_template, validate_source_catalog
+from .source_catalog import approve_source_catalog, enrich_manifest_from_source_catalog, export_source_catalog_template, validate_source_catalog
+from .source_proof import verify_source_catalog
 from .source_worklist import build_source_gap_worklist
 from .structure_parser import build_text_units
 from .table_semantics import enhance_table_rows
 from .vector_index import build_vector_index
 from .version_audit import build_version_audit_report
+from .baseline_report import write_baseline_report
+from .eval_holdout import approve_eval_holdout, freeze_eval_sets
+from .eval_acceptance import run_acceptance
+from .retrieval_ab import run_retrieval_ab
+from .doc_quality_audit import approve_doc_reviews, audit_doc_quality
+from .sensitive_audit import scan_sensitive_information
+from .competition_readiness import build_competition_readiness
 
 
 def main() -> None:
@@ -31,7 +42,11 @@ def main() -> None:
     sub = parser.add_subparsers(dest="command", required=True)
 
     sub.add_parser("build-manifest", help="Scan wendang/data and build processed manifest.")
-    sub.add_parser("build-metadata", help="Extract document metadata such as publisher, doc_no, dates, and domains.")
+    build_metadata_parser = sub.add_parser("build-metadata", help="Extract document metadata such as publisher, doc_no, dates, and domains.")
+    build_metadata_parser.add_argument("--manifest")
+    build_metadata_parser.add_argument("--chunks")
+    build_metadata_parser.add_argument("--output")
+    build_metadata_parser.add_argument("--report")
     metadata_audit_parser = sub.add_parser("metadata-audit", help="Build metadata coverage and missing-field audit report.")
     metadata_audit_parser.add_argument("--no-store-db", action="store_true", help="Do not store the audit report in SQLite.")
     version_audit_parser = sub.add_parser("version-audit", help="Build source/version traceability audit report.")
@@ -46,9 +61,24 @@ def main() -> None:
     source_template_parser.add_argument("--output", help="Output CSV path.")
     source_worklist_parser = sub.add_parser("source-gap-worklist", help="Build a prioritized source/version enrichment worklist.")
     source_worklist_parser.add_argument("--output", help="Output CSV path.")
+    source_worklist_parser.add_argument("--report", help="Output JSON report path.")
+    source_worklist_parser.add_argument("--metadata", help="Explicit document metadata JSONL path.")
+    source_worklist_parser.add_argument("--trusted-eval", help="Explicit trusted evaluation JSONL path.")
+    source_worklist_parser.add_argument("--retrieval-eval", help="Explicit retrieval evaluation JSONL path.")
     source_worklist_parser.add_argument("--limit", type=int, help="Export only the top N rows.")
     validate_source_parser = sub.add_parser("validate-source-catalog", help="Validate a source URL catalog before merging.")
     validate_source_parser.add_argument("--source-catalog", required=True, help="CSV/JSONL/JSON catalog to validate.")
+    source_proof_parser = sub.add_parser("verify-source-catalog", help="Verify official source URLs and local attachment hashes without importing metadata.")
+    source_proof_parser.add_argument("--source-catalog", required=True, help="CSV/JSONL/JSON candidate catalog.")
+    source_proof_parser.add_argument("--raw-root", required=True, help="Expanded raw input directory containing candidate files.")
+    source_proof_parser.add_argument("--output", required=True, help="Proof report JSON path; does not modify the catalog.")
+    source_proof_parser.add_argument("--verified-catalog-output", help="Write a new machine-proof catalog only when every row is verified.")
+    approve_source_parser = sub.add_parser("approve-source-catalog", help="Stamp explicitly reviewed catalog rows and validate the output.")
+    approve_source_parser.add_argument("--source-catalog", required=True, help="CSV/JSONL candidate catalog.")
+    approve_source_parser.add_argument("--output", required=True, help="Approved CSV/JSONL output path; must differ from input.")
+    approve_source_parser.add_argument("--reviewer", required=True, help="Named human reviewer or authorized review identity.")
+    approve_source_parser.add_argument("--reviewed-at", required=True, help="ISO-8601 review timestamp.")
+    approve_source_parser.add_argument("--doc-id", action="append", required=True, help="Explicit reviewed doc_id; repeat for each row.")
     import_source_parser = sub.add_parser("import-source-catalog", help="Validate and store a source URL catalog in SQLite.")
     import_source_parser.add_argument("--source-catalog", required=True, help="CSV/JSONL/JSON catalog to import.")
     import_source_parser.add_argument("--reset-catalog", action="store_true", help="Clear previous entries for the same catalog path.")
@@ -78,6 +108,33 @@ def main() -> None:
     build_retrieval_eval_parser.add_argument("--target-size", type=int, default=60)
     build_retrieval_eval_parser.add_argument("--retrieval", choices=["bm25", "hybrid"], default="hybrid")
     build_retrieval_eval_parser.add_argument("--rerank", action="store_true")
+    freeze_eval_parser = sub.add_parser("freeze-eval", help="Freeze independent dev and holdout evaluation sets with overlap checks.")
+    freeze_eval_parser.add_argument("--dev", required=True, help="Explicit dev JSONL path.")
+    freeze_eval_parser.add_argument("--holdout", required=True, help="Explicit holdout JSONL path.")
+    freeze_eval_parser.add_argument("--output-dir", required=True, help="New output directory for freeze_manifest.json.")
+    freeze_eval_parser.add_argument("--source-label", default="explicit_input")
+    approve_holdout_parser = sub.add_parser("approve-eval-holdout", help="Stamp explicitly reviewed holdout cases into a new JSONL file.")
+    approve_holdout_parser.add_argument("--holdout", required=True, help="Pending-review holdout JSONL path.")
+    approve_holdout_parser.add_argument("--output", required=True, help="Approved JSONL output path; must differ from input.")
+    approve_holdout_parser.add_argument("--reviewer", required=True, help="Named non-implementation reviewer.")
+    approve_holdout_parser.add_argument("--reviewed-at", required=True, help="ISO-8601 review timestamp with timezone.")
+    approve_holdout_parser.add_argument("--case-id", action="append", required=True, help="Explicit reviewed case ID; repeat for each case.")
+    acceptance_parser = sub.add_parser("eval-acceptance", help="Run the final trusted holdout evaluation behind a ready freeze gate.")
+    acceptance_parser.add_argument("--eval-path", required=True, help="Reviewed holdout JSONL matching the freeze manifest.")
+    acceptance_parser.add_argument("--holdout-manifest", required=True, help="Ready freeze_manifest.json path.")
+    acceptance_parser.add_argument("--output", required=True, help="Final acceptance report JSON path.")
+    acceptance_parser.add_argument(
+        "--max-p95-ms",
+        required=True,
+        type=float,
+        help="Positive P95 latency threshold supplied by the competition platform or deployment owner.",
+    )
+    retrieval_ab_parser = sub.add_parser("eval-retrieval-ab", help="Compare BM25 and local hybrid retrieval without changing defaults.")
+    retrieval_ab_parser.add_argument("--eval-path", required=True)
+    retrieval_ab_parser.add_argument("--output", required=True)
+    retrieval_ab_parser.add_argument("--holdout-manifest")
+    retrieval_ab_parser.add_argument("--top-k", type=int, default=5)
+    retrieval_ab_parser.add_argument("--no-rerank", action="store_true")
     ask_parser = sub.add_parser("ask", help="Ask a question or replay one QA id.")
     ask_parser.add_argument("--qa-id", help="QA id such as Q001.")
     ask_parser.add_argument("--question", help="Question text.")
@@ -133,25 +190,93 @@ def main() -> None:
     docs_parser.add_argument("--limit", type=int, default=10)
     docs_parser.add_argument("--offset", type=int, default=0)
     sub.add_parser("kb-status", help="Show processed RAG knowledge base status.")
+    path_audit_parser = sub.add_parser("path-audit", help="Audit persisted project path references.")
+    path_audit_parser.add_argument("--root", action="append", help="Artifact file or directory to audit; repeatable.")
+    path_audit_parser.add_argument("--output", help="Write the JSON audit report to this repository path.")
+    baseline_parser = sub.add_parser("baseline-report", help="Write a reproducibility baseline report.")
+    baseline_parser.add_argument("--output", help="Output baseline.json path.")
+    baseline_parser.add_argument("--check", action="append", default=[], help="Check status as name=status, optionally name=status=json-details.")
+    doc_audit_parser = sub.add_parser("doc-quality-audit", help="Audit all legacy .doc extraction and manual-review coverage.")
+    doc_audit_parser.add_argument("--manifest", required=True)
+    doc_audit_parser.add_argument("--chunks", required=True)
+    doc_audit_parser.add_argument("--build-state", required=True)
+    doc_audit_parser.add_argument("--output", required=True)
+    doc_audit_parser.add_argument("--worklist")
+    doc_audit_parser.add_argument("--reviewed")
+    approve_doc_parser = sub.add_parser("approve-doc-reviews", help="Stamp completed external .doc review checks into a new file.")
+    approve_doc_parser.add_argument("--review", required=True)
+    approve_doc_parser.add_argument("--output", required=True)
+    approve_doc_parser.add_argument("--reviewer", required=True)
+    approve_doc_parser.add_argument("--reviewed-at", required=True)
+    approve_doc_parser.add_argument("--doc-id", action="append", required=True)
+    sensitive_parser = sub.add_parser("sensitive-audit", help="Scan extracted text and cells without persisting matched values.")
+    sensitive_parser.add_argument("--text-units", required=True)
+    sensitive_parser.add_argument("--table-cells", required=True)
+    sensitive_parser.add_argument("--output", required=True)
+    sensitive_parser.add_argument("--decisions")
+    readiness_parser = sub.add_parser("competition-readiness", help="Build a fail-closed competition delivery readiness report.")
+    readiness_parser.add_argument("--kb-stats", required=True)
+    readiness_parser.add_argument("--kb-errors", required=True)
+    readiness_parser.add_argument("--path-audit", required=True)
+    readiness_parser.add_argument("--metadata", required=True)
+    readiness_parser.add_argument("--doc-quality", required=True)
+    readiness_parser.add_argument("--sensitive-audit", required=True)
+    readiness_parser.add_argument("--holdout-manifest", required=True)
+    readiness_parser.add_argument("--acceptance-report", required=True)
+    readiness_parser.add_argument("--output", required=True)
 
     args = parser.parse_args()
     if args.command == "build-manifest":
         records = build_manifest(RAW_DATA_DIR, MANIFEST_PATH)
-        print(json.dumps({"manifest": str(MANIFEST_PATH), "count": len(records)}, ensure_ascii=False, indent=2))
+        print(json.dumps({"manifest": to_project_ref(MANIFEST_PATH), "count": len(records)}, ensure_ascii=False, indent=2))
     elif args.command == "export-source-template":
         output_path = Path(args.output) if args.output else None
         payload = export_source_catalog_template(output_path=output_path) if output_path else export_source_catalog_template()
         print(json.dumps(payload, ensure_ascii=False, indent=2))
     elif args.command == "source-gap-worklist":
         output_path = Path(args.output) if args.output else None
-        payload = (
-            build_source_gap_worklist(output_path=output_path, limit=args.limit)
-            if output_path
-            else build_source_gap_worklist(limit=args.limit)
-        )
+        kwargs = {"limit": args.limit}
+        if output_path:
+            kwargs["output_path"] = output_path
+        if args.report:
+            kwargs["report_path"] = Path(args.report)
+        if args.metadata:
+            kwargs["metadata_path"] = Path(args.metadata)
+        if args.trusted_eval:
+            kwargs["trusted_eval_path"] = Path(args.trusted_eval)
+        if args.retrieval_eval:
+            kwargs["retrieval_eval_path"] = Path(args.retrieval_eval)
+        payload = build_source_gap_worklist(**kwargs)
         print(json.dumps(payload, ensure_ascii=False, indent=2))
     elif args.command == "validate-source-catalog":
-        print(json.dumps(validate_source_catalog(Path(args.source_catalog)), ensure_ascii=False, indent=2))
+        payload = validate_source_catalog(Path(args.source_catalog))
+        print(json.dumps(payload, ensure_ascii=False, indent=2))
+        if not payload["valid"]:
+            raise SystemExit(1)
+    elif args.command == "verify-source-catalog":
+        payload = verify_source_catalog(
+            Path(args.source_catalog),
+            Path(args.raw_root),
+            Path(args.output),
+            verified_catalog_path=Path(args.verified_catalog_output) if args.verified_catalog_output else None,
+        )
+        print(json.dumps(payload, ensure_ascii=False, indent=2))
+        if not payload["import_allowed"]:
+            raise SystemExit(1)
+    elif args.command == "approve-source-catalog":
+        print(
+            json.dumps(
+                approve_source_catalog(
+                    Path(args.source_catalog),
+                    Path(args.output),
+                    args.reviewer,
+                    args.reviewed_at,
+                    args.doc_id,
+                ),
+                ensure_ascii=False,
+                indent=2,
+            )
+        )
     elif args.command == "import-source-catalog":
         print(
             json.dumps(
@@ -169,7 +294,16 @@ def main() -> None:
         )
         print(json.dumps(payload, ensure_ascii=False, indent=2))
     elif args.command == "build-metadata":
-        print(json.dumps(build_document_metadata(), ensure_ascii=False, indent=2))
+        metadata_kwargs = {}
+        if args.manifest:
+            metadata_kwargs["manifest_path"] = Path(args.manifest)
+        if args.chunks:
+            metadata_kwargs["chunks_path"] = Path(args.chunks)
+        if args.output:
+            metadata_kwargs["output_path"] = Path(args.output)
+        if args.report:
+            metadata_kwargs["report_path"] = Path(args.report)
+        print(json.dumps(build_document_metadata(**metadata_kwargs), ensure_ascii=False, indent=2))
     elif args.command == "metadata-audit":
         print(json.dumps(build_metadata_quality_report(store_db=not args.no_store_db), ensure_ascii=False, indent=2))
     elif args.command == "version-audit":
@@ -199,10 +333,10 @@ def main() -> None:
         )
     elif args.command == "eval-excel":
         payload = evaluate_excel()
-        print(json.dumps({"report": str(EXCEL_EVAL_REPORT), **payload["summary"]}, ensure_ascii=False, indent=2))
+        print(json.dumps({"report": to_project_ref(EXCEL_EVAL_REPORT), **payload["summary"]}, ensure_ascii=False, indent=2))
     elif args.command == "eval-text":
         payload = evaluate_text()
-        print(json.dumps({"report": str(TEXT_EVAL_REPORT), **payload["summary"]}, ensure_ascii=False, indent=2))
+        print(json.dumps({"report": to_project_ref(TEXT_EVAL_REPORT), **payload["summary"]}, ensure_ascii=False, indent=2))
     elif args.command == "eval-all":
         excel = evaluate_excel()
         text = evaluate_text()
@@ -212,8 +346,8 @@ def main() -> None:
             "total": total,
             "correct": correct,
             "accuracy": correct / total if total else 0,
-            "excel_report": str(EXCEL_EVAL_REPORT),
-            "text_report": str(TEXT_EVAL_REPORT),
+            "excel_report": to_project_ref(EXCEL_EVAL_REPORT),
+            "text_report": to_project_ref(TEXT_EVAL_REPORT),
             "excel": excel["summary"],
             "text": text["summary"],
         }
@@ -326,6 +460,111 @@ def main() -> None:
         )
     elif args.command == "kb-status":
         print(json.dumps(kb_status(), ensure_ascii=False, indent=2))
+    elif args.command == "path-audit":
+        roots = [Path(value) for value in args.root] if args.root else None
+        output_path = Path(args.output) if args.output else None
+        payload = audit_project_paths(roots=roots, output_path=output_path)
+        print(json.dumps(payload, ensure_ascii=False, indent=2))
+        if payload["issue_count"]:
+            raise SystemExit(1)
+    elif args.command == "baseline-report":
+        checks = []
+        for value in args.check:
+            name, _, status = value.partition("=")
+            checks.append({"name": name, "status": status or "passed"})
+        payload = write_baseline_report(Path(args.output) if args.output else None, checks)
+        print(json.dumps(payload, ensure_ascii=False, indent=2))
+        diagnostic_dirty_allowed = (
+            payload.get("approval_status") == "diagnostic_dirty_worktree"
+            and os.getenv("JINRONG_BASELINE_ALLOW_DIAGNOSTIC_DIRTY", "").lower() == "true"
+        )
+        if payload["overall_status"] != "passed" and not diagnostic_dirty_allowed:
+            raise SystemExit(1)
+    elif args.command == "freeze-eval":
+        payload = freeze_eval_sets(
+            Path(args.dev),
+            Path(args.holdout),
+            Path(args.output_dir),
+            source_label=args.source_label,
+        )
+        print(json.dumps(payload, ensure_ascii=False, indent=2))
+    elif args.command == "approve-eval-holdout":
+        payload = approve_eval_holdout(
+            Path(args.holdout),
+            Path(args.output),
+            args.reviewer,
+            args.reviewed_at,
+            args.case_id,
+        )
+        print(json.dumps(payload, ensure_ascii=False, indent=2))
+    elif args.command == "eval-acceptance":
+        try:
+            payload = run_acceptance(
+                Path(args.eval_path),
+                Path(args.holdout_manifest),
+                Path(args.output),
+                max_p95_ms=args.max_p95_ms,
+            )
+        except ValueError as exc:
+            raise SystemExit(f"eval-acceptance blocked: {exc}") from exc
+        print(json.dumps(payload, ensure_ascii=False, indent=2))
+        if payload["status"] != "passed":
+            raise SystemExit(1)
+    elif args.command == "doc-quality-audit":
+        payload = audit_doc_quality(
+            Path(args.manifest),
+            Path(args.chunks),
+            Path(args.build_state),
+            Path(args.output),
+            worklist_path=Path(args.worklist) if args.worklist else None,
+            reviewed_path=Path(args.reviewed) if args.reviewed else None,
+        )
+        print(json.dumps(payload, ensure_ascii=False, indent=2))
+        if payload["gate"] != "passed":
+            raise SystemExit(1)
+    elif args.command == "approve-doc-reviews":
+        payload = approve_doc_reviews(
+            Path(args.review),
+            Path(args.output),
+            args.reviewer,
+            args.reviewed_at,
+            args.doc_id,
+        )
+        print(json.dumps(payload, ensure_ascii=False, indent=2))
+    elif args.command == "sensitive-audit":
+        payload = scan_sensitive_information(
+            Path(args.text_units),
+            Path(args.table_cells),
+            Path(args.output),
+            decisions_path=Path(args.decisions) if args.decisions else None,
+        )
+        print(json.dumps(payload, ensure_ascii=False, indent=2))
+        if payload["gate"] != "passed":
+            raise SystemExit(1)
+    elif args.command == "competition-readiness":
+        payload = build_competition_readiness(
+            kb_stats_path=Path(args.kb_stats),
+            kb_errors_path=Path(args.kb_errors),
+            path_audit_path=Path(args.path_audit),
+            metadata_path=Path(args.metadata),
+            doc_quality_path=Path(args.doc_quality),
+            sensitive_audit_path=Path(args.sensitive_audit),
+            holdout_manifest_path=Path(args.holdout_manifest),
+            acceptance_report_path=Path(args.acceptance_report),
+            output_path=Path(args.output),
+        )
+        print(json.dumps(payload, ensure_ascii=False, indent=2))
+        if payload["status"] != "passed":
+            raise SystemExit(1)
+    elif args.command == "eval-retrieval-ab":
+        payload = run_retrieval_ab(
+            Path(args.eval_path),
+            Path(args.output),
+            top_k=args.top_k,
+            rerank=not args.no_rerank,
+            holdout_manifest=Path(args.holdout_manifest) if args.holdout_manifest else None,
+        )
+        print(json.dumps(payload, ensure_ascii=False, indent=2))
 
 
 if __name__ == "__main__":

@@ -5,12 +5,13 @@ from pathlib import Path
 from typing import Any
 
 from ..config import SQLITE_DB_PATH
+from ..path_refs import to_project_ref
 from .schema import connect, init_db
 
 
 def database_status(db_path: Path = SQLITE_DB_PATH) -> dict[str, Any]:
     if not db_path.exists():
-        return {"available": False, "db_path": str(db_path)}
+        return {"available": False, "db_path": to_project_ref(db_path)}
     with connect(db_path) as conn:
         init_db(conn)
         tables = [
@@ -34,7 +35,7 @@ def database_status(db_path: Path = SQLITE_DB_PATH) -> dict[str, Any]:
         ).fetchone()
     return {
         "available": True,
-        "db_path": str(db_path),
+        "db_path": to_project_ref(db_path),
         **counts,
         "latest_import_run": dict(latest_run) if latest_run else None,
     }

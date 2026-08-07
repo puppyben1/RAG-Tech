@@ -1,9 +1,10 @@
 from __future__ import annotations
 
+import os
 from pathlib import Path
 
 
-PROJECT_ROOT = Path(__file__).resolve().parents[2]
+PROJECT_ROOT = Path(os.environ.get("JINRONG_PROJECT_ROOT", Path(__file__).resolve().parents[2])).resolve()
 RAW_DATA_DIR = PROJECT_ROOT / "wendang" / "data"
 WENDANG_DIR = PROJECT_ROOT / "wendang"
 PROCESSED_DIR = PROJECT_ROOT / "data" / "processed"
@@ -36,6 +37,7 @@ RETRIEVAL_EVAL_REPORT = REPORTS_DIR / "retrieval_eval.json"
 TRUSTED_EVAL_PATH = EVAL_DIR / "trusted_eval.jsonl"
 TRUSTED_EVAL_REPORT = REPORTS_DIR / "trusted_eval.json"
 TRUSTED_EVAL_SUMMARY_REPORT = REPORTS_DIR / "trusted_eval_summary.json"
+FINAL_ACCEPTANCE_REPORT = REPORTS_DIR / "acceptance" / "final" / "trusted_holdout.json"
 KB_STATS_PATH = PROCESSED_DIR / "kb_stats.json"
 KB_BUILD_STATE_PATH = PROCESSED_DIR / "kb_build_state.jsonl"
 KB_BUILD_ERRORS_PATH = REPORTS_DIR / "kb_build_errors.json"

@@ -8,6 +8,7 @@ from pathlib import Path
 from typing import Any
 
 from ..config import DOCUMENT_METADATA_PATH, MANIFEST_ENRICHED_PATH, MANIFEST_PATH, SQLITE_DB_PATH, TABLE_ROWS_PATH, TEXT_UNITS_PATH
+from ..path_refs import to_project_ref
 from ..utils import read_jsonl
 from .repository import database_status
 from .schema import connect, init_db
@@ -67,7 +68,15 @@ def _insert_import_run(
         INSERT INTO import_runs(run_id, started_at, status, manifest_path, metadata_path, text_units_path, table_rows_path)
         VALUES (?, ?, ?, ?, ?, ?, ?)
         """,
-        (run_id, started_at, "running", str(manifest_path), str(metadata_path), str(text_units_path), str(table_rows_path)),
+        (
+            run_id,
+            started_at,
+            "running",
+            to_project_ref(manifest_path),
+            to_project_ref(metadata_path),
+            to_project_ref(text_units_path),
+            to_project_ref(table_rows_path),
+        ),
     )
 
 

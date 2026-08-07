@@ -2,8 +2,10 @@ from __future__ import annotations
 
 import csv
 import json
+from datetime import datetime
 from pathlib import Path
 from typing import Any
+from urllib.parse import urlparse
 
 from .config import (
     MANIFEST_ENRICHED_PATH,
@@ -12,6 +14,7 @@ from .config import (
     SOURCE_ENRICHMENT_REPORT,
     SOURCE_CATALOG_VALIDATION_REPORT,
 )
+from .path_refs import to_project_ref
 from .utils import ensure_dir, norm_text, read_jsonl, write_jsonl
 
 
@@ -20,6 +23,7 @@ CATALOG_FIELDS = (
     "sha256",
     "file_name",
     "title",
+    "period",
     "source_url",
     "attachment_url",
     "column",
@@ -35,9 +39,19 @@ CATALOG_FIELDS = (
     "supersedes_doc_id",
     "superseded_by_doc_id",
     "version_group",
+    "source_evidence",
+    "version_evidence",
+    "version_evidence_url",
+    "proof_type",
+    "verification_method",
+    "verified_at",
+    "proof_evidence",
+    "reviewed_by",
+    "reviewed_at",
 )
 
 MERGE_FIELDS = (
+    "period",
     "source_url",
     "attachment_url",
     "column",
@@ -53,9 +67,66 @@ MERGE_FIELDS = (
     "supersedes_doc_id",
     "superseded_by_doc_id",
     "version_group",
+    "source_evidence",
+    "version_evidence",
+    "version_evidence_url",
+    "proof_type",
+    "verification_method",
+    "verified_at",
+    "proof_evidence",
+    "reviewed_by",
+    "reviewed_at",
 )
 
-VERSION_STATUS_VALUES = {"", "current", "superseded", "unknown"}
+VERSION_STATUS_VALUES = {"", "current", "superseded", "unknown", "not_applicable"}
+
+
+def approve_source_catalog(
+    source_catalog_path: Path,
+    output_path: Path,
+    reviewer: str,
+    reviewed_at: str,
+    doc_ids: list[str],
+    manifest_path: Path = MANIFEST_PATH,
+) -> dict[str, Any]:
+    """Stamp explicitly selected rows, then require the resulting catalog to validate."""
+    reviewer = reviewer.strip()
+    if not reviewer:
+        raise ValueError("reviewer is required")
+    if source_catalog_path.resolve() == output_path.resolve():
+        raise ValueError("approved output must differ from source catalog")
+    try:
+        datetime.fromisoformat(reviewed_at)
+    except ValueError as exc:
+        raise ValueError("reviewed_at must be ISO-8601") from exc
+    selected = {str(doc_id).strip() for doc_id in doc_ids if str(doc_id).strip()}
+    if not selected:
+        raise ValueError("at least one doc_id is required")
+    rows = _read_catalog(source_catalog_path)
+    matched = {str(row.get("doc_id")) for row in rows if str(row.get("doc_id")) in selected}
+    missing = sorted(selected - matched)
+    if missing:
+        raise ValueError(f"doc_id not found in catalog: {', '.join(missing)}")
+    for row in rows:
+        if str(row.get("doc_id")) in selected:
+            row["reviewed_by"] = reviewer
+            row["reviewed_at"] = reviewed_at
+    _write_catalog(output_path, rows)
+    validation = validate_source_catalog(
+        output_path,
+        manifest_path=manifest_path,
+        report_path=output_path.with_name(f"{output_path.stem}.validation.json"),
+    )
+    if not validation["valid"]:
+        raise ValueError(f"approved catalog remains invalid: {validation['blocking_issue_count']} blocking issue(s)")
+    return {
+        "source_catalog_path": to_project_ref(source_catalog_path),
+        "output_path": to_project_ref(output_path),
+        "reviewer": reviewer,
+        "reviewed_at": reviewed_at,
+        "approved_doc_ids": sorted(selected),
+        "validation": validation,
+    }
 
 
 def export_source_catalog_template(
@@ -69,7 +140,7 @@ def export_source_catalog_template(
         writer.writeheader()
         for row in rows:
             writer.writerow({field: row.get(field, "") or "" for field in CATALOG_FIELDS})
-    return {"output_path": str(output_path), "documents": len(rows), "fields": list(CATALOG_FIELDS)}
+    return {"output_path": to_project_ref(output_path), "documents": len(rows), "fields": list(CATALOG_FIELDS)}
 
 
 def enrich_manifest_from_source_catalog(
@@ -78,6 +149,13 @@ def enrich_manifest_from_source_catalog(
     output_path: Path = MANIFEST_ENRICHED_PATH,
     report_path: Path = SOURCE_ENRICHMENT_REPORT,
 ) -> dict[str, Any]:
+    validation = validate_source_catalog(
+        source_catalog_path,
+        manifest_path=manifest_path,
+        report_path=report_path.with_name("source_catalog_validation_report.json"),
+    )
+    if not validation["valid"]:
+        raise ValueError(f"source catalog has {validation['blocking_issue_count']} blocking issue(s)")
     manifest = read_jsonl(manifest_path)
     catalog_rows = _read_catalog(source_catalog_path)
     indexes = _build_catalog_indexes(catalog_rows)
@@ -112,8 +190,8 @@ def enrich_manifest_from_source_catalog(
         if id(row) not in used_catalog_ids and any(_clean_value(row.get(field)) for field in MERGE_FIELDS)
     ]
     report = {
-        "source_catalog_path": str(source_catalog_path),
-        "output_path": str(output_path),
+        "source_catalog_path": to_project_ref(source_catalog_path),
+        "output_path": to_project_ref(output_path),
         "documents": len(manifest),
         "catalog_rows": len(catalog_rows),
         "matched_documents": matched,
@@ -144,6 +222,7 @@ def validate_source_catalog(
     match_by_counts: dict[str, int] = {}
     missing_required_identity = 0
     url_warnings: list[dict[str, Any]] = []
+    review_issues: list[dict[str, Any]] = []
     duplicates = _duplicate_report(catalog_rows)
     conflicts: list[dict[str, Any]] = []
     used_catalog_ids: set[int] = set()
@@ -151,7 +230,7 @@ def validate_source_catalog(
     for row_index, row in enumerate(catalog_rows, start=1):
         if not any(_clean_value(row.get(field)) for field in ("doc_id", "sha256", "file_name", "title")):
             missing_required_identity += 1
-        for field in ("source_url", "attachment_url"):
+        for field in ("source_url", "attachment_url", "version_evidence_url"):
             value = _clean_value(row.get(field))
             if value and not _looks_like_url(value):
                 url_warnings.append({"row_index": row_index, "field": field, "value": value})
@@ -162,6 +241,7 @@ def validate_source_catalog(
             value = _clean_value(row.get(field))
             if value and not _looks_like_date(value):
                 url_warnings.append({"row_index": row_index, "field": field, "value": value})
+        review_issues.extend(_review_issues(row, row_index))
 
     for record in manifest:
         catalog_row, match_by = _match_catalog_row(record, indexes)
@@ -191,9 +271,12 @@ def validate_source_catalog(
         for row in catalog_rows
         if id(row) not in used_catalog_ids and any(_clean_value(row.get(field)) for field in MERGE_FIELDS)
     ]
+    blocking_issue_count = missing_required_identity + len(url_warnings) + len(review_issues) + sum(
+        len(duplicates.get(key, [])) for key in ("doc_id", "sha256", "file_name")
+    )
     report = {
-        "source_catalog_path": str(source_catalog_path),
-        "manifest_path": str(manifest_path),
+        "source_catalog_path": to_project_ref(source_catalog_path),
+        "manifest_path": to_project_ref(manifest_path),
         "documents": len(manifest),
         "catalog_rows": len(catalog_rows),
         "matched_documents": matched,
@@ -203,6 +286,8 @@ def validate_source_catalog(
         "duplicate_keys": duplicates,
         "url_warning_count": len(url_warnings),
         "url_warning_sample": url_warnings[:20],
+        "review_issue_count": len(review_issues),
+        "review_issue_sample": review_issues[:20],
         "conflict_count": len(conflicts),
         "conflict_sample": conflicts[:20],
         "unmatched_catalog_rows": len(unmatched_catalog),
@@ -216,6 +301,8 @@ def validate_source_catalog(
             1 for row in catalog_rows if _clean_value(row.get("supersedes_doc_id")) or _clean_value(row.get("superseded_by_doc_id"))
         ),
         "known_manifest_doc_ids": len(manifest_by_doc),
+        "blocking_issue_count": blocking_issue_count,
+        "valid": blocking_issue_count == 0,
     }
     ensure_dir(report_path.parent)
     report_path.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
@@ -237,6 +324,20 @@ def _read_catalog(path: Path) -> list[dict[str, Any]]:
         with path.open("r", encoding="utf-8-sig", newline="") as f:
             return [dict(row) for row in csv.DictReader(f)]
     raise ValueError("source catalog must be .csv, .jsonl, or .json")
+
+
+def _write_catalog(path: Path, rows: list[dict[str, Any]]) -> None:
+    ensure_dir(path.parent)
+    if path.suffix.lower() == ".jsonl":
+        path.write_text("\n".join(json.dumps(row, ensure_ascii=False) for row in rows) + "\n", encoding="utf-8")
+        return
+    if path.suffix.lower() == ".csv":
+        with path.open("w", encoding="utf-8-sig", newline="") as handle:
+            writer = csv.DictWriter(handle, fieldnames=CATALOG_FIELDS)
+            writer.writeheader()
+            writer.writerows({field: row.get(field, "") or "" for field in CATALOG_FIELDS} for row in rows)
+        return
+    raise ValueError("approved catalog output must be .csv or .jsonl")
 
 
 def _build_catalog_indexes(rows: list[dict[str, Any]]) -> dict[str, dict[str, dict[str, Any]]]:
@@ -297,8 +398,34 @@ def _duplicate_report(rows: list[dict[str, Any]]) -> dict[str, list[dict[str, An
 
 
 def _looks_like_url(value: str) -> bool:
-    return value.startswith(("http://", "https://"))
+    parsed = urlparse(value)
+    host = (parsed.hostname or "").lower()
+    if parsed.scheme not in {"http", "https"} or not host:
+        return False
+    return host not in {"example.com", "example.org", "example.net", "localhost"} and not host.endswith(".invalid")
 
 
 def _looks_like_date(value: str) -> bool:
     return bool(__import__("re").match(r"^\d{4}-\d{2}-\d{2}$", value))
+
+
+def _review_issues(row: dict[str, Any], row_index: int) -> list[dict[str, Any]]:
+    has_source = bool(_clean_value(row.get("source_url")) or _clean_value(row.get("attachment_url")))
+    status = _clean_value(row.get("version_status"))
+    claims_authority = has_source or status in {"current", "superseded", "not_applicable"}
+    if not claims_authority:
+        return []
+    proof_type = _clean_value(row.get("proof_type"))
+    manual_proof = proof_type == "manual_review" or not proof_type
+    required = ["reviewed_by", "reviewed_at"] if manual_proof else ["proof_type", "verification_method", "verified_at", "proof_evidence"]
+    if has_source:
+        required.append("source_evidence")
+    if status in {"current", "superseded", "not_applicable"}:
+        required.append("version_evidence")
+    if status == "not_applicable":
+        required.append("period")
+    return [
+        {"row_index": row_index, "field": field, "issue": "required_for_authority_claim"}
+        for field in required
+        if not _clean_value(row.get(field))
+    ]

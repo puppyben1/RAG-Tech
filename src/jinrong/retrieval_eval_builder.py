@@ -6,6 +6,7 @@ from typing import Any
 
 from .config import RETRIEVAL_EVAL_PATH
 from .knowledge_base import load_table_rows
+from .path_refs import to_project_ref
 from .services import load_text_units, search_evidence
 from .utils import ensure_dir, norm_text, write_jsonl
 
@@ -75,7 +76,7 @@ def build_retrieval_eval_set(
             rejected += 1
     write_jsonl(output_path, cases)
     return {
-        "output_path": str(output_path),
+        "output_path": to_project_ref(output_path),
         "target_size": target_size,
         "cases": len(cases),
         "candidates": len(candidates),

@@ -7,6 +7,7 @@ from pathlib import Path
 from typing import Any
 
 from .config import REPORTS_DIR, TEXT_CHUNKS_PATH, TEXT_UNITS_PATH
+from .path_refs import to_project_ref
 from .utils import ensure_dir, norm_text, read_jsonl, write_jsonl
 
 
@@ -173,7 +174,7 @@ def _buffer_too_large(buffer: list[str]) -> bool:
 def _build_report(units: list[dict[str, Any]], output_path: Path) -> dict[str, Any]:
     by_type = Counter(unit.get("source_type") for unit in units)
     return {
-        "output_path": str(output_path),
+        "output_path": to_project_ref(output_path),
         "text_units": len(units),
         "with_page_no": sum(1 for unit in units if unit.get("page_no") is not None),
         "with_section_path": sum(1 for unit in units if unit.get("section_path")),

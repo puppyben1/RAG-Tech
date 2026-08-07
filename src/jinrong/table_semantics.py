@@ -6,6 +6,7 @@ from pathlib import Path
 from typing import Any
 
 from .config import TABLE_CELLS_PATH, TABLE_ROWS_PATH, TABLE_SEMANTICS_REPORT
+from .path_refs import to_project_ref
 from .utils import ensure_dir, norm_text, read_jsonl, write_jsonl
 
 
@@ -48,8 +49,8 @@ def enhance_table_rows(
 
     write_jsonl(output_path, enhanced)
     report = {
-        "table_rows_path": str(output_path),
-        "table_cells_path": str(table_cells_path),
+        "table_rows_path": to_project_ref(output_path),
+        "table_cells_path": to_project_ref(table_cells_path),
         "table_rows": len(enhanced),
         "rows_with_indicator": rows_with_indicator,
         "rows_with_headers": rows_with_headers,

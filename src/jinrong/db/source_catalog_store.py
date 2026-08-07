@@ -7,6 +7,7 @@ from pathlib import Path
 from typing import Any
 
 from ..config import MANIFEST_PATH, SQLITE_DB_PATH
+from ..path_refs import to_project_ref
 from ..source_catalog import _clean_value, _match_catalog_row, _read_catalog, _build_catalog_indexes, validate_source_catalog
 from ..utils import read_jsonl
 from .repository import database_status
@@ -20,6 +21,8 @@ def import_source_catalog_to_db(
     reset_catalog: bool = False,
 ) -> dict[str, Any]:
     validation = validate_source_catalog(source_catalog_path, manifest_path=manifest_path)
+    if not validation["valid"]:
+        raise ValueError(f"source catalog has {validation['blocking_issue_count']} blocking issue(s)")
     catalog_rows = _read_catalog(source_catalog_path)
     manifest = read_jsonl(manifest_path)
     indexes = _build_catalog_indexes(catalog_rows)
@@ -78,7 +81,7 @@ def import_source_catalog_to_db(
                 (
                     entry_id,
                     imported_at,
-                    str(source_catalog_path),
+                    to_project_ref(source_catalog_path),
                     row_index,
                     match_doc_id,
                     match_by,
@@ -107,7 +110,7 @@ def import_source_catalog_to_db(
             )
         conn.commit()
     return {
-        "source_catalog_path": str(source_catalog_path),
+        "source_catalog_path": to_project_ref(source_catalog_path),
         "reset_catalog": reset_catalog,
         "validation": validation,
         "database": database_status(db_path),
@@ -115,7 +118,7 @@ def import_source_catalog_to_db(
 
 
 def _entry_id(path: Path, row_index: int, row: dict[str, Any]) -> str:
-    payload = json.dumps({"path": str(path), "row_index": row_index, "row": row}, ensure_ascii=False, sort_keys=True)
+    payload = json.dumps({"path": to_project_ref(path), "row_index": row_index, "row": row}, ensure_ascii=False, sort_keys=True)
     return hashlib.sha256(payload.encode("utf-8")).hexdigest()
 
 

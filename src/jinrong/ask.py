@@ -10,6 +10,7 @@ from .compliance_qa import answer_compliance_question, is_compliance_question
 from .config import RAW_DATA_DIR
 from .excel_parser import filter_sheet, parse_excel
 from .qa_data import QAItem, load_qa
+from .path_refs import to_project_ref
 from .table_qa import (
     _best_fact,
     _evidence,
@@ -194,7 +195,7 @@ def _ask_excel_open(question: str, data_dir: Path) -> AskResponse:
 
 def _fact_evidence(path: Path, fact) -> dict[str, Any]:
     return {
-        "source": str(path),
+        "source": to_project_ref(path),
         "sheet_name": fact.sheet_name,
         "cell_ref": fact.cell_ref,
         "row_header": fact.row_header,
@@ -226,7 +227,7 @@ def _ask_text_open(question: str, data_dir: Path) -> AskResponse:
         question=question,
         answer=best_sentence,
         answer_text=best_sentence,
-        evidence=[{"source": str(path), "text": best_sentence}],
+        evidence=[{"source": to_project_ref(path), "text": best_sentence}],
         confidence="medium",
         route="text_open",
     )

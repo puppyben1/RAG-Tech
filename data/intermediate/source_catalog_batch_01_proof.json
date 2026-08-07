@@ -1,0 +1,246 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-08-07T03:08:15.428390Z",
+  "catalog_path": "data/intermediate/source_catalog_batch_01_candidate.jsonl",
+  "raw_root": null,
+  "rows": 4,
+  "status_counts": {
+    "verified": 4
+  },
+  "results": [
+    {
+      "doc_id": "nfra_397",
+      "status": "verified",
+      "proof_type": "official_metadata_attachment_and_version",
+      "reasons": [],
+      "checks": {
+        "local_file": {
+          "found": true,
+          "unique": true,
+          "sha256": "fd7a0fa2f74d520268b4c7033f0c5bf5b61b4955635c4c462227eb71b4a40f82",
+          "expected_sha256": "fd7a0fa2f74d520268b4c7033f0c5bf5b61b4955635c4c462227eb71b4a40f82",
+          "sha256_match": true
+        },
+        "source_url": {
+          "url": "https://www.nfra.gov.cn/cn/view/pages/ItemDetail.html?docId=1152893&itemId=928",
+          "official_host": true,
+          "status_code": 200,
+          "bytes": 20416,
+          "sha256": "2746269444dfbb546796f82825e20d277d6f21e04a357922a03218f9a5bd14d6",
+          "sha256_match": true,
+          "text_matches": [
+            false,
+            false
+          ],
+          "error": null
+        },
+        "source_metadata": {
+          "url": "https://www.nfra.gov.cn/cn/static/data/DocInfo/SelectByDocId/data_docId=1152893.json",
+          "status_code": 200,
+          "identity_match": true,
+          "title_match": true,
+          "doc_no_match": true,
+          "publish_date_match": true,
+          "attachment_url_match": true,
+          "effective_date_match": true,
+          "error": null
+        },
+        "attachment_url": {
+          "url": "https://www.nfra.gov.cn/chinese/docfile/2024/71b67abaee404d8aaeda0339d01bc47d.docx",
+          "official_host": true,
+          "status_code": 200,
+          "bytes": 101120,
+          "sha256": "fd7a0fa2f74d520268b4c7033f0c5bf5b61b4955635c4c462227eb71b4a40f82",
+          "sha256_match": true,
+          "text_matches": [],
+          "error": null
+        },
+        "version_evidence_url": {
+          "url": null,
+          "official_host": false,
+          "status_code": null,
+          "effective_date_match": false,
+          "error": null
+        }
+      },
+      "version_status_claim": "current",
+      "effective_date_claim": "2024-07-01"
+    },
+    {
+      "doc_id": "nfra_398",
+      "status": "verified",
+      "proof_type": "official_metadata_attachment_and_version",
+      "reasons": [],
+      "checks": {
+        "local_file": {
+          "found": true,
+          "unique": true,
+          "sha256": "d1dfb2576bf86b67c71ab4c8cbe8774451d8a26a59d13e87de224ded59a12cc7",
+          "expected_sha256": "d1dfb2576bf86b67c71ab4c8cbe8774451d8a26a59d13e87de224ded59a12cc7",
+          "sha256_match": true
+        },
+        "source_url": {
+          "url": "https://www.nfra.gov.cn/cn/view/pages/ItemDetail.html?docId=1152893&itemId=928",
+          "official_host": true,
+          "status_code": 200,
+          "bytes": 20416,
+          "sha256": "2746269444dfbb546796f82825e20d277d6f21e04a357922a03218f9a5bd14d6",
+          "sha256_match": true,
+          "text_matches": [
+            false,
+            false
+          ],
+          "error": null
+        },
+        "source_metadata": {
+          "url": "https://www.nfra.gov.cn/cn/static/data/DocInfo/SelectByDocId/data_docId=1152893.json",
+          "status_code": 200,
+          "identity_match": true,
+          "title_match": true,
+          "doc_no_match": true,
+          "publish_date_match": true,
+          "attachment_url_match": true,
+          "effective_date_match": true,
+          "error": null
+        },
+        "attachment_url": {
+          "url": "https://www.nfra.gov.cn/chinese/docfile/2024/2777a4a6cd1442df9c47450f47f7a9dd.pdf",
+          "official_host": true,
+          "status_code": 200,
+          "bytes": 458857,
+          "sha256": "d1dfb2576bf86b67c71ab4c8cbe8774451d8a26a59d13e87de224ded59a12cc7",
+          "sha256_match": true,
+          "text_matches": [],
+          "error": null
+        },
+        "version_evidence_url": {
+          "url": null,
+          "official_host": false,
+          "status_code": null,
+          "effective_date_match": false,
+          "error": null
+        }
+      },
+      "version_status_claim": "current",
+      "effective_date_claim": "2024-07-01"
+    },
+    {
+      "doc_id": "nfra_390",
+      "status": "verified",
+      "proof_type": "official_metadata_attachment_and_version",
+      "reasons": [],
+      "checks": {
+        "local_file": {
+          "found": true,
+          "unique": true,
+          "sha256": "ad848a457948f01661b18a10a9b4d3fa894522d186d171b656b3fbd7fc6ae3e2",
+          "expected_sha256": "ad848a457948f01661b18a10a9b4d3fa894522d186d171b656b3fbd7fc6ae3e2",
+          "sha256_match": true
+        },
+        "source_url": {
+          "url": "https://www.nfra.gov.cn/cn/view/pages/ItemDetail.html?docId=1192308&itemId=926&generaltype=0",
+          "official_host": true,
+          "status_code": 200,
+          "bytes": 20416,
+          "sha256": "2746269444dfbb546796f82825e20d277d6f21e04a357922a03218f9a5bd14d6",
+          "sha256_match": true,
+          "text_matches": [
+            false,
+            false
+          ],
+          "error": null
+        },
+        "source_metadata": {
+          "url": "https://www.nfra.gov.cn/cn/static/data/DocInfo/SelectByDocId/data_docId=1192308.json",
+          "status_code": 200,
+          "identity_match": true,
+          "title_match": true,
+          "doc_no_match": true,
+          "publish_date_match": true,
+          "attachment_url_match": true,
+          "effective_date_match": true,
+          "error": null
+        },
+        "attachment_url": {
+          "url": "https://www.nfra.gov.cn/chinese/docfile/2024/299b740e64314c85a7a8fe61d165e093.doc",
+          "official_host": true,
+          "status_code": 200,
+          "bytes": 21565,
+          "sha256": "ad848a457948f01661b18a10a9b4d3fa894522d186d171b656b3fbd7fc6ae3e2",
+          "sha256_match": true,
+          "text_matches": [],
+          "error": null
+        },
+        "version_evidence_url": {
+          "url": null,
+          "official_host": false,
+          "status_code": null,
+          "effective_date_match": false,
+          "error": null
+        }
+      },
+      "version_status_claim": "current",
+      "effective_date_claim": "2024-12-27"
+    },
+    {
+      "doc_id": "nfra_389",
+      "status": "verified",
+      "proof_type": "official_metadata_attachment_and_version",
+      "reasons": [],
+      "checks": {
+        "local_file": {
+          "found": true,
+          "unique": true,
+          "sha256": "9a6c1460d381be20fcc6138d354d74f1f4309178d3bf443b59c7c725b4519909",
+          "expected_sha256": "9a6c1460d381be20fcc6138d354d74f1f4309178d3bf443b59c7c725b4519909",
+          "sha256_match": true
+        },
+        "source_url": {
+          "url": "https://www.nfra.gov.cn/cn/view/pages/ItemDetail.html?docId=1193890&itemId=928",
+          "official_host": true,
+          "status_code": 200,
+          "bytes": 20416,
+          "sha256": "2746269444dfbb546796f82825e20d277d6f21e04a357922a03218f9a5bd14d6",
+          "sha256_match": true,
+          "text_matches": [
+            false,
+            false
+          ],
+          "error": null
+        },
+        "source_metadata": {
+          "url": "https://www.nfra.gov.cn/cn/static/data/DocInfo/SelectByDocId/data_docId=1193890.json",
+          "status_code": 200,
+          "identity_match": true,
+          "title_match": true,
+          "doc_no_match": true,
+          "publish_date_match": true,
+          "attachment_url_match": true,
+          "effective_date_match": false,
+          "error": null
+        },
+        "attachment_url": {
+          "url": "https://www.nfra.gov.cn/chinese/docfile/2025/47de9ca6d479493ca9ae67db5524c26f.pdf",
+          "official_host": true,
+          "status_code": 200,
+          "bytes": 239693,
+          "sha256": "9a6c1460d381be20fcc6138d354d74f1f4309178d3bf443b59c7c725b4519909",
+          "sha256_match": true,
+          "text_matches": [],
+          "error": null
+        },
+        "version_evidence_url": {
+          "url": "https://www.gov.cn/gongbao/2025/issue_11926/202503/content_7013994.html",
+          "official_host": true,
+          "status_code": 200,
+          "effective_date_match": true,
+          "error": null
+        }
+      },
+      "version_status_claim": "current",
+      "effective_date_claim": "2026-01-01"
+    }
+  ],
+  "import_allowed": true,
+  "verified_catalog_path": "data/intermediate/source_catalog_batch_01_verified.jsonl"
+}

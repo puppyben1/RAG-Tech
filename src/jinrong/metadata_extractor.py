@@ -8,6 +8,7 @@ from typing import Any
 
 from .config import DOCUMENT_METADATA_PATH, MANIFEST_ENRICHED_PATH, MANIFEST_PATH, METADATA_EXTRACTION_REPORT, TEXT_CHUNKS_PATH
 from .manifest import build_manifest
+from .path_refs import to_project_ref
 from .utils import ensure_dir, norm_text, read_jsonl, write_jsonl
 
 
@@ -86,10 +87,21 @@ def build_document_metadata(
 
 def extract_document_metadata(record: dict[str, Any], first_text: str = "") -> dict[str, Any]:
     source = "\n".join([record.get("file_name", ""), record.get("title", ""), first_text[:3000]])
-    publisher, publisher_evidence = _extract_publisher(source)
-    doc_no, doc_no_evidence = _extract_doc_no(source)
-    publish_date, publish_date_evidence = _extract_publish_date(source)
-    business_domain, regulatory_topic = _classify_domain(record, first_text)
+    extracted_publisher, publisher_evidence = _extract_publisher(source)
+    extracted_doc_no, doc_no_evidence = _extract_doc_no(source)
+    extracted_publish_date, publish_date_evidence = _extract_publish_date(source)
+    extracted_domain, extracted_topic = _classify_domain(record, first_text)
+    publisher = record.get("publisher") or extracted_publisher
+    doc_no = record.get("doc_no") or extracted_doc_no
+    publish_date = record.get("publish_date") or extracted_publish_date
+    business_domain = record.get("business_domain") or extracted_domain
+    regulatory_topic = record.get("regulatory_topic") or extracted_topic
+    if record.get("publisher"):
+        publisher_evidence = "verified source catalog"
+    if record.get("doc_no"):
+        doc_no_evidence = "verified source catalog"
+    if record.get("publish_date"):
+        publish_date_evidence = "verified source catalog"
     column = record.get("column") or _infer_column(record, business_domain)
     if not publisher:
         publisher, publisher_evidence = _infer_publisher_from_record(record)
@@ -97,6 +109,7 @@ def extract_document_metadata(record: dict[str, Any], first_text: str = "") -> d
         "doc_id": record["doc_id"],
         "title": record.get("title"),
         "file_name": record.get("file_name"),
+        "sha256": record.get("sha256"),
         "source_type": record.get("source_type"),
         "file_ext": record.get("file_ext"),
         "period": record.get("period"),
@@ -115,6 +128,15 @@ def extract_document_metadata(record: dict[str, Any], first_text: str = "") -> d
         "supersedes_doc_id": record.get("supersedes_doc_id"),
         "superseded_by_doc_id": record.get("superseded_by_doc_id"),
         "version_group": record.get("version_group"),
+        "source_evidence": record.get("source_evidence"),
+        "version_evidence": record.get("version_evidence"),
+        "version_evidence_url": record.get("version_evidence_url"),
+        "proof_type": record.get("proof_type"),
+        "verification_method": record.get("verification_method"),
+        "verified_at": record.get("verified_at"),
+        "proof_evidence": record.get("proof_evidence"),
+        "reviewed_by": record.get("reviewed_by"),
+        "reviewed_at": record.get("reviewed_at"),
         "metadata_evidence": {
             "publisher": publisher_evidence,
             "publish_date": publish_date_evidence,
@@ -232,7 +254,7 @@ def _build_report(rows: list[dict[str, Any]], output_path: Path) -> dict[str, An
     by_type = Counter(row.get("source_type") for row in rows)
     by_domain = Counter(row.get("business_domain") for row in rows)
     return {
-        "output_path": str(output_path),
+        "output_path": to_project_ref(output_path),
         "documents": total,
         "publisher_filled": sum(1 for row in rows if row.get("publisher")),
         "publish_date_filled": sum(1 for row in rows if row.get("publish_date")),

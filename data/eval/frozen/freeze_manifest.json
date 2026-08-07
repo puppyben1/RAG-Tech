@@ -1,0 +1,117 @@
+{
+  "schema_version": "holdout_freeze_v1",
+  "frozen_at": "2026-08-07T04:13:43.060359Z",
+  "source_label": "independent_seed_pending_review",
+  "dev": {
+    "case_count": 3,
+    "sha256": "81d2769ffefbb23ccda8d040ea41614aaccbf10f002527651a48e5d32bb0bc78",
+    "question_fingerprint": "320aca32bc02f4961c34a61fb326a4153351d2b15c7781c5d7d11243fd8b3d84",
+    "question_fingerprints": [
+      "f455234b3b6a258b20eebc9b613a630cc51280c3a927bc1afc9c80f23a65f524",
+      "4a806417731cf4fa215986557f3a2a80dd4a5f6e116aa76a7457ed31bac0b479",
+      "1870b7a5b5410aa5528dea810b96fc0cfc44faf357b7bb78199455f11207c0f5"
+    ],
+    "path": "data/eval/frozen/trusted_eval_dev.jsonl",
+    "frozen_path": "data/eval/frozen/trusted_eval_dev.frozen.jsonl"
+  },
+  "holdout": {
+    "case_count": 6,
+    "sha256": "ed2e41185258ef87e01693231e2c9f6ac6ca2fd589469577e90df79a39febc13",
+    "question_fingerprint": "2fe997542b4c66b63108774cb9194d208581f48ee2ccdbb697f528ed56587530",
+    "question_fingerprints": [
+      "845ab6d8e565406223a5d4fe0cd696f31b5b737bfa3a3f8aaa1f879ce0d9cf82",
+      "866e9579423cfc0a1e6b4d290143b4089eca0d2808fc67b8fe3bc0528db54ebd",
+      "d96acf32d09070b8b4645c02156d57513bf4675efca389dd0977eb5624c2bdc3",
+      "8be59bdaca4858b53c0f369da7eb8e947f5d9eadf1cb31823fe7d498ebee0294",
+      "8700c14bb84ee10f545e0b6e89811b1873ca15e76c6830728533ef27f1cd82eb",
+      "aa533747453f1a7f24b49d942d645b7fb0e631ea85746ade0862a683fdcd12f5"
+    ],
+    "path": "data/eval/frozen/trusted_eval_holdout.jsonl",
+    "frozen_path": "data/eval/frozen/trusted_eval_holdout.frozen.jsonl"
+  },
+  "overlap": {
+    "question_fingerprint_count": 0,
+    "case_id_count": 0
+  },
+  "coverage": {
+    "不可回答负例": 1,
+    "业务流程": 1,
+    "制度事实": 1,
+    "条款阈值": 1,
+    "统计取数": 1,
+    "跨文件场景判断": 1
+  },
+  "minimum_cases_per_category": 5,
+  "coverage_complete": false,
+  "missing_categories": [],
+  "insufficient_categories": {
+    "不可回答负例": 1,
+    "业务流程": 1,
+    "制度事实": 1,
+    "条款阈值": 1,
+    "统计取数": 1,
+    "跨文件场景判断": 1
+  },
+  "gold_issue_count": 13,
+  "gold_issue_sample": [
+    {
+      "id": "HOLDOUT_001",
+      "field": "must_contain"
+    },
+    {
+      "id": "HOLDOUT_001",
+      "field": "critical_entities"
+    },
+    {
+      "id": "HOLDOUT_001",
+      "field": "gold_evidence"
+    },
+    {
+      "id": "HOLDOUT_002",
+      "field": "must_contain"
+    },
+    {
+      "id": "HOLDOUT_002",
+      "field": "gold_evidence"
+    },
+    {
+      "id": "HOLDOUT_003",
+      "field": "refusal_reason"
+    },
+    {
+      "id": "HOLDOUT_004",
+      "field": "must_contain"
+    },
+    {
+      "id": "HOLDOUT_004",
+      "field": "gold_evidence"
+    },
+    {
+      "id": "HOLDOUT_005",
+      "field": "must_contain"
+    },
+    {
+      "id": "HOLDOUT_005",
+      "field": "gold_evidence"
+    },
+    {
+      "id": "HOLDOUT_006",
+      "field": "must_contain"
+    },
+    {
+      "id": "HOLDOUT_006",
+      "field": "critical_entities"
+    },
+    {
+      "id": "HOLDOUT_006",
+      "field": "gold_evidence"
+    }
+  ],
+  "review_status": "pending_external_review",
+  "gate": "blocked",
+  "gate_reasons": [
+    "pending_external_review",
+    "incomplete_gold_cases:6",
+    "insufficient_category_samples"
+  ]
+}

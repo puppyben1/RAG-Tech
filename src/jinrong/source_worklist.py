@@ -14,6 +14,7 @@ from .config import (
     TRUSTED_EVAL_PATH,
 )
 from .source_catalog import CATALOG_FIELDS
+from .path_refs import to_project_ref
 from .utils import ensure_dir, read_jsonl
 
 
@@ -123,8 +124,9 @@ def _missing_fields(doc: dict[str, Any]) -> list[str]:
         "source_site",
         "publish_date",
         "version_status",
-        "version_group",
         "effective_date",
+        "source_evidence",
+        "version_evidence",
     )
     missing = []
     for field in fields:
@@ -134,6 +136,14 @@ def _missing_fields(doc: dict[str, Any]) -> list[str]:
                 missing.append(field)
         elif not value:
             missing.append(field)
+    machine_proved = all(
+        str(doc.get(field) or "").strip()
+        for field in ("proof_type", "verification_method", "verified_at", "proof_evidence")
+    )
+    if not machine_proved:
+        for field in ("reviewed_by", "reviewed_at"):
+            if not doc.get(field):
+                missing.append(field)
     return missing
 
 
@@ -156,7 +166,7 @@ def _report(
         for row in rows[:20]
     ]
     return {
-        "output_path": str(output_path),
+        "output_path": to_project_ref(output_path),
         "documents": len(docs),
         "worklist_rows": len(rows),
         "trusted_eval_referenced_docs": len(trusted_refs),
@@ -171,6 +181,10 @@ def _report(
                 "version_status",
                 "version_group",
                 "effective_date",
+                "source_evidence",
+                "version_evidence",
+                "reviewed_by",
+                "reviewed_at",
             )
         },
         "top_priority_sample": top,

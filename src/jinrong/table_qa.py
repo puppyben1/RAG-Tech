@@ -8,6 +8,7 @@ from typing import Any
 from .config import RAW_DATA_DIR
 from .excel_parser import CellFact, filter_sheet, parse_excel
 from .qa_data import QAItem
+from .path_refs import to_project_ref
 from .utils import loose_contains, nearly_equal, norm_text, round_like_eval, to_number
 
 
@@ -106,7 +107,7 @@ def _candidate_facts(facts: list[CellFact], row_term: str | None, col_term: str 
 
 def _evidence(path: Path, fact: CellFact, extra: str | None = None) -> str:
     parts = [
-        str(path),
+        to_project_ref(path),
         f"工作表：{fact.sheet_name}",
         f"单元格：{fact.cell_ref}",
     ]
@@ -167,7 +168,7 @@ def solve_calc(item: QAItem, path: Path, facts: list[CellFact]) -> AnswerResult:
     value = round_like_eval((to_fact.value_num or 0) - (from_fact.value_num or 0))
     answer = _option_to_answer(value, item.options)
     ev = (
-        f"{str(path)}；工作表：{from_fact.sheet_name}；"
+        f"{to_project_ref(path)}；工作表：{from_fact.sheet_name}；"
         f"{from_col}={from_fact.value_raw}({from_fact.cell_ref})，"
         f"{to_col}={to_fact.value_raw}({to_fact.cell_ref})；变化值={value}。"
     )

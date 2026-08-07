@@ -1,0 +1,5 @@
+{"id":"AB_TEXT_001","query":"银行函证 工作质量 效率","source_type":"word","expected_doc_id":"nfra_397","expected_evidence_type":"text_unit","expected_contains":["银行函证"]}
+{"id":"AB_TEXT_002","query":"数据安全事件 核心数据 泄露","source_type":"word","expected_doc_id":"nfra_390","expected_evidence_type":"text_unit","expected_contains":["数据安全事件"]}
+{"id":"AB_TEXT_003","query":"银行函证 办理说明","source_type":"word","expected_doc_id":"nfra_397","expected_evidence_type":"text_unit","expected_contains":["办理说明"]}
+{"id":"AB_TABLE_004","query":"4806061.691218953","source_type":"excel","expected_doc_id":"nfra_001","expected_evidence_type":"table_row","expected_contains":["4806061.691218953"]}
+{"id":"AB_TABLE_005","query":"4820568.61325416","source_type":"excel","expected_doc_id":"nfra_001","expected_evidence_type":"table_row","expected_contains":["4820568.61325416"]}

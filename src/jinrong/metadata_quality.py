@@ -9,6 +9,7 @@ from typing import Any
 
 from .config import DOCUMENT_METADATA_PATH, METADATA_QUALITY_REPORT, SQLITE_DB_PATH
 from .db.schema import connect, init_db
+from .path_refs import to_project_ref
 from .utils import ensure_dir, read_jsonl
 
 
@@ -57,7 +58,7 @@ def _build_report(rows: list[dict[str, Any]], report_path: Path) -> dict[str, An
         for filled in [sum(1 for row in rows if row.get(field))]
     }
     return {
-        "report_path": str(report_path),
+        "report_path": to_project_ref(report_path),
         "created_at": _now(),
         "documents": total,
         "field_coverage": field_coverage,

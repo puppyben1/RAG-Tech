@@ -1,0 +1,29 @@
+{
+  "output_path": "tmp/validation-20260807/document_metadata.jsonl",
+  "documents": 500,
+  "publisher_filled": 466,
+  "publish_date_filled": 8,
+  "doc_no_filled": 12,
+  "source_url_filled": 4,
+  "attachment_url_filled": 4,
+  "by_source_type": {
+    "excel": 389,
+    "pdf": 45,
+    "word": 66
+  },
+  "by_business_domain": {
+    "监管统计": 170,
+    "保险经营统计": 221,
+    "保险资金运用": 15,
+    "其他": 18,
+    "风险管理": 7,
+    "资本管理": 57,
+    "绿色金融": 1,
+    "数据安全": 1,
+    "普惠金融": 1,
+    "银行函证": 2,
+    "行政许可": 3,
+    "反洗钱": 1,
+    "支付结算": 3
+  }
+}

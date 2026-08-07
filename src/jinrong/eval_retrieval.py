@@ -1,10 +1,13 @@
 from __future__ import annotations
 
 import json
+import time
 from pathlib import Path
 from typing import Any
 
 from .config import RETRIEVAL_EVAL_PATH, RETRIEVAL_EVAL_REPORT
+from .eval_provenance import add_eval_provenance
+from .path_refs import to_project_ref
 from .services import search_evidence
 from .utils import ensure_dir, norm_text, read_jsonl
 
@@ -22,6 +25,7 @@ def evaluate_retrieval(
     top1 = sum(1 for row in details if row["top1_hit"])
     top3 = sum(1 for row in details if row["top3_hit"])
     topk = sum(1 for row in details if row["topk_hit"])
+    latencies = sorted(float(row.get("latency_ms", 0)) for row in details)
     summary = {
         "total": total,
         "retrieval": retrieval,
@@ -33,15 +37,21 @@ def evaluate_retrieval(
         "top1_accuracy": top1 / total if total else 0,
         "top3_accuracy": top3 / total if total else 0,
         "topk_accuracy": topk / total if total else 0,
-        "report_path": str(report_path),
+        "latency_ms": {
+            "p50": _percentile(latencies, 0.50),
+            "p95": _percentile(latencies, 0.95),
+            "max": max(latencies) if latencies else 0,
+        },
+        "report_path": to_project_ref(report_path),
     }
-    payload = {"summary": summary, "details": details}
+    payload = add_eval_provenance({"summary": summary, "details": details}, eval_path)
     ensure_dir(report_path.parent)
     report_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
     return summary
 
 
 def _evaluate_case(case: dict[str, Any], retrieval: str, rerank: bool, top_k: int) -> dict[str, Any]:
+    started = time.perf_counter()
     search = search_evidence(
         query=case["query"],
         source_type=case.get("source_type"),
@@ -69,7 +79,15 @@ def _evaluate_case(case: dict[str, Any], retrieval: str, rerank: bool, top_k: in
         "index": search.get("index"),
         "top_evidence_type": results[0].get("evidence_type") if results else None,
         "top_text": str(results[0].get("text", ""))[:300] if results else "",
+        "latency_ms": round((time.perf_counter() - started) * 1000, 2),
     }
+
+
+def _percentile(values: list[float], quantile: float) -> float:
+    if not values:
+        return 0
+    index = min(len(values) - 1, max(0, int((len(values) - 1) * quantile)))
+    return round(values[index], 2)
 
 
 def _is_hit(case: dict[str, Any], result: dict[str, Any]) -> bool:

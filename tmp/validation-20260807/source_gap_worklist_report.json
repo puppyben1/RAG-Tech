@@ -1,0 +1,182 @@
+{
+  "output_path": "tmp/validation-20260807/source_gap_worklist.csv",
+  "documents": 500,
+  "worklist_rows": 496,
+  "trusted_eval_referenced_docs": 13,
+  "retrieval_eval_referenced_docs": 30,
+  "missing_field_counts": {
+    "source_url": 496,
+    "attachment_url": 496,
+    "source_site": 496,
+    "publish_date": 492,
+    "version_status": 496,
+    "version_group": 0,
+    "effective_date": 496,
+    "source_evidence": 496,
+    "version_evidence": 496,
+    "reviewed_by": 496,
+    "reviewed_at": 496
+  },
+  "top_priority_sample": [
+    {
+      "doc_id": "nfra_002",
+      "title": "2026年2月全国各地区原保险保费收入情况表",
+      "source_type": "excel",
+      "priority": 2555,
+      "priority_reasons": "eval_hit:25;stat_table;missing_source;unknown_version",
+      "missing_fields": "source_url;attachment_url;source_site;publish_date;version_status;effective_date;source_evidence;version_evidence;reviewed_by;reviewed_at"
+    },
+    {
+      "doc_id": "nfra_361",
+      "title": "绿色信贷统计信息披露说明-中文",
+      "source_type": "pdf",
+      "priority": 775,
+      "priority_reasons": "eval_hit:7;regulation_text;missing_source;unknown_version;has_doc_no",
+      "missing_fields": "source_url;attachment_url;source_site;publish_date;version_status;effective_date;source_evidence;version_evidence;reviewed_by;reviewed_at"
+    },
+    {
+      "doc_id": "nfra_012",
+      "title": "2025年商业银行主要监管指标情况表",
+      "source_type": "excel",
+      "priority": 755,
+      "priority_reasons": "eval_hit:7;stat_table;missing_source;unknown_version",
+      "missing_fields": "source_url;attachment_url;source_site;publish_date;version_status;effective_date;source_evidence;version_evidence;reviewed_by;reviewed_at"
+    },
+    {
+      "doc_id": "nfra_362",
+      "title": "21家国内主要银行绿色信贷统计数据汇总表（201306）CN.p",
+      "source_type": "pdf",
+      "priority": 665,
+      "priority_reasons": "eval_hit:6;regulation_text;missing_source;unknown_version",
+      "missing_fields": "source_url;attachment_url;source_site;publish_date;version_status;effective_date;source_evidence;version_evidence;reviewed_by;reviewed_at"
+    },
+    {
+      "doc_id": "nfra_363",
+      "title": "21家国内主要银行绿色信贷统计数据汇总表（201312）CN.p",
+      "source_type": "pdf",
+      "priority": 665,
+      "priority_reasons": "eval_hit:6;regulation_text;missing_source;unknown_version",
+      "missing_fields": "source_url;attachment_url;source_site;publish_date;version_status;effective_date;source_evidence;version_evidence;reviewed_by;reviewed_at"
+    },
+    {
+      "doc_id": "nfra_001",
+      "title": "2026年银行业总资产、总负债（月度）",
+      "source_type": "excel",
+      "priority": 655,
+      "priority_reasons": "eval_hit:6;stat_table;missing_source;unknown_version",
+      "missing_fields": "source_url;attachment_url;source_site;publish_date;version_status;effective_date;source_evidence;version_evidence;reviewed_by;reviewed_at"
+    },
+    {
+      "doc_id": "nfra_070",
+      "title": "2024年商业银行主要监管指标情况表",
+      "source_type": "excel",
+      "priority": 455,
+      "priority_reasons": "eval_hit:4;stat_table;missing_source;unknown_version",
+      "missing_fields": "source_url;attachment_url;source_site;publish_date;version_status;effective_date;source_evidence;version_evidence;reviewed_by;reviewed_at"
+    },
+    {
+      "doc_id": "nfra_003",
+      "title": "2026年2月人身险公司经营情况表",
+      "source_type": "excel",
+      "priority": 355,
+      "priority_reasons": "eval_hit:3;stat_table;missing_source;unknown_version",
+      "missing_fields": "source_url;attachment_url;source_site;publish_date;version_status;effective_date;source_evidence;version_evidence;reviewed_by;reviewed_at"
+    },
+    {
+      "doc_id": "nfra_004",
+      "title": "2026年2月财产险公司经营情况表",
+      "source_type": "excel",
+      "priority": 255,
+      "priority_reasons": "eval_hit:2;stat_table;missing_source;unknown_version",
+      "missing_fields": "source_url;attachment_url;source_site;publish_date;version_status;effective_date;source_evidence;version_evidence;reviewed_by;reviewed_at"
+    },
+    {
+      "doc_id": "nfra_007",
+      "title": "2026年1月人身险公司经营情况表",
+      "source_type": "excel",
+      "priority": 255,
+      "priority_reasons": "eval_hit:2;stat_table;missing_source;unknown_version",
+      "missing_fields": "source_url;attachment_url;source_site;publish_date;version_status;effective_date;source_evidence;version_evidence;reviewed_by;reviewed_at"
+    },
+    {
+      "doc_id": "nfra_008",
+      "title": "2026年1月财产险公司经营情况表",
+      "source_type": "excel",
+      "priority": 255,
+      "priority_reasons": "eval_hit:2;stat_table;missing_source;unknown_version",
+      "missing_fields": "source_url;attachment_url;source_site;publish_date;version_status;effective_date;source_evidence;version_evidence;reviewed_by;reviewed_at"
+    },
+    {
+      "doc_id": "nfra_364",
+      "title": "21家国内主要银行绿色信贷统计数据汇总表（201406）CN.p",
+      "source_type": "pdf",
+      "priority": 165,
+      "priority_reasons": "eval_hit:1;regulation_text;missing_source;unknown_version",
+      "missing_fields": "source_url;attachment_url;source_site;publish_date;version_status;effective_date;source_evidence;version_evidence;reviewed_by;reviewed_at"
+    },
+    {
+      "doc_id": "nfra_365",
+      "title": "21家国内主要银行绿色信贷统计数据汇总表（201412）CN.p",
+      "source_type": "pdf",
+      "priority": 165,
+      "priority_reasons": "eval_hit:1;regulation_text;missing_source;unknown_version",
+      "missing_fields": "source_url;attachment_url;source_site;publish_date;version_status;effective_date;source_evidence;version_evidence;reviewed_by;reviewed_at"
+    },
+    {
+      "doc_id": "nfra_366",
+      "title": "21家国内主要银行绿色信贷统计数据汇总表（201506）CN.p",
+      "source_type": "pdf",
+      "priority": 165,
+      "priority_reasons": "eval_hit:1;regulation_text;missing_source;unknown_version",
+      "missing_fields": "source_url;attachment_url;source_site;publish_date;version_status;effective_date;source_evidence;version_evidence;reviewed_by;reviewed_at"
+    },
+    {
+      "doc_id": "nfra_367",
+      "title": "21家国内主要银行绿色信贷统计数据汇总表（201512）CN.p",
+      "source_type": "pdf",
+      "priority": 165,
+      "priority_reasons": "eval_hit:1;regulation_text;missing_source;unknown_version",
+      "missing_fields": "source_url;attachment_url;source_site;publish_date;version_status;effective_date;source_evidence;version_evidence;reviewed_by;reviewed_at"
+    },
+    {
+      "doc_id": "nfra_368",
+      "title": "21家国内主要银行绿色信贷统计数据汇总表（201606）CN.p",
+      "source_type": "pdf",
+      "priority": 165,
+      "priority_reasons": "eval_hit:1;regulation_text;missing_source;unknown_version",
+      "missing_fields": "source_url;attachment_url;source_site;publish_date;version_status;effective_date;source_evidence;version_evidence;reviewed_by;reviewed_at"
+    },
+    {
+      "doc_id": "nfra_369",
+      "title": "21家国内主要银行绿色信贷统计数据汇总表（201612）CN.p",
+      "source_type": "pdf",
+      "priority": 165,
+      "priority_reasons": "eval_hit:1;regulation_text;missing_source;unknown_version",
+      "missing_fields": "source_url;attachment_url;source_site;publish_date;version_status;effective_date;source_evidence;version_evidence;reviewed_by;reviewed_at"
+    },
+    {
+      "doc_id": "nfra_370",
+      "title": "21家国内主要银行绿色信贷统计数据汇总表（201706）CN.p",
+      "source_type": "pdf",
+      "priority": 165,
+      "priority_reasons": "eval_hit:1;regulation_text;missing_source;unknown_version",
+      "missing_fields": "source_url;attachment_url;source_site;publish_date;version_status;effective_date;source_evidence;version_evidence;reviewed_by;reviewed_at"
+    },
+    {
+      "doc_id": "nfra_373",
+      "title": "2015中国保险市场年报（中文)",
+      "source_type": "pdf",
+      "priority": 165,
+      "priority_reasons": "eval_hit:1;regulation_text;missing_source;unknown_version",
+      "missing_fields": "source_url;attachment_url;source_site;publish_date;version_status;effective_date;source_evidence;version_evidence;reviewed_by;reviewed_at"
+    },
+    {
+      "doc_id": "nfra_385",
+      "title": "附件：保险公司资本保证金处置情况报告表",
+      "source_type": "word",
+      "priority": 165,
+      "priority_reasons": "eval_hit:1;regulation_text;missing_source;unknown_version",
+      "missing_fields": "source_url;attachment_url;source_site;publish_date;version_status;effective_date;source_evidence;version_evidence;reviewed_by;reviewed_at"
+    }
+  ]
+}

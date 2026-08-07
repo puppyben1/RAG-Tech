@@ -1,0 +1,74 @@
+{
+  "schema_version": "competition_readiness_v1",
+  "generated_at": "2026-08-07T04:37:38.099697Z",
+  "status": "blocked",
+  "ready_for_competition_claim": false,
+  "blocked_gates": [
+    "source_and_version",
+    "legacy_doc_quality",
+    "independent_holdout",
+    "final_acceptance"
+  ],
+  "gates": {
+    "reproducibility": {
+      "status": "passed",
+      "reasons": [],
+      "documents": 500,
+      "processed_documents": 500,
+      "error_count": 0
+    },
+    "source_and_version": {
+      "status": "blocked",
+      "reasons": [
+        "source_or_version_incomplete:496"
+      ],
+      "documents": 500,
+      "complete_documents": 4,
+      "incomplete_documents": 496,
+      "coverage": 0.008
+    },
+    "legacy_doc_quality": {
+      "status": "blocked",
+      "reasons": [
+        "manual_review_pending:32"
+      ],
+      "artifact_gate": "blocked",
+      "summary": {
+        "documents": 32,
+        "machine_passed": 32,
+        "machine_failed": 0,
+        "manual_review_pending": 32
+      }
+    },
+    "sensitive_information": {
+      "status": "passed",
+      "reasons": [],
+      "artifact_gate": "passed",
+      "summary": {
+        "records_scanned": 90687,
+        "candidate_count": 0,
+        "confirmed_sensitive_count": 0,
+        "unresolved_count": 0
+      }
+    },
+    "independent_holdout": {
+      "status": "blocked",
+      "reasons": [
+        "incomplete_gold_cases:6",
+        "insufficient_category_samples",
+        "pending_external_review"
+      ],
+      "artifact_gate": "blocked",
+      "holdout_cases": 6
+    },
+    "final_acceptance": {
+      "status": "blocked",
+      "reasons": [
+        "final_acceptance_report_missing"
+      ],
+      "report_status": null,
+      "final_passed": false,
+      "latency_gate": {}
+    }
+  }
+}
