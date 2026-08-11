@@ -1,9 +1,9 @@
 import React, { useEffect, useMemo, useState } from "react";
 import {
   Activity, Archive, BarChart3, ChevronDown, ChevronLeft, ChevronRight, CircleHelp,
-  BookOpen, Calculator, Database, FileSearch, Files, History, Menu, MessageSquareText,
+  BookOpen, Braces, Calculator, ClipboardList, Database, FileCheck2, FileSearch, Files, Gauge, GitBranch, History, Layers3, Menu, MessageSquareText, Network,
   Paperclip, PanelRight, Play, Plus, Search, Send, Settings, Sparkles, Table2,
-  Upload, Workflow, X,
+  ShieldCheck, Target, Upload, Workflow, X,
 } from "lucide-react";
 import { apiRequest, getInitialApiBase, saveApiBase } from "./api.js";
 import { Badge, EmptyState, ErrorBox, EvidenceCard, HealthBadge, MetricCard } from "./components.jsx";
@@ -15,6 +15,7 @@ const navItems = [
   { key: "search", label: "证据检索", icon: FileSearch },
   { key: "graph", label: "知识图谱", icon: Workflow },
   { key: "eval", label: "评测中心", icon: BarChart3 },
+  { key: "guide", label: "方案说明", icon: ClipboardList },
 ];
 
 const sampleQuestion = "根据 Excel 附件《2023年10月人身险公司经营情况表》（工作表：人身保险公司（月度）），“原保险保费收入”在“本年累计/截至当期”口径下的数值是多少？";
@@ -72,10 +73,11 @@ export default function App() {
   return (
     <div className={`shell ${collapsed ? "sidebar-collapsed" : ""}`}>
       <aside className="sidebar">
-        <div className="brand-row"><div className="brand-mark">R</div><span className="brand-name">可信 RAG</span><button className="ghost icon-button sidebar-toggle" title="收起导航" onClick={() => setCollapsed(!collapsed)}>{collapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}</button></div>
+        <div className="brand-row"><div className="brand-mark">R</div><span className="brand-name">RegRAG</span><button className="ghost icon-button sidebar-toggle" title="收起导航" onClick={() => setCollapsed(!collapsed)}>{collapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}</button></div>
+        <div className="workspace-card"><div className="workspace-avatar">银</div><div><strong>银行监管助手</strong><small>TRUSTED WORKSPACE</small></div><ChevronDown size={14} /></div>
         <button className="new-chat" onClick={() => setTab("ask")}><Plus size={16} /><span>新建对话</span></button>
         <nav className="nav">{navItems.map((item) => { const Icon = item.icon; return <button key={item.key} className={tab === item.key ? "active" : ""} onClick={() => setTab(item.key)} title={item.label}><Icon size={17} /><span>{item.label}</span></button>; })}</nav>
-        <div className="sidebar-bottom"><div className="workspace-label"><Database size={15} /><span>监管知识库</span><ChevronDown size={13} /></div><div className="user-row"><div className="avatar">D</div><div className="user-copy"><strong>demo</strong><small>demo@weknora.local</small></div><Settings size={15} /></div></div>
+        <div className="sidebar-bottom"><div className="workspace-label"><Database size={15} /><span>监管知识库</span><span className="workspace-count">200+</span></div><div className="user-row"><div className="avatar">R</div><div className="user-copy"><strong>竞赛演示环境</strong><small>公开监管资料</small></div><Settings size={15} /></div></div>
       </aside>
       <main className="main">
         <header className="topbar"><div className="breadcrumbs"><span>监管知识库</span><ChevronRight size={14} /><strong>{current?.label}</strong></div><div className="top-actions"><div className="data-mode" role="group" aria-label="数据模式"><button className={!demoMode ? "active" : ""} onClick={() => setDemoMode(false)}>实时数据</button><button className={demoMode ? "active" : ""} onClick={() => setDemoMode(true)}>演示样例</button></div><HealthBadge status={health} /><div className="api-input"><span>API</span><input value={apiBase} onChange={(e) => setApiBase(e.target.value)} aria-label="API Base" /></div><button className="ghost icon-button" onClick={checkHealth} title="检查服务"><Settings size={17} /></button></div></header>
@@ -87,6 +89,7 @@ export default function App() {
           {tab === "documents" && <DocumentsPage apiBase={apiBase} />}
           {tab === "graph" && <GraphPage />}
           {tab === "eval" && <EvalPage apiBase={apiBase} />}
+          {tab === "guide" && <ProductSpecPage setTab={setTab} />}
         </div>
       </main>
     </div>
@@ -126,6 +129,34 @@ function DocumentsPage({ apiBase }) { const [sourceType, setSourceType] = useSta
 function GraphPage() { return <div className="graph-page"><div className="page-intro compact"><div><p className="eyebrow">KNOWLEDGE GRAPH</p><h1>知识图谱</h1><p className="muted">从文档、条款、机构和指标之间的关系发现上下文。</p></div><div className="graph-controls"><button className="secondary"><Search size={15} />搜索节点</button><button className="ghost icon-button" title="适应屏幕"><Workflow size={16} /></button></div></div><div className="graph-canvas"><div className="graph-grid" />{[["监管制度", 50, 38, "green"], ["银行函证", 27, 27, "orange"], ["统计报表", 70, 25, "blue"], ["原保险保费收入", 60, 63, "orange"], ["金融监管总局", 33, 68, "green"], ["业务领域", 78, 60, "green"], ["2023年10月", 46, 80, "blue"]].map(([label, x, y, tone]) => <button className={`graph-node ${tone}`} style={{ left: `${x}%`, top: `${y}%` }} key={label}><span />{label}</button>)}<div className="graph-legend"><strong>节点类型</strong><span><i className="blue" />摘要</span><span><i className="green" />实体</span><span><i className="orange" />概念</span><span><i className="red" />对比</span></div></div></div>; }
 
 function EvalPage({ apiBase }) { const [scope, setScope] = useState("all"); const [result, setResult] = useState(null); const [loading, setLoading] = useState(false); const [error, setError] = useState(""); async function run() { setLoading(true); setError(""); try { setResult(await apiRequest(apiBase, "/eval", { scope })); } catch (e) { setError(e.message); } finally { setLoading(false); } } return <div className="eval-page"><div className="page-intro compact"><div><p className="eyebrow">QUALITY CONTROL</p><h1>评测中心</h1><p className="muted">验证回答准确率、证据命中和运行环境一致性。</p></div><button className="primary" onClick={run} disabled={loading}><BarChart3 size={15} />{loading ? "评测中" : "运行评测"}</button></div><section className="panel eval-controls"><label>评测范围</label><select value={scope} onChange={(e) => setScope(e.target.value)}><option value="all">全部题目</option><option value="excel">Excel</option><option value="text">Word / PDF</option></select><ErrorBox message={error} /></section>{result ? <section className="metrics-grid eval-metrics"><MetricCard label="总题数" value={result.total} tone="blue" /><MetricCard label="通过" value={result.correct} tone="green" /><MetricCard label="失败" value={(result.total || 0) - (result.correct || 0)} tone="red" /><MetricCard label="准确率" value={`${Math.round(Number(result.accuracy || 0) * 100)}%`} tone="green" /></section> : <section className="panel eval-empty"><BarChart3 size={28} /><h2>还没有本次评测结果</h2><p className="muted">选择范围并运行评测，查看失败样本和指标变化。</p></section>}</div>; }
+
+function ProductSpecPage({ setTab }) {
+  const targets = [
+    ["制度事实准确率", "≥ 85%"],
+    ["表格取数准确率", "≥ 80%"],
+    ["证据引用命中率", "≥ 90%"],
+    ["关键事实错误率", "≤ 5%"],
+    ["依据不足拒答率", "≥ 80%"],
+  ];
+  const pipeline = [
+    { icon: Files, title: "多源资料接入", text: "Word、PDF、Excel 与官方网页附件，统一记录来源、哈希和版本。" },
+    { icon: Layers3, title: "结构化解析", text: "保留标题层级、条款编号、表头、单位、期间和单元格定位。" },
+    { icon: GitBranch, title: "混合检索", text: "关键词、向量、元数据和表格结构联合召回，并执行版本过滤与重排。" },
+    { icon: ShieldCheck, title: "受控生成", text: "依据最小充分证据生成；无权威证据时拒答，不让模型自由补全。" },
+    { icon: FileCheck2, title: "引用与评测", text: "答案返回文件、页码、条款或单元格，并持续评测准确率与新鲜度。" },
+  ];
+  return <div className="spec-page">
+    <section className="spec-cover panel">
+      <div><p className="eyebrow">PRODUCT SPECIFICATION · V1.0</p><h1>银行业监管可信 RAG 问答系统</h1><p>面向制度查询、流程核对、统计取数和合规判断，建设“问得准、找得到、答得清、可追溯、可复现”的监管知识工作台。</p></div>
+      <div className="cover-actions"><button className="primary" onClick={() => setTab("ask")}><MessageSquareText size={15} />体验可信问答</button><button className="secondary" onClick={() => setTab("documents")}><Database size={15} />查看知识库</button></div>
+    </section>
+    <section className="spec-kpi-grid">{targets.map(([label, value]) => <div className="spec-kpi" key={label}><span>{label}</span><strong>{value}</strong></div>)}</section>
+    <section className="spec-grid two-column"><article className="panel"><div className="section-head"><div><p className="eyebrow">WHY NOW</p><h2>业务问题</h2></div><Target size={19} /></div><ul className="spec-list"><li>监管资料分散在多个官方渠道，格式和版本不统一。</li><li>人工检索易漏查、误用旧规，条款和指标定位不稳定。</li><li>制度正文与统计表格需要跨文件、跨模态联合推理。</li><li>关键数字、日期、机构和文号必须精确且可核验。</li></ul></article><article className="panel"><div className="section-head"><div><p className="eyebrow">DELIVERABLES</p><h2>交付成果</h2></div><Braces size={19} /></div><ul className="spec-list"><li>可运行的 RAG Web 系统与 API 服务。</li><li>含来源、版本和位置元数据的结构化知识库。</li><li>Word / PDF / Excel 解析与可复现构建脚本。</li><li>检索、生成、拒答和独立 holdout 评测报告。</li></ul></article></section>
+    <section><div className="section-title"><div><p className="eyebrow">SYSTEM FLOW</p><h2>可信问答链路</h2></div><span className="muted">每一步都保留可审计输入与输出</span></div><div className="pipeline-grid">{pipeline.map(({ icon: Icon, title, text }, index) => <article className="pipeline-card" key={title}><div className="pipeline-index">0{index + 1}</div><Icon size={19} /><h3>{title}</h3><p>{text}</p></article>)}</div></section>
+    <section className="spec-grid two-column"><article className="panel"><div className="section-head"><div><p className="eyebrow">QUESTION TYPES</p><h2>覆盖问题类型</h2></div><Network size={19} /></div><div className="tag-cloud">{["监管事实", "条款阈值", "业务流程", "保存期限", "禁止性规定", "Excel 取数", "指标口径", "跨文件判断", "合规场景", "依据不足拒答"].map((tag) => <Badge key={tag}>{tag}</Badge>)}</div></article><article className="panel"><div className="section-head"><div><p className="eyebrow">DATASET</p><h2>数据基础</h2></div><Database size={19} /></div><div className="dataset-stats"><div><strong>100</strong><span>制度原文与附件</span></div><div><strong>100</strong><span>Excel 统计附件</span></div><div><strong>20</strong><span>重点文件目录</span></div><div><strong>42</strong><span>种子问答样本</span></div></div></article></section>
+    <section className="panel acceptance-panel"><div><p className="eyebrow">ACCEPTANCE</p><h2>验收原则</h2><p className="muted">权威来源优先、旧版默认排除、证据不足明确拒答；任何成功指标都必须来自当前代码、当前数据和独立评测集。</p></div><div className="acceptance-badges"><span><ShieldCheck size={15} />可溯源</span><span><Gauge size={15} />可量化</span><span><GitBranch size={15} />可复现</span></div></section>
+  </div>;
+}
 
 function EvidenceList({ items }) { if (!items.length) return <EmptyState>暂无证据</EmptyState>; return <div className="evidence-list">{items.map((item, index) => <EvidenceCard key={`${item.doc_id || "e"}-${index}`} item={item} />)}</div>; }
 function MoreIcon() { return <span className="more-dots">•••</span>; }
