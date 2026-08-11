@@ -7,7 +7,7 @@ from typing import Any
 
 
 VERSION_STATUSES = frozenset({"current", "superseded", "unknown", "not_applicable"})
-TRUST_POLICY_VERSION = "2026-08-07"
+TRUST_POLICY_VERSION = "P0-C-20260807"
 
 
 def normalize_version_status(value: Any) -> str:

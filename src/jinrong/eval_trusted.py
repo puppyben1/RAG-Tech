@@ -9,8 +9,8 @@ from typing import Any
 
 from .ask import ask
 from .config import REPORTS_DIR, TRUSTED_EVAL_PATH, TRUSTED_EVAL_REPORT, TRUSTED_EVAL_SUMMARY_REPORT
-from .eval_provenance import add_eval_provenance, assess_eval_freshness
-from .path_refs import to_project_ref
+from .eval_provenance import assess_freshness, build_provenance
+from .path_refs import ProjectPathError, to_project_ref
 from .utils import ensure_dir, norm_text, read_jsonl
 
 
@@ -39,7 +39,7 @@ def evaluate_trusted(
         cases = cases[:limit]
     details = [_evaluate_case(case) for case in cases]
     summary = _summarize(details, report_path)
-    payload = add_eval_provenance({"summary": summary, "details": details}, eval_path)
+    payload = {"schema_version": "2.0", "provenance": build_provenance(eval_path), "summary": summary, "details": details}
     ensure_dir(report_path.parent)
     report_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
     return summary
@@ -53,13 +53,14 @@ def evaluate_trusted_by_type(
     for case_type in TRUSTED_CASE_TYPES:
         report_path = _trusted_report_path(reports_dir, case_type)
         summaries[case_type] = evaluate_trusted(eval_path=eval_path, report_path=report_path, case_type=case_type)
-    return write_trusted_summary_report(summaries=summaries)
+    return write_trusted_summary_report(summaries=summaries, eval_path=eval_path)
 
 
 def write_trusted_summary_report(
     summaries: dict[str, dict[str, Any]] | None = None,
     report_path: Path = TRUSTED_EVAL_SUMMARY_REPORT,
     reports_dir: Path = REPORTS_DIR,
+    eval_path: Path = TRUSTED_EVAL_PATH,
 ) -> dict[str, Any]:
     stale_sources: list[str] = []
     if summaries is None:
@@ -77,6 +78,8 @@ def write_trusted_summary_report(
         for case_type, summary in summaries.items()
     }
     payload = {
+        "schema_version": "2.0",
+        "provenance": build_provenance(eval_path),
         "total": total,
         "passed": passed,
         "failed": total - passed,
@@ -84,7 +87,6 @@ def write_trusted_summary_report(
         "by_type": by_type,
         "report_path": to_project_ref(report_path),
     }
-    payload = add_eval_provenance(payload, TRUSTED_EVAL_PATH)
     if stale_sources:
         payload["stale"] = True
         payload["stale_reasons"] = [f"source_report_stale:{case_type}" for case_type in stale_sources]
@@ -95,14 +97,36 @@ def write_trusted_summary_report(
 
 def load_trusted_report(case_type: str = "summary", reports_dir: Path = REPORTS_DIR) -> dict[str, Any]:
     if case_type == "summary":
-        path = TRUSTED_EVAL_SUMMARY_REPORT
+        path = reports_dir / TRUSTED_EVAL_SUMMARY_REPORT.name
     else:
         path = _trusted_report_path(reports_dir, case_type)
     if not path.exists():
         return {"available": False, "case_type": case_type, "report_path": to_project_ref(path), "message": "trusted eval report not found"}
-    payload = json.loads(path.read_text(encoding="utf-8"))
-    freshness = assess_eval_freshness(payload, TRUSTED_EVAL_PATH)
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, UnicodeDecodeError, json.JSONDecodeError):
+        return {"available": False, "case_type": case_type, "report_path": to_project_ref(path), "message": "trusted eval report is invalid"}
+    payload = _sanitize_report_paths(payload, reports_dir)
+    freshness = assess_freshness(payload, TRUSTED_EVAL_PATH)
     return {"available": True, "case_type": case_type, **payload, **freshness}
+
+
+def _sanitize_report_paths(value: Any, reports_dir: Path) -> Any:
+    if isinstance(value, list):
+        return [_sanitize_report_paths(item, reports_dir) for item in value]
+    if not isinstance(value, dict):
+        return value
+    cleaned: dict[str, Any] = {}
+    for key, item in value.items():
+        if key == "report_path" and isinstance(item, str):
+            candidate = reports_dir / Path(item.replace("\\", "/")).name
+            try:
+                cleaned[key] = to_project_ref(candidate)
+            except ProjectPathError:
+                cleaned[key] = None
+        else:
+            cleaned[key] = _sanitize_report_paths(item, reports_dir)
+    return cleaned
 
 
 def _load_type_summaries(reports_dir: Path) -> tuple[dict[str, dict[str, Any]], list[str]]:
@@ -114,7 +138,7 @@ def _load_type_summaries(reports_dir: Path) -> tuple[dict[str, dict[str, Any]], 
             continue
         payload = json.loads(path.read_text(encoding="utf-8"))
         summaries[case_type] = payload.get("summary", {})
-        if assess_eval_freshness(payload, TRUSTED_EVAL_PATH)["stale"]:
+        if assess_freshness(payload, TRUSTED_EVAL_PATH)["stale"]:
             stale_sources.append(case_type)
     return summaries, stale_sources
 

@@ -6,7 +6,7 @@ from pathlib import Path
 from typing import Any
 
 from .config import RETRIEVAL_EVAL_PATH, RETRIEVAL_EVAL_REPORT
-from .eval_provenance import add_eval_provenance
+from .eval_provenance import build_provenance
 from .path_refs import to_project_ref
 from .services import search_evidence
 from .utils import ensure_dir, norm_text, read_jsonl
@@ -44,7 +44,7 @@ def evaluate_retrieval(
         },
         "report_path": to_project_ref(report_path),
     }
-    payload = add_eval_provenance({"summary": summary, "details": details}, eval_path)
+    payload = {"schema_version": "2.0", "provenance": build_provenance(eval_path), "summary": summary, "details": details}
     ensure_dir(report_path.parent)
     report_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
     return summary

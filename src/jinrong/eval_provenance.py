@@ -72,6 +72,51 @@ def assess_eval_freshness(payload: dict[str, Any], eval_path: Path) -> dict[str,
     }
 
 
+def build_provenance(eval_path: Path) -> dict[str, Any]:
+    legacy = build_eval_provenance(eval_path)
+    dataset = legacy["evaluation_dataset_fingerprint"]
+    knowledge_base = legacy["knowledge_base_fingerprint"]
+    source_tree = legacy["source_tree_fingerprint"]
+    return {
+        "git_sha": legacy["git_sha"],
+        "source_tree": source_tree,
+        "source_tree_fingerprint": source_tree["sha256"],
+        "evaluation_dataset": dataset,
+        "evaluation_dataset_fingerprint": dataset["sha256"],
+        "knowledge_base_artifacts": knowledge_base["files"],
+        "knowledge_base_artifact_fingerprint": knowledge_base["sha256"],
+        "trust_policy_version": legacy["trust_policy_version"],
+        "generated_at": legacy["generated_at"],
+    }
+
+
+def assess_freshness(report: dict[str, Any], eval_path: Path) -> dict[str, Any]:
+    expected = build_provenance(eval_path)
+    actual = report.get("provenance") if isinstance(report.get("provenance"), dict) else {}
+    fields = (
+        "git_sha",
+        "source_tree_fingerprint",
+        "evaluation_dataset_fingerprint",
+        "knowledge_base_artifact_fingerprint",
+        "trust_policy_version",
+    )
+    reasons = []
+    for field in fields:
+        if field not in actual:
+            reasons.append(f"missing_{field}")
+        elif actual[field] != expected[field]:
+            reasons.append(field)
+    if not actual.get("generated_at"):
+        reasons.append("missing_generated_at")
+    return {
+        "stale": bool(reasons),
+        "current": not reasons,
+        "stale_reasons": reasons,
+        "report_status": "stale" if reasons else "current",
+        "current_provenance": expected,
+    }
+
+
 def _sha256(path: Path) -> str | None:
     if not path.is_file():
         return None

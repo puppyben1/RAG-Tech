@@ -1,88 +1,131 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Activity, BarChart3, Database, FileSearch, Files, MessageSquareText, PlayCircle, Settings } from "lucide-react";
+import {
+  Activity, Archive, BarChart3, ChevronDown, ChevronLeft, ChevronRight, CircleHelp,
+  BookOpen, Calculator, Database, FileSearch, Files, History, Menu, MessageSquareText,
+  Paperclip, PanelRight, Play, Plus, Search, Send, Settings, Sparkles, Table2,
+  Upload, Workflow, X,
+} from "lucide-react";
 import { apiRequest, getInitialApiBase, saveApiBase } from "./api.js";
 import { Badge, EmptyState, ErrorBox, EvidenceCard, HealthBadge, MetricCard } from "./components.jsx";
 
 const navItems = [
   { key: "dashboard", label: "工作台", icon: Activity },
-  { key: "ask", label: "问答", icon: MessageSquareText },
+  { key: "ask", label: "新对话", icon: MessageSquareText },
+  { key: "documents", label: "文档中心", icon: Files },
   { key: "search", label: "证据检索", icon: FileSearch },
-  { key: "documents", label: "文档库", icon: Files },
-  { key: "status", label: "知识库状态", icon: Database },
+  { key: "graph", label: "知识图谱", icon: Workflow },
   { key: "eval", label: "评测中心", icon: BarChart3 },
-  { key: "demo", label: "答辩演示", icon: PlayCircle },
 ];
 
+const sampleQuestion = "根据 Excel 附件《2023年10月人身险公司经营情况表》（工作表：人身保险公司（月度）），“原保险保费收入”在“本年累计/截至当期”口径下的数值是多少？";
+
 const demoCases = [
-  { id: "policy_fact", label: "制度事实", route: "rag_open", answer: "演示答案：制度事实由当前资料中的官方条款支持。", evidence: [{ source_title: "银行函证办理说明", source_url: "https://example.invalid/official/nfra_397", version_status: "current", position: { page_no: 3, article_no: "第三条" }, text: "证据原文：银行函证办理应按照制度要求执行。" }] },
-  { id: "threshold", label: "条款阈值", route: "rag_open", answer: "演示答案：达到条款规定阈值后进入升级流程。", evidence: [{ source_title: "消费者权益保护规定", source_url: "https://example.invalid/official/nfra_390", version_status: "current", position: { page_no: 8, article_no: "第十二条" }, text: "证据原文：达到规定阈值时，应按本条启动升级处理。" }] },
-  { id: "excel", label: "Excel 取数", route: "rag_open", answer: "演示答案：取数结果为 128.40。", evidence: [{ source_title: "经营情况统计表", source_url: "https://example.invalid/official/nfra_398", version_status: "current", position: { sheet_name: "月度统计", cell_ref: "H22" }, text: "证据原文：原保险保费收入 | 本年累计 | 128.40 | 亿元" }] },
-  { id: "cross_file", label: "跨文件判断", route: "rag_open", answer: "演示答案：制度文件定义条件，统计表提供对应数值。", evidence: [{ source_title: "业务制度", source_url: "https://example.invalid/official/nfra_389", version_status: "current", position: { page_no: 5, article_no: "第二十条" }, text: "证据原文：业务判断条件与处理责任。" }, { source_title: "经营情况统计表", source_url: "https://example.invalid/official/nfra_398", version_status: "current", position: { sheet_name: "月度统计", cell_ref: "H22" }, text: "证据原文：对应统计数值。" }] },
-  { id: "refusal", label: "资料不足/旧版冲突拒答", route: "rag_refusal", answer: "无法根据当前资料确定；发现资料不足或版本冲突。", evidence: [{ source_title: "旧版制度（仅作冲突提示）", source_url: "https://example.invalid/official/legacy", version_status: "superseded", position: { page_no: 2, article_no: "第一条" }, text: "证据原文：该版本已被替代，不进入权威回答。" }] },
+  {
+    id: "excel-lookup", label: "Excel 精确取数", ability: "结构化表格查询", icon: Table2,
+    question: sampleQuestion,
+    response: {
+      answer_text: "31739.18 亿元", confidence: "high", route: "excel_lookup",
+      evidence: [{ doc_id: "nfra_demo_excel", source_title: "2023年10月人身险公司经营情况表", source_type: "excel", sheet_name: "人身保险公司（月度）", cell_ref: "C5", row_header: "原保险保费收入", col_header: "本年累计/截至当期", unit: "单位：亿元", value_raw: 31739.18, text: "原保险保费收入在本年累计/截至当期口径下的原始值为 31739.18。" }],
+    },
+  },
+  {
+    id: "excel-calc", label: "Excel 比较计算", ability: "多单元格计算与校验", icon: Calculator,
+    question: "比较2023年10月人身险公司经营情况表中的原保险保费收入与赔付支出，并给出差值和计算依据。",
+    response: {
+      answer_text: "原保险保费收入高于赔付支出，差值为 25310.62 亿元。计算：31739.18 - 6428.56 = 25310.62。", confidence: "high", route: "excel_calc",
+      evidence: [
+        { doc_id: "nfra_demo_excel", source_title: "2023年10月人身险公司经营情况表", source_type: "excel", sheet_name: "人身保险公司（月度）", cell_ref: "C5", row_header: "原保险保费收入", col_header: "本年累计/截至当期", unit: "单位：亿元", value_raw: 31739.18, text: "原保险保费收入：31739.18。" },
+        { doc_id: "nfra_demo_excel", source_title: "2023年10月人身险公司经营情况表", source_type: "excel", sheet_name: "人身保险公司（月度）", cell_ref: "C8", row_header: "赔付支出", col_header: "本年累计/截至当期", unit: "单位：亿元", value_raw: 6428.56, text: "赔付支出：6428.56。" },
+      ],
+    },
+  },
+  {
+    id: "policy-text", label: "制度条款检索", ability: "章节级文本证据", icon: BookOpen,
+    question: "银行函证工作如何提高质量和效率？",
+    response: {
+      answer_text: "银行应通过规范函证业务流程、强化内部控制、推动数字化函证和明确各参与方职责，提高银行函证工作的质量与效率。", confidence: "high", route: "rag_open",
+      evidence: [{ doc_id: "nfra_398", source_title: "银行函证工作操作指引", source_type: "pdf", publisher: "金融监管总局办公厅、财政部办公厅", doc_no: "财会〔2022〕39号", position: { page_no: 1, section_path: "一、总体要求", unit_id: "nfra_398_unit_0001" }, text: "规范银行函证及回函工作，提高银行函证工作质量和效率，防范操作风险。" }],
+    },
+  },
 ];
 
 export default function App() {
   const [tab, setTab] = useState("dashboard");
   const [apiBase, setApiBase] = useState(getInitialApiBase);
   const [health, setHealth] = useState("unknown");
+  const [collapsed, setCollapsed] = useState(false);
+  const [demoMode, setDemoMode] = useState(false);
+  const [selectedDemo, setSelectedDemo] = useState(null);
   const current = useMemo(() => navItems.find((item) => item.key === tab), [tab]);
 
-  useEffect(() => saveApiBase(apiBase), [apiBase]);
+  useEffect(() => { saveApiBase(apiBase); }, [apiBase]);
+  useEffect(() => { checkHealth(); }, []);
   async function checkHealth() {
-    try { setHealth((await apiRequest(apiBase, "/health")).status === "ok" ? "ok" : "error"); } catch { setHealth("error"); }
+    try { const data = await apiRequest(apiBase, "/health"); setHealth(data.status === "ok" ? "ok" : "error"); }
+    catch { setHealth("error"); }
+  }
+  function openDemo(demoCase) {
+    setSelectedDemo(demoCase);
+    setTab("ask");
   }
 
-  return <div className="shell">
-    <aside className="sidebar"><div className="brand">可信金融 RAG</div><nav className="nav">{navItems.map(({ key, label, icon: Icon }) => <button key={key} className={tab === key ? "active" : ""} onClick={() => setTab(key)}><Icon size={18} /><span>{label}</span></button>)}</nav></aside>
-    <main className="main"><header className="topbar"><h1>{current?.label}</h1><div className="api-base"><HealthBadge status={health} /><input value={apiBase} onChange={(e) => setApiBase(e.target.value)} aria-label="API Base" /><button className="icon-button" onClick={checkHealth} title="检查 API"><Settings size={18} /></button></div></header>
-      {tab === "dashboard" && <DashboardPage setTab={setTab} apiBase={apiBase} />}
-      {tab === "ask" && <AskPage apiBase={apiBase} />}
-      {tab === "search" && <SearchPage apiBase={apiBase} />}
-      {tab === "documents" && <DocumentsPage apiBase={apiBase} />}
-      {tab === "status" && <StatusPage apiBase={apiBase} />}
-      {tab === "eval" && <EvalPage apiBase={apiBase} />}
-      {tab === "demo" && <DemoPage />}
-    </main>
+  return (
+    <div className={`shell ${collapsed ? "sidebar-collapsed" : ""}`}>
+      <aside className="sidebar">
+        <div className="brand-row"><div className="brand-mark">R</div><span className="brand-name">可信 RAG</span><button className="ghost icon-button sidebar-toggle" title="收起导航" onClick={() => setCollapsed(!collapsed)}>{collapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}</button></div>
+        <button className="new-chat" onClick={() => setTab("ask")}><Plus size={16} /><span>新建对话</span></button>
+        <nav className="nav">{navItems.map((item) => { const Icon = item.icon; return <button key={item.key} className={tab === item.key ? "active" : ""} onClick={() => setTab(item.key)} title={item.label}><Icon size={17} /><span>{item.label}</span></button>; })}</nav>
+        <div className="sidebar-bottom"><div className="workspace-label"><Database size={15} /><span>监管知识库</span><ChevronDown size={13} /></div><div className="user-row"><div className="avatar">D</div><div className="user-copy"><strong>demo</strong><small>demo@weknora.local</small></div><Settings size={15} /></div></div>
+      </aside>
+      <main className="main">
+        <header className="topbar"><div className="breadcrumbs"><span>监管知识库</span><ChevronRight size={14} /><strong>{current?.label}</strong></div><div className="top-actions"><div className="data-mode" role="group" aria-label="数据模式"><button className={!demoMode ? "active" : ""} onClick={() => setDemoMode(false)}>实时数据</button><button className={demoMode ? "active" : ""} onClick={() => setDemoMode(true)}>演示样例</button></div><HealthBadge status={health} /><div className="api-input"><span>API</span><input value={apiBase} onChange={(e) => setApiBase(e.target.value)} aria-label="API Base" /></div><button className="ghost icon-button" onClick={checkHealth} title="检查服务"><Settings size={17} /></button></div></header>
+        <div className="page-content">
+          {demoMode && <div className="demo-banner"><Play size={14} /><strong>演示样例模式</strong><span>当前答案与证据为预置演示数据，不代表实时知识库结果。</span><button onClick={() => setDemoMode(false)}>切换到实时数据</button></div>}
+          {tab === "dashboard" && <DashboardPage apiBase={apiBase} setTab={setTab} demoMode={demoMode} openDemo={openDemo} />}
+          {tab === "ask" && <AskPage apiBase={apiBase} demoMode={demoMode} initialDemo={selectedDemo} openDemo={openDemo} />}
+          {tab === "search" && <SearchPage apiBase={apiBase} />}
+          {tab === "documents" && <DocumentsPage apiBase={apiBase} />}
+          {tab === "graph" && <GraphPage />}
+          {tab === "eval" && <EvalPage apiBase={apiBase} />}
+        </div>
+      </main>
+    </div>
+  );
+}
+
+function DashboardPage({ apiBase, setTab, demoMode, openDemo }) {
+  const [status, setStatus] = useState(null); const [trusted, setTrusted] = useState(null); const [error, setError] = useState("");
+  useEffect(() => {
+    if (demoMode) { setError(""); setStatus({ documents: 500, processed_documents: 500, text_units: 7132, table_cells: 83555, table_rows: 15775, error_count: 0 }); setTrusted({ total: 300, passed: 300, accuracy: 1 }); return; }
+    Promise.allSettled([apiRequest(apiBase, "/kb/status"), apiRequest(apiBase, "/eval/trusted/summary")]).then(([statusResult, trustedResult]) => {
+      if (statusResult.status === "fulfilled") setStatus(statusResult.value); else setError("知识库状态暂时无法读取，请检查后端服务。");
+      if (trustedResult.status === "fulfilled" && trustedResult.value?.available) setTrusted(trustedResult.value);
+    });
+  }, [apiBase, demoMode]);
+  const cases = demoCases;
+  return <div className="stack">
+    <div className="demo-hero"><div><p className="eyebrow">DEMO WORKSPACE</p><h1>用证据回答监管问题</h1><p>从 Excel 精确取数，到制度条款检索，每个答案都能回到原始资料。</p></div><div className="hero-actions"><button className="primary" onClick={() => openDemo(cases[0])}><Play size={15} />开始演示</button><button className="secondary" onClick={() => setTab("ask")}><MessageSquareText size={15} />进入完整问答</button></div></div>
+    <ErrorBox message={error} />
+    <div className="spec-strip"><span><strong>3</strong> 类演示题</span><span><strong>{status?.documents ?? "-"}</strong> 份资料</span><span><strong>{trusted ? `${trusted.passed ?? trusted.correct ?? "-"}/${trusted.total ?? "-"}` : "-"}</strong> 评测通过</span><span className="strip-note">实时数据优先，演示样例仅在主动切换后使用</span></div>
+    <section><div className="section-title"><div><p className="eyebrow">DEMO ROUTES</p><h2>选择一条演示路径</h2></div><span className="muted">点击题目后可查看完整检索过程</span></div><div className="demo-case-grid">{cases.map((demoCase, index) => { const Icon = demoCase.icon; return <button className="demo-case" key={demoCase.id} onClick={() => openDemo(demoCase)}><div className="demo-case-top"><span className={`case-number case-${index + 1}`}>0{index + 1}</span><Icon size={18} /></div><strong>{demoCase.label}</strong><p>{demoCase.ability}</p><span className="case-question">{demoCase.question}</span><span className="case-cta">填入问题 <ChevronRight size={14} /></span></button>; })}</div></section>
+    <section className="dashboard-grid"><div className="panel status-panel"><div className="section-head"><div><p className="eyebrow">KNOWLEDGE BASE</p><h2>知识库状态</h2></div><span className="status-dot"><i />{demoMode ? "演示数据" : "实时状态"}</span></div><div className="metrics-grid mini-metrics"><MetricCard label="已入库文档" value={status?.documents} tone="blue" /><MetricCard label="文本单元" value={status?.text_units || status?.text_chunks} /><MetricCard label="表格事实" value={status?.table_cells} /></div><div className="progress-row"><span>文档处理</span><strong>{status?.processed_documents ?? "-"} / {status?.documents ?? "-"}</strong></div><div className="progress-track"><i style={{ width: `${status?.documents ? Math.round((status.processed_documents || 0) / status.documents * 100) : 0}%` }} /></div></div><div className="panel status-panel"><div className="section-head"><div><p className="eyebrow">EVALUATION</p><h2>可信评测摘要</h2></div><button className="text-button" onClick={() => setTab("eval")}>查看详情</button></div>{trusted ? <div className="eval-summary"><strong>{Math.round(Number(trusted.accuracy || 0) * 100)}%</strong><span>准确率</span><div><b>{trusted.passed ?? trusted.correct ?? "-"}</b><small>通过题数</small></div><div><b>{trusted.total ?? "-"}</b><small>总题数</small></div></div> : <EmptyState>运行评测后显示摘要</EmptyState>}</div></section>
   </div>;
 }
 
-function DashboardPage({ setTab, apiBase }) {
-  const [status, setStatus] = useState(null); const [error, setError] = useState("");
-  useEffect(() => { setError(""); apiRequest(apiBase, "/kb/status").then(setStatus).catch((e) => setError(e.message)); }, [apiBase]);
-  return <div className="stack"><ErrorBox message={error} /><section className="metrics-grid"><MetricCard label="文档" value={status?.documents} tone="blue" /><MetricCard label="文本单元" value={status?.text_units ?? status?.text_chunks} /><MetricCard label="表格单元" value={status?.table_cells} /><MetricCard label="表格行" value={status?.table_rows} /><MetricCard label="错误" value={status?.error_count} tone={status?.error_count ? "red" : "green"} /></section><section className="panel command-panel"><button className="primary" onClick={() => setTab("ask")}>进入问答</button><button className="secondary" onClick={() => setTab("search")}>检索证据</button><button className="secondary" onClick={() => setTab("demo")}>打开答辩演示</button></section></div>;
+function AskPage({ apiBase, demoMode, initialDemo, openDemo }) {
+  const [mode, setMode] = useState("question"); const [qaId, setQaId] = useState("Q001"); const [question, setQuestion] = useState(""); const [optionsText, setOptionsText] = useState(""); const [result, setResult] = useState(null); const [loading, setLoading] = useState(false); const [error, setError] = useState(""); const [showEvidence, setShowEvidence] = useState(true); const [steps, setSteps] = useState([]);
+  useEffect(() => { if (initialDemo) { setQuestion(initialDemo.question); setResult(null); setError(""); } }, [initialDemo]);
+  async function submit() { if (mode === "question" && !question.trim()) { setError("请输入问题后再发送。"); return; } setLoading(true); setError(""); setResult(null); setSteps(["识别问题类型", "检索知识库证据"]); try { if (demoMode && initialDemo) { await new Promise((resolve) => setTimeout(resolve, 520)); setSteps(["识别问题类型", "检索知识库证据", "完成数字一致性校验"]); setResult({ ...initialDemo.response, demo: true }); return; } const payload = mode === "qa" ? { qa_id: qaId } : { question }; if (mode !== "qa" && optionsText.trim()) payload.options = JSON.parse(optionsText); const data = await apiRequest(apiBase, "/ask", payload); setSteps(["识别问题类型", "检索知识库证据", "完成数字一致性校验"]); setResult(data); } catch (e) { setError(e.message); setSteps([]); } finally { setLoading(false); } }
+  return <div className="ask-layout"><section className="chat-column"><div className="chat-title"><div><p className="eyebrow">可信问答 {demoMode && <span className="inline-demo-tag">演示样例</span>}</p><h1>{initialDemo ? initialDemo.label : "今天想了解什么？"}</h1></div><button className="ghost icon-button" title="会话历史"><History size={17} /></button></div><div className="conversation">{!result && !loading ? <div className="welcome"><div className="welcome-icon"><Sparkles size={20} /></div><h2>{initialDemo ? "问题已准备好，点击发送查看证据" : "从监管资料中找到可靠答案"}</h2><p>支持制度条款检索、Excel 取数、比较计算和多事实问答。</p><div className="suggestions">{demoCases.map((demoCase) => <button key={demoCase.id} onClick={() => openDemo(demoCase)}>{demoCase.label} <ChevronRight size={14} /></button>)}</div></div> : <><div className="question-bubble">{mode === "qa" ? `QA 编号：${qaId}` : question}</div>{loading && <div className="agent-trace">{steps.map((s, i) => <div className="trace-row" key={s}><span className="trace-icon">{i === steps.length - 1 ? <Activity size={14} /> : <span className="check">✓</span>}</span><span>{s}</span>{i === steps.length - 1 && <small>处理中</small>}</div>)}</div>}{result && <div className="answer-block"><div className="answer-meta"><span className="status-dot"><i />{result.demo ? "演示结果" : "已完成"}</span><span>引用 {result.evidence?.length || 0} 份证据</span><span>·</span><span>{result.route || "可信问答"}</span></div><div className="answer-text">{String(result.answer_text ?? result.answer ?? "无法根据当前资料确定。")}</div><div className="answer-actions"><button className="ghost" onClick={() => navigator.clipboard?.writeText(String(result.answer_text || result.answer || ""))}>复制答案</button><button className="ghost" onClick={() => setShowEvidence(!showEvidence)}><PanelRight size={14} />{showEvidence ? "收起证据" : "查看证据"}</button></div></div>}</>}</div><div className="composer"><textarea value={question} onChange={(e) => setQuestion(e.target.value)} placeholder="直接向模型提问" /><div className="composer-footer"><div className="composer-tools"><button className="ghost tool-button" title="添加附件"><Paperclip size={16} /></button><button className="mode-select"><Sparkles size={14} />{mode === "qa" ? "QA 复现" : "可信问答"}<ChevronDown size={13} /></button><button className="ghost tool-button" title="帮助"><CircleHelp size={16} /></button></div><div className="composer-actions"><select value={mode} onChange={(e) => setMode(e.target.value)} aria-label="问答模式"><option value="question">自定义问题</option><option value="qa">按 QA 编号</option></select><button className="send-button" onClick={submit} disabled={loading} title="发送"><Send size={16} /></button></div></div></div><ErrorBox message={error} /></section>{showEvidence && <aside className="evidence-drawer"><div className="drawer-head"><div><p className="eyebrow">SOURCE TRACE</p><h2>证据与引用 {result?.demo && <span className="inline-demo-tag">演示数据</span>}</h2></div><button className="ghost icon-button" onClick={() => setShowEvidence(false)} title="关闭"><X size={16} /></button></div>{result ? <><div className="confidence-row"><span>回答可信度</span><Badge tone={result.confidence === "high" ? "green" : "neutral"}>{result.confidence || "待评估"}</Badge></div><div className="evidence-list"><EvidenceList items={result.evidence || []} /></div></> : <EmptyState>提交问题后显示来源片段、页码和单元格定位。</EmptyState>}</aside>}</div>;
 }
 
-function AskPage({ apiBase }) {
-  const [question, setQuestion] = useState(""); const [result, setResult] = useState(null); const [loading, setLoading] = useState(false); const [error, setError] = useState("");
-  async function submit() { setLoading(true); setError(""); try { setResult(await apiRequest(apiBase, "/ask", { question })); } catch (e) { setError(e.message); } finally { setLoading(false); } }
-  return <div className="content-grid"><section className="panel"><h2>问题</h2><textarea value={question} onChange={(e) => setQuestion(e.target.value)} placeholder="输入制度、条款、统计或跨文件问题" /><div className="actions"><button className="primary" onClick={submit} disabled={loading || !question.trim()}>{loading ? "处理中" : "提交"}</button><button className="secondary" onClick={() => { setQuestion(""); setResult(null); }}>清空</button></div><ErrorBox message={error} /></section><section className="result"><h2>答案</h2>{result ? <><div className="answer">{String(result.answer_text ?? result.answer ?? "无答案")}</div><div className="meta"><Badge tone={result.route === "rag_refusal" ? "red" : "green"}>{result.route}</Badge><Badge>{result.confidence || "-"}</Badge></div><EvidenceList items={result.evidence || []} /></> : <EmptyState>等待提交</EmptyState>}</section></div>;
-}
+function SearchPage({ apiBase }) { const [query, setQuery] = useState("银行函证 工作质量 效率"); const [sourceType, setSourceType] = useState(""); const [result, setResult] = useState(null); const [loading, setLoading] = useState(false); const [error, setError] = useState(""); async function submit() { setLoading(true); setError(""); try { setResult(await apiRequest(apiBase, "/search", { query, source_type: sourceType || null, retrieval: "hybrid", rerank: true, top_k: 8 })); } catch (e) { setError(e.message); } finally { setLoading(false); } } return <div className="search-page"><div className="page-intro compact"><div><p className="eyebrow">RETRIEVAL LAB</p><h1>证据检索</h1><p className="muted">用关键词和元数据定位可核验的最小证据。</p></div><button className="secondary" onClick={submit} disabled={loading}><Search size={15} />{loading ? "检索中" : "开始检索"}</button></div><section className="filter-bar"><div className="search-input"><Search size={16} /><input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="搜索证据、条款、指标..." /></div><select value={sourceType} onChange={(e) => setSourceType(e.target.value)}><option value="">全部类型</option><option value="excel">Excel</option><option value="word">Word</option><option value="pdf">PDF</option></select><span className="filter-chip">Hybrid + Rerank</span></section><ErrorBox message={error} />{result && <div className="result-summary"><strong>{result.total} 个结果</strong><span>索引：{result.index}</span><span>展示前 {result.results?.length || 0} 条</span></div>}<EvidenceList items={result?.results || []} /></div>; }
 
-function SearchPage({ apiBase }) {
-  const [query, setQuery] = useState(""); const [result, setResult] = useState(null); const [error, setError] = useState("");
-  async function submit() { setError(""); try { setResult(await apiRequest(apiBase, "/search", { query, top_k: 5 })); } catch (e) { setError(e.message); } }
-  return <div className="content-grid"><section className="panel"><h2>检索条件</h2><input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="输入关键词" /><div className="actions"><button className="primary" onClick={submit} disabled={!query.trim()}>检索</button></div><ErrorBox message={error} /></section><section className="result"><h2>证据结果</h2>{result ? <><div className="status-line"><Badge>{result.index || "-"}</Badge><Badge>命中 {result.total ?? 0}</Badge></div><EvidenceList items={result.results || []} /></> : <EmptyState>等待检索</EmptyState>}</section></div>;
-}
+function DocumentsPage({ apiBase }) { const [sourceType, setSourceType] = useState(""); const [query, setQuery] = useState(""); const [result, setResult] = useState(null); const [selected, setSelected] = useState(null); const [error, setError] = useState(""); async function load() { setError(""); try { const params = new URLSearchParams({ limit: "50" }); if (sourceType) params.set("source_type", sourceType); if (query) params.set("query", query); setResult(await apiRequest(apiBase, `/documents?${params}`)); } catch (e) { setError(e.message); } } useEffect(() => { load(); }, [apiBase]); return <div className="documents-page"><div className="page-intro compact"><div><p className="eyebrow">KNOWLEDGE BASE</p><h1>文档中心</h1><p className="muted">管理监管制度、政策文件与统计报表。</p></div><button className="primary" onClick={load}><Upload size={15} />刷新文档</button></div><div className="document-workspace"><aside className="folder-tree panel"><div className="section-head"><h2>目录</h2><button className="ghost icon-button" title="新建目录"><Plus size={15} /></button></div><button className="folder active"><Archive size={15} />全部文档 <small>{result?.total || "-"}</small></button><button className="folder"><Archive size={15} />监管制度 <small>—</small></button><button className="folder"><Archive size={15} />统计报表 <small>—</small></button><button className="folder"><Archive size={15} />研究资料 <small>—</small></button></aside><section className="document-list"><div className="doc-toolbar"><div className="search-input"><Search size={15} /><input value={query} onChange={(e) => setQuery(e.target.value)} onKeyDown={(e) => e.key === "Enter" && load()} placeholder="搜索文档名称..." /></div><select value={sourceType} onChange={(e) => { setSourceType(e.target.value); load(); }}><option value="">全部类型</option><option value="excel">Excel</option><option value="word">Word</option><option value="pdf">PDF</option></select><button className="ghost icon-button" title="列表视图"><Menu size={16} /></button></div><ErrorBox message={error} /><div className="doc-grid">{(result?.documents || []).map((doc) => <button className={`doc-card ${selected?.doc_id === doc.doc_id ? "selected" : ""}`} key={doc.doc_id} onClick={() => setSelected(doc)}><div className="doc-card-head"><span className={`file-type ${doc.source_type}`}>{doc.source_type === "excel" ? "XLS" : doc.source_type === "pdf" ? "PDF" : "DOC"}</span><MoreIcon /></div><strong>{doc.title}</strong><p>{doc.file_name}</p><div className="doc-card-foot"><span>{doc.period || "未标注期间"}</span><span>{doc.file_ext || doc.source_type}</span></div></button>)}</div>{!result?.documents?.length && <EmptyState>暂无匹配文档</EmptyState>}</section>{selected && <aside className="document-detail panel"><div className="drawer-head"><div><p className="eyebrow">DOCUMENT DETAIL</p><h2>{selected.title}</h2></div><button className="ghost icon-button" onClick={() => setSelected(null)} title="关闭"><X size={16} /></button></div><div className="detail-meta"><Badge>{selected.source_type}</Badge><Badge>{selected.period || "期间未知"}</Badge></div><dl><dt>文档编号</dt><dd>{selected.doc_id}</dd><dt>文件名</dt><dd>{selected.file_name}</dd><dt>路径</dt><dd>{selected.local_path || "-"}</dd></dl><div className="detail-actions"><button className="secondary"><FileSearch size={14} />查看证据</button><button className="ghost"><History size={14} />版本历史</button></div></aside>}</div></div>; }
 
-function DocumentsPage({ apiBase }) { const [result, setResult] = useState(null); const [error, setError] = useState("");
-  async function load() { try { setResult(await apiRequest(apiBase, "/documents?limit=50")); } catch (e) { setError(e.message); } }
-  useEffect(() => { load(); }, [apiBase]);
-  return <div className="stack"><section className="panel"><div className="actions"><button className="primary" onClick={load}>刷新文档</button></div><ErrorBox message={error} /></section><section className="table-wrap"><table><thead><tr><th>doc_id</th><th>标题</th><th>类型</th><th>版本</th><th>文件</th></tr></thead><tbody>{(result?.documents || []).map((doc) => <tr key={doc.doc_id}><td>{doc.doc_id}</td><td>{doc.title}</td><td>{doc.source_type}</td><td>{doc.version_status || "unknown"}</td><td>{doc.file_name}</td></tr>)}</tbody></table></section></div>;
-}
+function GraphPage() { return <div className="graph-page"><div className="page-intro compact"><div><p className="eyebrow">KNOWLEDGE GRAPH</p><h1>知识图谱</h1><p className="muted">从文档、条款、机构和指标之间的关系发现上下文。</p></div><div className="graph-controls"><button className="secondary"><Search size={15} />搜索节点</button><button className="ghost icon-button" title="适应屏幕"><Workflow size={16} /></button></div></div><div className="graph-canvas"><div className="graph-grid" />{[["监管制度", 50, 38, "green"], ["银行函证", 27, 27, "orange"], ["统计报表", 70, 25, "blue"], ["原保险保费收入", 60, 63, "orange"], ["金融监管总局", 33, 68, "green"], ["业务领域", 78, 60, "green"], ["2023年10月", 46, 80, "blue"]].map(([label, x, y, tone]) => <button className={`graph-node ${tone}`} style={{ left: `${x}%`, top: `${y}%` }} key={label}><span />{label}</button>)}<div className="graph-legend"><strong>节点类型</strong><span><i className="blue" />摘要</span><span><i className="green" />实体</span><span><i className="orange" />概念</span><span><i className="red" />对比</span></div></div></div>; }
 
-function StatusPage({ apiBase }) { const [status, setStatus] = useState(null); const [error, setError] = useState("");
-  async function load() { try { setStatus(await apiRequest(apiBase, "/kb/status")); } catch (e) { setError(e.message); } }
-  useEffect(() => { load(); }, [apiBase]);
-  return <div className="stack"><ErrorBox message={error} /><section className="metrics-grid"><MetricCard label="文档" value={status?.documents} /><MetricCard label="已处理" value={status?.processed_documents} /><MetricCard label="文本单元" value={status?.text_units ?? status?.text_chunks} /><MetricCard label="表格单元" value={status?.table_cells} /><MetricCard label="表格行" value={status?.table_rows} /></section><section className="panel"><button className="secondary" onClick={load}>刷新</button>{status && <pre className="json-view">{JSON.stringify(status, null, 2)}</pre>}</section></div>;
-}
+function EvalPage({ apiBase }) { const [scope, setScope] = useState("all"); const [result, setResult] = useState(null); const [loading, setLoading] = useState(false); const [error, setError] = useState(""); async function run() { setLoading(true); setError(""); try { setResult(await apiRequest(apiBase, "/eval", { scope })); } catch (e) { setError(e.message); } finally { setLoading(false); } } return <div className="eval-page"><div className="page-intro compact"><div><p className="eyebrow">QUALITY CONTROL</p><h1>评测中心</h1><p className="muted">验证回答准确率、证据命中和运行环境一致性。</p></div><button className="primary" onClick={run} disabled={loading}><BarChart3 size={15} />{loading ? "评测中" : "运行评测"}</button></div><section className="panel eval-controls"><label>评测范围</label><select value={scope} onChange={(e) => setScope(e.target.value)}><option value="all">全部题目</option><option value="excel">Excel</option><option value="text">Word / PDF</option></select><ErrorBox message={error} /></section>{result ? <section className="metrics-grid eval-metrics"><MetricCard label="总题数" value={result.total} tone="blue" /><MetricCard label="通过" value={result.correct} tone="green" /><MetricCard label="失败" value={(result.total || 0) - (result.correct || 0)} tone="red" /><MetricCard label="准确率" value={`${Math.round(Number(result.accuracy || 0) * 100)}%`} tone="green" /></section> : <section className="panel eval-empty"><BarChart3 size={28} /><h2>还没有本次评测结果</h2><p className="muted">选择范围并运行评测，查看失败样本和指标变化。</p></section>}</div>; }
 
-function EvalPage({ apiBase }) { const [result, setResult] = useState(null); const [trusted, setTrusted] = useState(null); const [error, setError] = useState("");
-  async function run() { try { setResult(await apiRequest(apiBase, "/eval", { scope: "all" })); } catch (e) { setError(e.message); } }
-  async function loadTrusted() { try { setTrusted(await apiRequest(apiBase, "/eval/trusted/summary")); } catch (e) { setError(e.message); } }
-  useEffect(() => { loadTrusted(); }, [apiBase]);
-  return <div className="stack"><section className="panel"><div className="actions"><button className="primary" onClick={run}>运行基础评测</button><button className="secondary" onClick={loadTrusted}>刷新可信报告</button></div><ErrorBox message={error} /></section>{result && <section className="result"><h2>基础评测</h2><div className="answer">{result.correct ?? 0} / {result.total ?? 0}</div><pre className="json-view">{JSON.stringify(result, null, 2)}</pre></section>}{trusted && <section className="result"><h2>可信评测</h2><div className="meta"><Badge tone={trusted.stale ? "red" : "green"}>{trusted.stale ? "stale" : "current"}</Badge><Badge>{trusted.passed ?? 0} / {trusted.total ?? 0}</Badge></div><pre className="json-view">{JSON.stringify(trusted, null, 2)}</pre></section>}</div>;
-}
-
-function DemoPage() { const [selected, setSelected] = useState(demoCases[0]); return <div className="demo-layout"><section className="panel"><h2>五条固定演示链路</h2><div className="demo-list">{demoCases.map((item) => <button key={item.id} className={`demo-row ${selected.id === item.id ? "active" : ""}`} onClick={() => setSelected(item)}><span>{item.label}</span><Badge tone={item.route === "rag_refusal" ? "red" : "green"}>{item.route}</Badge></button>)}</div></section><section className="result"><h2>{selected.label}</h2><div className="answer">{selected.answer}</div><div className="meta"><Badge tone={selected.route === "rag_refusal" ? "red" : "green"}>{selected.route}</Badge><Badge>离线演示数据</Badge></div><EvidenceList items={selected.evidence} /></section></div>; }
-
-function EvidenceList({ items }) { if (!items.length) return <EmptyState />; return <div className="evidence-list">{items.map((item, index) => <EvidenceCard key={`${item.doc_id || item.source_title || "e"}-${index}`} item={item} />)}</div>; }
+function EvidenceList({ items }) { if (!items.length) return <EmptyState>暂无证据</EmptyState>; return <div className="evidence-list">{items.map((item, index) => <EvidenceCard key={`${item.doc_id || "e"}-${index}`} item={item} />)}</div>; }
+function MoreIcon() { return <span className="more-dots">•••</span>; }
