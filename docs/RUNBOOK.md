@@ -80,6 +80,29 @@ Invoke-RestMethod -Method Post -ContentType application/json -Body '{"query":"�
 Invoke-RestMethod -Method Post -ContentType application/json -Body '{"question":"银行监管是什么？"}' http://127.0.0.1:8000/ask
 ```
 
+## Legacy QA 迁移与复核
+
+以下命令不会修改 `wendang/QA数据.xlsx`。审计发现旧路径、正文型 evidence、歧义或未解析文档时返回非零状态：
+
+```powershell
+$env:PYTHONPATH = "src"
+.\.venv\Scripts\python.exe -m jinrong.cli qa-data-audit `
+  --qa wendang/QA数据.xlsx `
+  --manifest data/processed/manifest.jsonl
+```
+
+生成结构化候选和人工复核清单：
+
+```powershell
+.\.venv\Scripts\python.exe -m jinrong.cli migrate-qa-data `
+  --qa wendang/QA数据.xlsx `
+  --manifest data/processed/manifest.jsonl `
+  --output data/intermediate/qa_migration_candidates.jsonl `
+  --review-worklist data/intermediate/qa_migration_review.csv
+```
+
+候选产物不是冻结 holdout。`ready_candidate` 仅表示文档和 Excel 单元格定位可以确定解析；其余状态必须人工补充文档选择、页码或条款定位，并通过独立 holdout 审核后才能用于最终验收。
+
 ## 显式 LibreOffice profile
 
 `libreoffice` 不属于首个批准基线。仅在单独验证时设置：

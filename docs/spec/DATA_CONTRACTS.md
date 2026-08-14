@@ -28,6 +28,12 @@ A holdout row contains `id`, `type`, `question`, boolean `answerable`, `expected
 
 Final review adds `review_status: reviewed`, `reviewed_by`, and timezone-qualified `reviewed_at` without changing the gold fields. The freeze requires five distinct questions per category, no dev/holdout overlap, complete gold, and valid review metadata. The final acceptance command binds the evaluated JSONL to the manifest SHA-256.
 
+## Legacy QA migration candidate
+
+`migrate-qa-data` converts the legacy MCQ workbook into a review candidate without modifying the workbook. Each row preserves the original question, options, answer, evidence, source title, and file label, and adds `migration_status`, `doc_id`, `expected_doc_ids`, `expected_evidence_type`, `gold_evidence`, project-relative `local_path`, nullable `source_url`, tags, and candidate document IDs.
+
+`ready_candidate` means only that document identity and the legacy Excel cell locator were parsed deterministically. It is not an approved gold label or an independent holdout result. Rows with `document_matched_locator_missing`, `ambiguous_document`, or `unresolved_document` remain fail-closed in the CSV review worklist. No migration output may enter the frozen holdout or final acceptance flow until it satisfies the independent holdout contract and receives the required external review metadata.
+
 ## Path and compatibility policy
 
 New artifacts MUST use project references. A legacy absolute path is read-only historical data and is reported as `legacy_absolute_path`; it is not silently rewritten or resolved by basename.

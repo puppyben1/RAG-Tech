@@ -26,6 +26,8 @@ def test_cli_help_smoke() -> None:
     assert result.returncode == 0
     assert "path-audit" in result.stdout
     assert "eval-acceptance" in result.stdout
+    assert "qa-data-audit" in result.stdout
+    assert "migrate-qa-data" in result.stdout
 
 
 def test_cli_path_audit_passes_for_source_tree() -> None:

@@ -25,7 +25,7 @@ from .table_qa import (
 )
 from .text_parser import extract_text, split_sentences
 from .text_qa import find_source_file, nearest_evidence, score_option
-from .trusted_qa import answer_open_question
+from .trusted_qa import REFUSAL_TEXT, answer_open_question
 from .multi_step_qa import answer_multi_hop, answer_text_then_table, is_multi_hop_question, is_text_then_table_question
 from .utils import norm_text, round_like_eval
 
@@ -39,9 +39,29 @@ class AskResponse:
     confidence: str
     route: str
     debug: str | None = None
+    refusal_reason: str | None = None
+
+    def __post_init__(self) -> None:
+        if self.refusal_reason is None and self.answer_text == REFUSAL_TEXT:
+            self.refusal_reason = _classify_refusal(self.debug)
 
     def to_json(self) -> str:
         return json.dumps(asdict(self), ensure_ascii=False, indent=2)
+
+
+def _classify_refusal(debug: str | None) -> str:
+    try:
+        payload = json.loads(debug or "{}")
+    except json.JSONDecodeError:
+        payload = {}
+    reason = str(payload.get("reason") or "")
+    if reason == "out_of_scope_or_sensitive_query":
+        return "out_of_scope_or_sensitive"
+    if reason == "non_authoritative_evidence":
+        return "non_authoritative_evidence"
+    if reason == "no evidence retrieved":
+        return "no_evidence"
+    return "insufficient_evidence"
 
 
 def ask(

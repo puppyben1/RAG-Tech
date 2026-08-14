@@ -35,6 +35,9 @@ from .retrieval_ab import run_retrieval_ab
 from .doc_quality_audit import approve_doc_reviews, audit_doc_quality
 from .sensitive_audit import scan_sensitive_information
 from .competition_readiness import build_competition_readiness
+from .qa_data_audit import audit_qa_data
+from .qa_data_migration import migrate_qa_data
+from .qa_review_import import import_qa_reviews
 
 
 def main() -> None:
@@ -57,6 +60,19 @@ def main() -> None:
     import_db_parser = sub.add_parser("import-db", help="Import processed JSONL knowledge base into SQLite.")
     import_db_parser.add_argument("--reset", action="store_true", help="Clear imported SQLite tables before importing.")
     sub.add_parser("db-status", help="Show SQLite production database status.")
+    qa_audit_parser = sub.add_parser("qa-data-audit", help="Audit legacy QA evidence mapping without modifying the workbook.")
+    qa_audit_parser.add_argument("--qa", required=True, help="QA workbook path.")
+    qa_audit_parser.add_argument("--manifest", help="Manifest JSONL path; defaults to the processed manifest.")
+    qa_migrate_parser = sub.add_parser("migrate-qa-data", help="Write structured QA candidates and a fail-closed review worklist.")
+    qa_migrate_parser.add_argument("--qa", required=True, help="Source QA workbook path; never modified.")
+    qa_migrate_parser.add_argument("--output", required=True, help="Candidate JSONL output path.")
+    qa_migrate_parser.add_argument("--review-worklist", required=True, help="CSV worklist for ambiguous or incomplete rows.")
+    qa_migrate_parser.add_argument("--manifest", help="Manifest JSONL path; defaults to the processed manifest.")
+    qa_review_import_parser = sub.add_parser("import-qa-reviews", help="Import and validate human-reviewed QA migration results from CSV.")
+    qa_review_import_parser.add_argument("--review-csv", required=True, help="Human-reviewed CSV worklist with filled locators.")
+    qa_review_import_parser.add_argument("--candidates", required=True, help="Original candidate JSONL from migrate-qa-data.")
+    qa_review_import_parser.add_argument("--output", required=True, help="Reviewed and validated JSONL output path.")
+    qa_review_import_parser.add_argument("--manifest", help="Manifest JSONL path; defaults to the processed manifest.")
     source_template_parser = sub.add_parser("export-source-template", help="Export a CSV template for source URL enrichment.")
     source_template_parser.add_argument("--output", help="Output CSV path.")
     source_worklist_parser = sub.add_parser("source-gap-worklist", help="Build a prioritized source/version enrichment worklist.")
@@ -318,6 +334,29 @@ def main() -> None:
         print(json.dumps(import_processed_jsonl(reset=args.reset), ensure_ascii=False, indent=2))
     elif args.command == "db-status":
         print(json.dumps(database_status(), ensure_ascii=False, indent=2))
+    elif args.command == "qa-data-audit":
+        payload = audit_qa_data(Path(args.qa), Path(args.manifest) if args.manifest else MANIFEST_PATH)
+        print(json.dumps(payload, ensure_ascii=False, indent=2))
+        if payload["status"] != "passed":
+            raise SystemExit(1)
+    elif args.command == "migrate-qa-data":
+        payload = migrate_qa_data(
+            Path(args.qa),
+            Path(args.output),
+            Path(args.review_worklist),
+            Path(args.manifest) if args.manifest else MANIFEST_PATH,
+        )
+        print(json.dumps(payload, ensure_ascii=False, indent=2))
+    elif args.command == "import-qa-reviews":
+        payload = import_qa_reviews(
+            Path(args.review_csv),
+            Path(args.candidates),
+            Path(args.output),
+            Path(args.manifest) if args.manifest else MANIFEST_PATH,
+        )
+        print(json.dumps(payload, ensure_ascii=False, indent=2))
+        if payload["status"] != "passed":
+            raise SystemExit(1)
     elif args.command == "build-kb":
         print(
             json.dumps(
